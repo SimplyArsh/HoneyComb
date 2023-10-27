@@ -1,0 +1,13 @@
+Before we dive into the project, we should probably familiarize ourselves with Git, React, NodeJS, and PosgreSQL.
+
+Here are some tutorials I found helpful:
+
+Git: https://www.youtube.com/watch?v=RGOj5yH7evk&ab_channel=freeCodeCamp.org
+
+React: We did React in assignment 3
+
+NodeJS: https://www.youtube.com/watch?v=zb3Qk8SG5Ms&list=PL4cUxeGkcC9jsz4LDYc6kv3ymONOKxwBU&ab_channel=NetNinja
+
+PosgreSQL: TBD
+
+Setting up the environment for our project: TBD
