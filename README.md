@@ -14,7 +14,7 @@ Express: npm install express
 To set up your constants environment, create a file .env in backend. In your .env file, put:
 
 PORT=4000
-MONGO_URI=mongodb+srv://<username>:<password>@honeycomb.tkucoy7.mongodb.net/?retryWrites=true&w=majority
+MONGO_URI=mongodb+srv://YOURusername:YOURpassword@honeycomb.tkucoy7.mongodb.net/?retryWrites=true&w=majority
 
 Frontend: Do npm install react-router-dom in the /frontend folder to allow for routers. Add "proxy": "http://localhost:4000" to the package.json file in the frontend. Do npm install date-fns to add date formatting in the frontend. 
 
