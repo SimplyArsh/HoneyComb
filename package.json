@@ -1,0 +1,28 @@
+{
+  "name": "35l_project",
+  "version": "1.0.0",
+  "description": "HoneyComb is a Project Hub built by college students for college students. Collaborate with your peers to complete projects in any field. Running short on manpower? Search for new talent that'll help you get the job done.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SimplyArsh/35l_project.git"
+  },
+  "author": "Alex Chen, Alex Chien, Arshnoor Dhaliwal, Rohan Kumar, Yahvin Gali",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SimplyArsh/35l_project/issues"
+  },
+  "homepage": "https://github.com/SimplyArsh/35l_project#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0",
+    "nodemon": "^3.0.1"
+  }
+}
