@@ -97,3 +97,16 @@ div.error {
 input.error {
   border: 1px solid var(--error);
 }
+
+/* Profile page */
+
+.profilePage {
+  display: flex;
+  flex-direction: column;
+}
+
+.profileUserInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
