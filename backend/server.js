@@ -1,18 +1,20 @@
+require('dotenv').config();
+
 const express = require('express')
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config();
+
+const userRouter = require('./routes/user');
 
 const app = express();
 const port = process.env.PORT || 5000;
-const examplesRouter = require('./routes/example');
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
 // Routers
-app.use('/examples', examplesRouter);
+app.use('/api/user', userRouter);
 
 // Connect to MongoDB
 const uri = process.env.ATLAS_URI;
