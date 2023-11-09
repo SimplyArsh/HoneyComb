@@ -16,6 +16,7 @@ const addExample = (req, res) => {
         description,
         date,
     })
+
     newExample.save()
         .then(() => res.json('Example added!'))
         .catch(err => res.status(400).json('Error: ' + err));
