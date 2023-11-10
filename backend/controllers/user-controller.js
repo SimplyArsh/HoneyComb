@@ -5,7 +5,7 @@ const createToken = (_id) => {
 }
 
 //user login
-const userLogin = async (req, res, type) => {
+const userLogin = async (req, res) => {
   const { email, password } = req.body
   try {
     const user = await User.login(email, password)

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const userRouter = require('./routes/user');
+const postRouter = require('./routes/post')
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -15,6 +16,7 @@ app.use(express.json());
 
 // Routers
 app.use('/api/user', userRouter);
+app.use('/api/post', postRouter)
 
 // Connect to MongoDB
 const uri = process.env.ATLAS_URI;
