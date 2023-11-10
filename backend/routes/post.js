@@ -7,7 +7,7 @@ const {
     deletePost,
     updatePost
 } = require('../controllers/post-controller')
-const requireAuth = require('../middleware/requireAuth')
+const requireAuth = require('../middleware/require-auth')
 const router = express.Router()
 
 router.use(requireAuth)           // require auth for all post routes
