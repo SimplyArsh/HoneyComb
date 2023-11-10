@@ -37,6 +37,10 @@ function App() {
             />
             <Route
               path='/profile'
+              element={<Profile />} // view user's own profile
+            />
+            <Route
+              path='/profile/:id' // view a specific profile
               element={<Profile />}
             />
           </Routes>
@@ -45,5 +49,7 @@ function App() {
     </div>
   );
 }
+
+
 
 export default App;
