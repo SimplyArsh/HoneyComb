@@ -9,7 +9,7 @@ const userLogin = async (req, res, type) => {
   const { email, password } = req.body
   try {
     const user = await User.login(email, password)
-    const token = createToken(user._id) //create token
+    const token = createToken(user._id) // create token
     res.status(200).json({ email, token })
   }
   catch (error) {
