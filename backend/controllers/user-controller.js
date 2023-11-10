@@ -7,9 +7,6 @@ const createToken = (_id) => {
 
 //user login
 const userLogin = async (req, res) => {
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such project post' })
-  }
   const { email, password } = req.body
   try {
     const user = await User.login(email, password)
