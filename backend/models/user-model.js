@@ -5,10 +5,10 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   username: { type: String, required: true },
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true }, // Email must be unique
   password: { type: String, required: true },
   aboutMe: { type: String, required: true },
-  postList: { type: String, default: '' },
+  postList: { type: Array, default: [] },
   numberOfLikes: { type: Number, default: 0 },
   numberOfPosts: { type: Number, default: 0 },
 }, {
@@ -18,13 +18,13 @@ const userSchema = new Schema({
 // static signup method
 userSchema.statics.signup = async function (username, email, password, aboutMe) {
   // validation
+  console.log(username, email, password, aboutMe)
   if (!username || !email || !password || !aboutMe) {
     throw Error('All fields must be filled')
   }
 
   //email validation and existence
   if (!validator.isEmail(email)) {
-    console.log(email)
     throw Error('Email not valid')
   }
 
@@ -39,7 +39,7 @@ userSchema.statics.signup = async function (username, email, password, aboutMe) 
     throw Error('Password not strong enough')
   }
 
-  const salt = await bcrypt.genSalt(10)
+  const salt = await bcrypt.genSalt(10) // the higher this number, the harder the password is to crack
   const hash = await bcrypt.hash(password, salt)
 
   //create user object

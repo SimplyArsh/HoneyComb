@@ -1,38 +1,16 @@
 import { useState } from "react"
-import { useUserContext } from "../hooks/use-user-context"
-import { useNavigate } from 'react-router-dom'
+import { useLogin } from "../hooks/use-login"
 
 const Login = () => {
-    const { token, dispatch } = useUserContext()
-    const navigate = useNavigate()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [error, setError] = useState(null) // login error display message
+    const { login, error, isLoading } = useLogin()
 
     const handleSubmit = async (e) => {
         e.preventDefault() // Don't refresh the page by default
 
-        const loginInfo = { email, password }
-
-        const response = await fetch('/api/user/login', { // check if login is valid
-            method: 'POST',
-            body: JSON.stringify(loginInfo),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-
-        const json = await response.json() // get back response
-
-        if (!response.ok) {
-            setError(json.error)
-        }
-
-        if (response.ok) {
-            dispatch({ type: 'SET_TOKEN', payload: json.token })
-            navigate('/')
-        }
+        await login(email, password)
     }
 
     return (
@@ -53,7 +31,7 @@ const Login = () => {
                         setPassword(e.target.value)
                     }}
                 />
-                <button>Login</button>
+                <button disabled={isLoading}>Login</button>
                 {error && <div className="error">{error}</div>}
             </form>
         </div>
