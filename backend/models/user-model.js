@@ -8,7 +8,7 @@ const userSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   aboutMe: { type: String, required: true },
-  postList: { type: String, default: '' },
+  postList: { type: Array, default: [] },
   numberOfLikes: { type: Number, default: 0 },
   numberOfPosts: { type: Number, default: 0 },
 }, {
