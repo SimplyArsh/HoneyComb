@@ -17,7 +17,7 @@ const Navbar = () => {
                     <h1>Navbar: Homepage</h1>
                 </Link>
                 <nav>
-                    {user && ( // only display createProject and profile if logged in
+                    {user && ( // only display createProject and profile if user logged in
                         <div>
                             <Link to="/createProject">
                                 <h1>Create project</h1>
@@ -28,7 +28,7 @@ const Navbar = () => {
                             </Link>
                         </div>
                     )}
-                    {!user && ( // only display signup and login if not logged in
+                    {!user && ( // only display signup and login if user not logged in
                         <div>
                             <Link to="/signup">
                                 <h1>Navbar: Sign up</h1>
