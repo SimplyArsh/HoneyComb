@@ -31,10 +31,10 @@ const Navbar = () => {
                     {!user && ( // only display signup and login if user not logged in
                         <div>
                             <Link to="/signup">
-                                <h1>Navbar: Sign up</h1>
+                                <h1>Sign up</h1>
                             </Link>
                             <Link to="/login">
-                                <h1>Navbar: Login</h1>
+                                <h1>Login</h1>
                             </Link>
                         </div>
                     )}

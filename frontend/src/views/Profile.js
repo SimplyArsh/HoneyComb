@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom';
+import { useAuthContext } from '../hooks/use-auth-context'
 
 const ProfileUserInfo = ({ personInfo }) => (
     <div className="header" >
@@ -31,6 +32,7 @@ const PostList = ({ posts }) => (
 
 const Profile = () => {
     const { id } = useParams()
+    const { user } = useAuthContext()
 
     const [username, setUsername] = useState(null)
     const [email, setEmail] = useState(null)
@@ -41,13 +43,33 @@ const Profile = () => {
     const [postList, setPostList] = useState(null)
 
     useEffect(() => {
+        if (!user) {
+            console.log("You must be logged in")
+            return
+        }
+
         const fetchProfile = async () => {
-            if (id == null) { // If no id, then user isn't looking at someone else's profile. Change this later to say if id == null and user not logged in, then don't fetch data. If user is logged in, fetch user's own profile
-                return
+            let response
+            if (id == null) { // fetch user own data if no id after profile. Otherwise look for specific id
+                response = await fetch('/api/user/profile', {
+                    headers: { // include token in header
+                        'Authorization': 'Bearer ' + user.token
+                    }
+                })
             }
-            const response = await fetch('/api/user/profile/' + id)
+            else {
+                response = await fetch('/api/user/profile/' + id, {
+                    headers: { // include token in header
+                        'Authorization': 'Bearer ' + user.token
+                    }
+                })
+            }
 
             const json = await response.json() // get user info from server and update state
+
+            if (!response.ok) {
+                return "Error"
+            }
             setUsername(json.username)
             setEmail(json.email)
             setDateJoined(json.createdAt)
@@ -55,22 +77,14 @@ const Profile = () => {
             setNumberOfPosts(json.numberOfPosts)
             setAboutMe(json.aboutMe)
             setPostList(json.postList)
-
-            if (!response.ok) {
-                return "Error"
-            }
         }
 
-        fetchProfile()
-    }) // hook
+        if (user) {
+            fetchProfile()
+        }
 
-    if (id == null) { // change this later to say if id == null and user not logged in, then don't display profile 
-        return (
-            <div className="profilePage">
-                <h1>No profile! Login or look at someone else's profile!</h1>
-            </div>
-        )
-    }
+    }, [user, id]) // hook
+
     return (
         <div className="profilePage">
             <ProfileUserInfo personInfo={{ username, email, dateJoined, numberOfLikes, numberOfPosts, aboutMe }} />
