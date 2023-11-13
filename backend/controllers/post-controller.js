@@ -1,12 +1,22 @@
 const Post = require('../models/post-model')
+const User = require('../models/user-model')
 const mongoose = require('mongoose')
 
 // get all posts
 const getPosts = async (req, res) => {
   const user_id = req.user._id
 
-  const posts = await Post.find({user_id}).sort({createdAt: -1})
+  const posts = await Post.find({ user_id }).sort({ createdAt: -1 })
 
+  res.status(200).json(posts)
+}
+
+//TODO: for right now it just retrieves all the posts
+const getRecomendationPosts = async (req, res) => {
+  const user_id = req.user._id 
+  console.log("IN HERE")
+  const posts = await Post.find({ user_id }).sort({ createdAt: -1 })
+  
   res.status(200).json(posts)
 }
 
@@ -15,45 +25,50 @@ const getPost = async (req, res) => {
   const { id } = req.params
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({error: 'No such project post'})
+    return res.status(404).json({ error: 'No such project post' })
   }
 
   const post = await Post.findById(id)
 
   if (!post) {
-    return res.status(404).json({error: 'No such project post'})
+    return res.status(404).json({ error: 'No such project post' })
   }
-  
+
   res.status(200).json(post)
 }
 
 
 // create new project post
 const createPost = async (req, res) => {
-  const {postName, description, skills} = req.body
+  const { postName, description, skills } = req.body
 
   let emptyFields = []
 
-  if(!postName) {
+  if (!postName) {
     emptyFields.push('postName')
   }
-  if(!description) {
+  if (!description) {
     emptyFields.push('description')
   }
-  if(!skills) {
+  if (!skills) {
     emptyFields.push('skills')
   }
-  if(emptyFields.length > 0) {
+  if (emptyFields.length > 0) {
     return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
   }
 
   // add doc to db
   try {
+    // create post 
     const user_id = req.user._id
-    const post = await Post.create({postName, description, skills, user_id})
+    const post = await Post.create({ postName, description, skills, user_id })
+
+    // add post to user's post list
+    user = User.addPost(user_id, post._id)
+
     res.status(200).json(post)
   } catch (error) {
-    res.status(400).json({error: error.message})
+    res.status(400).json({ error: error.message })
   }
 }
 
@@ -62,13 +77,13 @@ const deletePost = async (req, res) => {
   const { id } = req.params
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({error: 'No such project post'})
+    return res.status(404).json({ error: 'No such project post' })
   }
 
-  const post = await Post.findOneAndDelete({_id: id})
+  const post = await Post.findOneAndDelete({ _id: id })
 
   if (!post) {
-    return res.status(400).json({error: 'No such project post'})
+    return res.status(400).json({ error: 'No such project post' })
   }
 
   res.status(200).json(post)
@@ -79,15 +94,15 @@ const updatePost = async (req, res) => {
   const { id } = req.params
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({error: 'No such project post'})
+    return res.status(404).json({ error: 'No such project post' })
   }
 
-  const post = await Post.findOneAndUpdate({_id: id}, {
+  const post = await Post.findOneAndUpdate({ _id: id }, {
     ...req.body
   })
 
   if (!post) {
-    return res.status(400).json({error: 'No such project post'})
+    return res.status(400).json({ error: 'No such project post' })
   }
 
   res.status(200).json(post)
@@ -98,5 +113,6 @@ module.exports = {
   getPost,
   createPost,
   deletePost,
-  updatePost
+  updatePost,
+  getRecomendationPosts
 }
