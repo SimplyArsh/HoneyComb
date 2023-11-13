@@ -24,11 +24,19 @@ const ProfileUserInfo = ({ personInfo }) => (
     </div >
 );
 
-const PostList = ({ posts }) => (
-    <div className="postList">
-        <h2>{posts}</h2>
-    </div>
-);
+const PostList = ({ posts }) => {
+    return (
+        <div>
+            <h1>Posts:</h1>
+            <ul>
+                {posts.map((post, index) => (
+                    <li key={index}>{post}</li>
+                ))}
+            </ul>
+        </div>
+
+    )
+}
 
 const Profile = () => {
     const { id } = useParams()
@@ -40,7 +48,7 @@ const Profile = () => {
     const [numberOfLikes, setNumberOfLikes] = useState(null)
     const [numberOfPosts, setNumberOfPosts] = useState(null)
     const [aboutMe, setAboutMe] = useState(null)
-    const [postList, setPostList] = useState(null)
+    const [postList, setPostList] = useState([])
 
     useEffect(() => {
         if (!user) {
@@ -89,7 +97,6 @@ const Profile = () => {
         <div className="profilePage">
             <ProfileUserInfo personInfo={{ username, email, dateJoined, numberOfLikes, numberOfPosts, aboutMe }} />
             <PostList title="Current Posts" posts={postList} />
-            <PostList title="Past Posts" posts={postList} />
         </div>
     )
 }

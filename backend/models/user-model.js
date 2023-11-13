@@ -18,7 +18,6 @@ const userSchema = new Schema({
 // static signup method
 userSchema.statics.signup = async function (username, email, password, aboutMe) {
   // validation
-  console.log(username, email, password, aboutMe)
   if (!username || !email || !password || !aboutMe) {
     throw Error('All fields must be filled')
   }
@@ -66,6 +65,32 @@ userSchema.statics.login = async function (email, password) {
   }
 
   return user
+}
+
+// add a new post to user
+userSchema.statics.addPost = async function (userId, postId) {
+  try {
+    // Find the user 
+    const user = await this.findOne({ _id: userId }, 'postList');
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    // Add new postId to the postList
+    const updatedPostList = [...user.postList, postId];
+
+    // Update the user with the new postList
+    const updatedUser = await this.findByIdAndUpdate(
+      userId,
+      { $set: { postList: updatedPostList } },
+      { new: true }
+    );
+
+    return updatedUser;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 }
 
 const User = mongoose.model('User', userSchema);
