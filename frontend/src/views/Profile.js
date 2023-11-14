@@ -1,20 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { useAuthContext } from '../hooks/use-auth-context'
+import { useProfileContext } from '../hooks/use-profile-context';
 import ProfilePostList from '../components/Profile-Post-List'
 import ProfileUserInfo from '../components/Profile-User-Info'
 
 const Profile = () => {
     const { id } = useParams()
     const { user } = useAuthContext()
-
-    const [username, setUsername] = useState(null)
-    const [email, setEmail] = useState(null)
-    const [dateJoined, setDateJoined] = useState(null)
-    const [numberOfLikes, setNumberOfLikes] = useState(null)
-    const [numberOfPosts, setNumberOfPosts] = useState(null)
-    const [aboutMe, setAboutMe] = useState(null)
-    const [postList, setPostList] = useState([])
+    const { dispatch } = useProfileContext()
 
     useEffect(() => {
         if (!user) {
@@ -31,7 +25,7 @@ const Profile = () => {
                     }
                 })
             }
-            else {
+            else { // look at profile for specific user
                 response = await fetch('/api/user/profile/' + id, {
                     headers: { // include token in header
                         'Authorization': 'Bearer ' + user.token
@@ -39,31 +33,32 @@ const Profile = () => {
                 })
             }
 
-            const json = await response.json() // get user info from server and update state
+            const json = await response.json() // get user info from server and update context
 
             if (!response.ok) {
                 return "Error"
             }
-            setUsername(json.username)
-            setEmail(json.email)
-            setDateJoined(json.createdAt)
-            setNumberOfLikes(json.numberOfLikes)
-            setNumberOfPosts(json.numberOfPosts)
-            setAboutMe(json.aboutMe)
-            setPostList(json.postList)
+
+            // update profile context
+            dispatch({ type: 'SET_USERNAME', payload: json.username })
+            dispatch({ type: 'SET_EMAIL', payload: json.email })
+            dispatch({ type: 'SET_DATE_JOINED', payload: json.createdAt })
+            dispatch({ type: 'SET_NUMBER_OF_LIKES', payload: json.numberOfLikes })
+            dispatch({ type: 'SET_NUMBER_OF_POSTS' })
+            dispatch({ type: 'SET_ABOUT_ME', payload: json.aboutMe })
         }
 
         if (user) {
             fetchProfile()
         }
 
-    }, [user, id]) // hook
+    }, [user, id, dispatch]) // hook
 
     return (
         <div className="profilePage">
-            <ProfileUserInfo personInfo={{ username, email, dateJoined, numberOfLikes, numberOfPosts, aboutMe }} />
-            <ProfilePostList postList={postList} completed={false} />
-            <ProfilePostList postList={postList} completed={true} />
+            <ProfileUserInfo />
+            <ProfilePostList completed={false} id={id} />
+            <ProfilePostList completed={true} id={id} />
         </div>
     )
 }

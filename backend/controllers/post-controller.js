@@ -1,9 +1,17 @@
 const Post = require('../models/post-model')
 const mongoose = require('mongoose')
 
-// get all posts
+// get all posts for the authenticated user
 const getPosts = async (req, res) => {
   const user_id = req.user._id
+  const posts = await Post.find({ user_id }).sort({ createdAt: -1 })
+
+  res.status(200).json(posts)
+}
+
+// get all posts for a specific user
+const getUserPosts = async (req, res) => {
+  const user_id = req.params.id
   const posts = await Post.find({ user_id }).sort({ createdAt: -1 })
 
   res.status(200).json(posts)
@@ -81,7 +89,6 @@ const updatePost = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: 'No such project post' })
   }
-
   const post = await Post.findOneAndUpdate({ _id: id }, {
     ...req.body
   })
@@ -95,6 +102,7 @@ const updatePost = async (req, res) => {
 
 module.exports = {
   getPosts,
+  getUserPosts,
   getPost,
   createPost,
   deletePost,
