@@ -1,19 +1,18 @@
 const User = require('../models/user-model')
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
+
 const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '3d' })
 }
 
 //user login
 const userLogin = async (req, res) => {
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: 'No such project post' })
-  }
   const { email, password } = req.body
   try {
     const user = await User.login(email, password)
-    const token = createToken(user._id) //create token
+
+    const token = createToken(user._id) // create token
     res.status(200).json({ email, token })
   }
   catch (error) {
@@ -34,7 +33,26 @@ const userSignup = async (req, res) => {
   }
 }
 
-// get profile
+// get user own profile
+const getUserOwnProfile = async (req, res) => {
+  const id = req.user._id
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such user' })
+  }
+
+  let user = await User.findById(id)
+
+  if (!user) {
+    return res.status(404).json({ error: 'No such user' })
+  }
+  user = user._doc
+  user = { username: user.username, email: user.email, aboutMe: user.aboutMe, postList: user.postList, numberOfLikes: user.numberOfLikes, numberOfPosts: user.numberOfPosts, createdAt: user.createdAt } // only include basic user info, not passwords etc
+
+  res.status(200).json(user) // change this later to only include basic info
+}
+
+// get profile/:id
 const getProfile = async (req, res) => {
   const { id } = req.params
 
@@ -53,4 +71,4 @@ const getProfile = async (req, res) => {
   res.status(200).json(user) // change this later to only include basic info
 }
 
-module.exports = { userSignup, userLogin, getProfile }
+module.exports = { userSignup, userLogin, getProfile, getUserOwnProfile }
