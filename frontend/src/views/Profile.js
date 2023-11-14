@@ -1,42 +1,8 @@
-import { useEffect } from 'react'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { useAuthContext } from '../hooks/use-auth-context'
-
-const ProfileUserInfo = ({ personInfo }) => (
-    <div className="header" >
-        <div className="icon">
-            <i className="fa fa-user"></i> {/* Font Awesome icons */}
-        </div>
-        <div className="profileInfo">
-            <h1>{personInfo.username}</h1>
-            <h1>{personInfo.email}</h1>
-            <p>Date Joined: {personInfo.dateJoined}</p>
-            <p>Likes: {personInfo.numberOfLikes}</p>
-            <p>Posts: {personInfo.numberOfPosts}</p>
-            <p>About me: {personInfo.aboutMe}</p>
-        </div>
-        <div className="actions">
-            <Link to="/createProject"><i className="fa fa-plus"></i></Link>
-            <Link to="/messages"><i className="fa fa-envelope"></i></Link>
-        </div>
-    </div >
-);
-
-const PostList = ({ posts }) => {
-    return (
-        <div>
-            <h1>Posts:</h1>
-            <ul>
-                {posts.map((post, index) => (
-                    <li key={index}>{post}</li>
-                ))}
-            </ul>
-        </div>
-
-    )
-}
+import ProfilePostList from '../components/Profile-Post-List'
+import ProfileUserInfo from '../components/Profile-User-Info'
 
 const Profile = () => {
     const { id } = useParams()
@@ -96,7 +62,8 @@ const Profile = () => {
     return (
         <div className="profilePage">
             <ProfileUserInfo personInfo={{ username, email, dateJoined, numberOfLikes, numberOfPosts, aboutMe }} />
-            <PostList title="Current Posts" posts={postList} />
+            <ProfilePostList postList={postList} completed={false} />
+            <ProfilePostList postList={postList} completed={true} />
         </div>
     )
 }
