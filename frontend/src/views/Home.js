@@ -1,122 +1,76 @@
-import PostTemplate from "../components/postTemplate";
-import { useEffect } from 'react'
-import { useState } from 'react'
+import PostCard from "../components/postTemplate";
+import { useEffect, useState, useRef } from 'react'
 import { useParams } from 'react-router-dom';
 import { useAuthContext } from '../hooks/use-auth-context'
+import InfiniteScroll from 'react-infinite-scroll-component'
 // import { useInfiniteQuery } from '@tanstack/react-query'
 
 const Home = () => {
-    // const { id } = useParams()
+    
+    const [pageNumber, pageNumberUpdate] = useState(1)
+    const [posts, postsUpdate] = useState([])
     const { user } = useAuthContext()
-    const [image, setImage] = useState('');
-    const [posts, updatePosts] = useState([])
+    const isInitialRender = useRef(true);
+
+    const fetchMoreData = () => {
+
+        if (isInitialRender.current) {
+            isInitialRender.current = false;
+            return;
+        }
+
+        fetch('http://localhost:4000/api/post/recomendations?' + new URLSearchParams({
+            "pageNumber": pageNumber,
+            "pageSize": 4
+        }), {
+            headers: {"Authorization": 'Bearer ' + user.token}
+        }).then(
+            (response) => {
+                if (!response.ok) {
+                    throw new Error('Fetch error')
+                }
+                return response.json();
+        }).then(
+            (data) => {
+                pageNumberUpdate(pageNumber+1)
+                console.log(data)
+                if (!posts || posts.length === 0) {
+                    postsUpdate(data)
+                } else {
+                    postsUpdate((prevPosts) => [...prevPosts, ...data])
+                }
+        })
+        
+    }; 
 
     useEffect(() => {
-        if (!user) {
-            console.log("You must be logged in")
-            return
-        }
+        fetchMoreData(); // Initial fetch when the component mounts
+      }, []); // Empty dependency array to run only once
 
-        const fetchRecomendations = async () => {
-            let response;
-            response = await fetch('/api/post/', {
-                headers: { // include the page that we want to fetch
-                    'Authorization': 'Bearer ' + user.token
-                }
-            }); 
-            console.log(response)
-            const json = await response.json() // get user info from server and update state
-
-            for 
-
-            updatePosts((prevPosts) => [...prevPosts, json])
-
-            if (!response.ok) {
-                return "Could not fetch a response"
-            }
-        }
-
-        if (user) {
-            fetchRecomendations()
-        }
-
-    }, [user]) // hook
-
-
-
-    console.log(posts)
-
-    return (
-        // <div className="home">
-        //     <h1>Home page</h1>
-            <div className="home">
-                posts && {posts.map((post) => (
-                    <PostTemplate key={post.id} post={post} />
+    return(
+        <div>
+            <InfiniteScroll 
+                dataLength={posts.length}
+                next={fetchMoreData}
+                hasMore={true}
+                loader={<p> Loading... </p>}
+            > 
+                {posts.map((post) => ( <PostCard 
+                    key={post._id} 
+                    name={post.profile_name}
+                    avatar="https://img.freepik.com/free-photo/fashion-boy-with-yellow-jacket-blue-pants_71767-96.jpg?w=1380&t=st=1700010094~exp=1700010694~hmac=b9d7f8d56b66ac184e10e6b6fc4df817beaf81b63a6e495f32ad81e1eebbbb1a"
+                    postName={post.postName}
+                    description={post.description}
+                    dateCreated={post.dateCreated}
+                    skills={post.skills}
+                    likes={post.numberOfLikes}
+                />
                 ))}
-            </div>
-        // </div>
+            </InfiniteScroll>
+            
+        </div>
     )
 }
 
 export default Home
 
-
-    // const page = () => {
-
-    //     const  { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    //         ['query'],
-    //         async ({ pageParam = 1}) => {
-    //             const response = await fetchRecomendations(pageParam)
-    //             return response
-    //         },
-    //         {
-    //             getNextPageParam: (_, pages) => {
-    //                 return pages.length + 1
-    //             },
-    //             // intialData: {
-    //             //     pages: 
-    //             // },
-    //         }
-    //     )
-
-    //     return (
-    //         posts: 
-    //         {data?.pages.map((page, i) => 
-    //             div key=[i]
-    //             )}
-    //     )
-
-// EXTRA TESTING CODE BELOW
-
-// useEffect(() => {
-//     const fetchImage = async () => {
-//       const response = await fetch('https://plus.unsplash.com/premium_photo-1658527049634-15142565537a?q=80&w=2576&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
-//       const blob = await response.blob();
-//       setImage(URL.createObjectURL(blob));
-//     };
-
-//     fetchImage();
-//   }, []);
-
-// const posts = [
-//     {
-//         id: 1,
-//         user: {
-//         id: 1,
-//         name: "John Doe",
-//         avatar: image,
-//         },
-//         ageSinceUpload: "1 hour ago",
-//         textDescription: "This is a post.",
-//         images: [
-//         {
-//             id: 1,
-//             url: "https://unsplash.com/photos/cheerful-mature-businesswoman-keeping-arms-crossed-and-smiling-while-leaning-at-the-wall-wgh4eqMkh4k",
-//         },
-//         {
-//             id: 2,
-//             url: "https://example.com/image2.jpg",
-//         },
-//         ],
-//     }
-//     ];

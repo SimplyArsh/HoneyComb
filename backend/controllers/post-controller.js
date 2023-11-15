@@ -13,17 +13,39 @@ const getPosts = async (req, res) => {
 
 //TODO: for right now it just retrieves all the posts
 const getRecomendationPosts = async (req, res) => {
-  const user_id = req.user._id 
-  console.log("IN HERE")
-  const posts = await Post.find({ user_id }).sort({ createdAt: -1 })
-  
-  res.status(200).json(posts)
+
+  try {
+    const pageSize = req.query.pageSize;
+    const pageNumber = req.query.pageNumber;
+    console.log(pageSize)
+    const skip = (pageNumber - 1) * pageSize;
+
+    const result = await Post.find({}).skip(skip).limit(pageSize)
+
+    const resultWithProfileNames = await Promise.all(result.map(async (post) => {
+      const userId = post.user_id;
+    
+      const profileResponse = await User.findById(userId)
+      
+      const profileName = profileResponse.username;
+
+      return {
+        ...post._doc,
+        profile_name: profileName,
+      };
+
+    }));
+
+    res.status(200).json(resultWithProfileNames);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error: ', details:{ message: error.message } });
+  }
 }
 
 // get a single project post
 const getPost = async (req, res) => {
   const { id } = req.params
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: 'No such project post' })
   }

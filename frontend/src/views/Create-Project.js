@@ -15,7 +15,7 @@ const CreateProject = () => {
         console.log("You must be logged in")
         return
     }
-
+    
     const handleSubmit = async (e) => {
         setIsLoading(true)
         setError(null)

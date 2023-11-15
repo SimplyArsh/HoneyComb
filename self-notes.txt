@@ -1,0 +1,7 @@
+Two servers: backend and frontend
+user interacts directly with frontend
+
+
+Backend servers
+main file server.js
+express is for middleware to send/recieve json between frontend and backend
