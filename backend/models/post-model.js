@@ -7,9 +7,10 @@ const postSchema = new Schema({
   description: { type: String, required: true },
   skills: { type: String, required: true },
   user_id: { type: String, required: true },
-  numberOfLikes: { type: Number, default: 0 }
-}, { 
-    timestamps: true 
+  numberOfLikes: { type: Number, default: 0 },
+  completed: { type: Boolean, default: false }
+}, {
+  timestamps: true
 })
 
 module.exports = mongoose.model('Post', postSchema)

@@ -13,12 +13,14 @@ const Navbar = () => {
     return (
         <header>
             <div className="container">
-                <Link to="/">
-                    <h1>Navbar: Homepage</h1>
-                </Link>
                 <nav>
                     {user && ( // only display createProject and profile if user logged in
                         <div>
+                            <div>
+                                <Link to="/">
+                                    <h1>Navbar: Homepage</h1>
+                                </Link>
+                            </div>
                             <Link to="/createProject">
                                 <h1>Create project</h1>
                             </Link>
