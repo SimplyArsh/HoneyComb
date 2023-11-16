@@ -1,6 +1,7 @@
 const Post = require('../models/post-model')
 const User = require('../models/user-model')
 const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
 
 // get all posts for the authenticated user
 const getPosts = async (req, res) => {
@@ -24,7 +25,7 @@ const getRecomendationPosts = async (req, res) => {
   try {
     const pageSize = req.query.pageSize;
     const pageNumber = req.query.pageNumber;
-    console.log(pageSize)
+
     const skip = (pageNumber - 1) * pageSize;
 
     const result = await Post.find({}).skip(skip).limit(pageSize)
@@ -132,6 +133,52 @@ const updatePost = async (req, res) => {
   res.status(200).json(post)
 }
 
+const updateLikeCount = async (req, res) => {
+
+  // checking if the user has already liked
+  // user has already been authorzied, so token guarnteed at this point
+  const { id } = req.params
+  const user_id = req.user._id
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'Project doesnt exist' })
+  }
+
+  const postCheckLikeStatus = await Post.findOne({ _id: id })
+  let post; 
+
+
+  if (postCheckLikeStatus.usersWhoLiked.includes(user_id)) {
+    // removing the like
+    post = await Post.findOneAndUpdate({ _id: id }, {
+      $set: {
+        numberOfLikes: postCheckLikeStatus.numberOfLikes - 1,
+      },
+      $pull: {
+        usersWhoLiked: user_id
+      },
+    }, {new: true}) 
+  } else {
+    //inserting a like
+    post = await Post.findOneAndUpdate({ _id: id }, {
+      $set: {
+        numberOfLikes: postCheckLikeStatus.numberOfLikes + 1,
+      },
+      $push: {
+        usersWhoLiked: user_id
+      },
+    }, {new: true}) 
+  } 
+
+  if (!post) {
+    return res.status(400).json({ error: 'No such project post' })
+  }
+
+  res.status(200).json({ ...post._doc}) // ...post._doc, 
+}
+
+
+
 module.exports = {
   getPosts,
   getUserPosts,
@@ -139,5 +186,6 @@ module.exports = {
   createPost,
   deletePost,
   updatePost,
-  getRecomendationPosts
+  getRecomendationPosts,
+  updateLikeCount
 }

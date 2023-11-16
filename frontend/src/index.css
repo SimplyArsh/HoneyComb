@@ -172,6 +172,17 @@ input.error {
   padding: 8px;
   margin-right: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #d3dade;
+  color: rgb(255, 255, 255)fff;
+}
+
+.like-button.colored {
+  padding: 8px;
+  margin-right: 8px;
+  cursor: pointer;
+  background-color: #4892bc;
+  color: #861818;
 }
 
 .likes {

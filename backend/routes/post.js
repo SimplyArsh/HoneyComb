@@ -7,13 +7,15 @@ const {
     createPost,
     deletePost,
     updatePost,
-    getRecomendationPosts
+    getRecomendationPosts,
+    updateLikeCount
 } = require('../controllers/post-controller')
 const requireAuth = require('../middleware/require-auth')
 const router = express.Router()
 
 
 router.use(requireAuth)           // require auth for all post routes
+router.patch('/like/:id', updateLikeCount)
 router.get('/recomendations', getRecomendationPosts)
 router.get('/', getPosts)         // GET all posts
 router.get('/user/:id', getUserPosts)         // GET all posts for a specific user

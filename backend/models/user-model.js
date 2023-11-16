@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const validator = require('validator')
 const Schema = mongoose.Schema;
+const { ObjectID } = require('mongoose').Types
 
 const userSchema = new Schema({
   username: { type: String, required: true },
@@ -9,6 +10,7 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   aboutMe: { type: String, required: true },
   numberOfLikes: { type: Number, default: 0 },
+  postsLiked: { type: [ObjectID], required: false}, 
   numberOfPosts: { type: Number, default: 0 },
 }, {
   timestamps: true,
