@@ -1,0 +1,23 @@
+Thursday 2 November:
+
+Notes:
+- Universal language: JS
+- Frontend: react
+- Backend: express, mongoDB and NodeJS
+- Search bar: filter like discord, use IBM open source code for search algorithm
+- Start with NodeJS then decide whether or not to use Docker 
+- Use sandbox for CSS testing to reduce production time
+
+Rules for everyone:
+- Comments for every single line of code 
+- camelCasing for everything except constant
+- Hyphenate for filenames e.g. login-html 
+
+Roles:
+- Arsh and Rohan focus on frontend 
+- Alex, Yahvin and Alex focus on backend
+
+To do:
+- Watch CS35L past project presentations
+- Watch tutorials
+- Create login page, sign up page, and the homepage

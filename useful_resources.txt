@@ -1,0 +1,14 @@
+Before we dive into the project, we should probably familiarize ourselves with Git, React, NodeJS, and MangoDB.
+
+Here are some tutorials I found helpful:
+
+Git: https://www.youtube.com/watch?v=RGOj5yH7evk&ab_channel=freeCodeCamp.org
+
+React: https://www.youtube.com/watch?v=j942wKiXFu8&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d&ab_channel=NetNinja
+
+NodeJS: https://www.youtube.com/watch?v=zb3Qk8SG5Ms&list=PL4cUxeGkcC9jsz4LDYc6kv3ymONOKxwBU&ab_channel=NetNinja
+
+MangoDB: https://www.youtube.com/watch?v=ExcRbA7fy_A&list=PL4cUxeGkcC9h77dJ-QJlwGlZlTd4ecZOA&ab_channel=NetNinja
+
+MERN (all combined - includes setup): https://www.youtube.com/watch?v=98BzS5Oz5E4&list=PL4cUxeGkcC9iJ_KkrkBZWZRHVwnzLIoUE&index=1&pp=iAQB&ab_channel=NetNinja
+
