@@ -5,13 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { UserContextProvider } from './context/user-context'
 import { AuthContextProvider } from './context/auth-context'
+import { ProfileContextProvider } from './context/profile-context'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AuthContextProvider>
       <UserContextProvider>
-        <App />
+        <ProfileContextProvider>
+          <App />
+        </ProfileContextProvider>
       </UserContextProvider>
     </AuthContextProvider>
   </React.StrictMode>

@@ -8,9 +8,10 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true }, // Email must be unique
   password: { type: String, required: true },
   aboutMe: { type: String, required: true },
-  postList: { type: Array, default: [] },
   numberOfLikes: { type: Number, default: 0 },
   numberOfPosts: { type: Number, default: 0 },
+  followers: {type: [mongoose.Schema.Types.ObjectId], default: []},
+  following: {type: [mongoose.Schema.Types.ObjectId], default: []}
 }, {
   timestamps: true,
 });
@@ -66,32 +67,6 @@ userSchema.statics.login = async function (email, password) {
   }
 
   return user
-}
-
-// add a new post to user
-userSchema.statics.addPost = async function (userId, postId) {
-  try {
-    // Find the user 
-    const user = await this.findOne({ _id: userId }, 'postList');
-    if (!user) {
-      throw new Error('User not found');
-    }
-
-    // Add new postId to the postList
-    const updatedPostList = [...user.postList, postId];
-
-    // Update the user with the new postList
-    const updatedUser = await this.findByIdAndUpdate(
-      userId,
-      { $set: { postList: updatedPostList } },
-      { new: true }
-    );
-
-    return updatedUser;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
 }
 
 const User = mongoose.model('User', userSchema);

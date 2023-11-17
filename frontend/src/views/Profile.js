@@ -1,54 +1,14 @@
 import { useEffect } from 'react'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom';
 import { useAuthContext } from '../hooks/use-auth-context'
-
-const ProfileUserInfo = ({ personInfo }) => (
-    <div className="header" >
-        <div className="icon">
-            <i className="fa fa-user"></i> {/* Font Awesome icons */}
-        </div>
-        <div className="profileInfo">
-            <h1>{personInfo.username}</h1>
-            <h1>{personInfo.email}</h1>
-            <p>Date Joined: {personInfo.dateJoined}</p>
-            <p>Likes: {personInfo.numberOfLikes}</p>
-            <p>Posts: {personInfo.numberOfPosts}</p>
-            <p>About me: {personInfo.aboutMe}</p>
-        </div>
-        <div className="actions">
-            <Link to="/createProject"><i className="fa fa-plus"></i></Link>
-            <Link to="/messages"><i className="fa fa-envelope"></i></Link>
-        </div>
-    </div >
-);
-
-const PostList = ({ posts }) => {
-    return (
-        <div>
-            <h1>Posts:</h1>
-            <ul>
-                {posts.map((post, index) => (
-                    <li key={index}>{post}</li>
-                ))}
-            </ul>
-        </div>
-
-    )
-}
+import { useProfileContext } from '../hooks/use-profile-context';
+import ProfilePostList from '../components/Profile-Post-List'
+import ProfileUserInfo from '../components/Profile-User-Info'
 
 const Profile = () => {
     const { id } = useParams()
     const { user } = useAuthContext()
-
-    const [username, setUsername] = useState(null)
-    const [email, setEmail] = useState(null)
-    const [dateJoined, setDateJoined] = useState(null)
-    const [numberOfLikes, setNumberOfLikes] = useState(null)
-    const [numberOfPosts, setNumberOfPosts] = useState(null)
-    const [aboutMe, setAboutMe] = useState(null)
-    const [postList, setPostList] = useState([])
+    const { dispatch } = useProfileContext()
 
     useEffect(() => {
         if (!user) {
@@ -65,7 +25,7 @@ const Profile = () => {
                     }
                 })
             }
-            else {
+            else { // look at profile for specific user
                 response = await fetch('/api/user/profile/' + id, {
                     headers: { // include token in header
                         'Authorization': 'Bearer ' + user.token
@@ -73,30 +33,32 @@ const Profile = () => {
                 })
             }
 
-            const json = await response.json() // get user info from server and update state
+            const json = await response.json() // get user info from server and update context
 
             if (!response.ok) {
                 return "Error"
             }
-            setUsername(json.username)
-            setEmail(json.email)
-            setDateJoined(json.createdAt)
-            setNumberOfLikes(json.numberOfLikes)
-            setNumberOfPosts(json.numberOfPosts)
-            setAboutMe(json.aboutMe)
-            setPostList(json.postList)
+
+            // update profile context
+            dispatch({ type: 'SET_USERNAME', payload: json.username })
+            dispatch({ type: 'SET_EMAIL', payload: json.email })
+            dispatch({ type: 'SET_DATE_JOINED', payload: json.createdAt })
+            dispatch({ type: 'SET_NUMBER_OF_LIKES', payload: json.numberOfLikes })
+            dispatch({ type: 'SET_NUMBER_OF_POSTS' })
+            dispatch({ type: 'SET_ABOUT_ME', payload: json.aboutMe })
         }
 
         if (user) {
             fetchProfile()
         }
 
-    }, [user, id]) // hook
+    }, [user, id, dispatch]) // hook
 
     return (
         <div className="profilePage">
-            <ProfileUserInfo personInfo={{ username, email, dateJoined, numberOfLikes, numberOfPosts, aboutMe }} />
-            <PostList title="Current Posts" posts={postList} />
+            <ProfileUserInfo />
+            <ProfilePostList completed={false} id={id} />
+            <ProfilePostList completed={true} id={id} />
         </div>
     )
 }

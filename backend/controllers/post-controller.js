@@ -1,11 +1,17 @@
 const Post = require('../models/post-model')
-const User = require('../models/user-model')
 const mongoose = require('mongoose')
 
-// get all posts
+// get all posts for the authenticated user
 const getPosts = async (req, res) => {
   const user_id = req.user._id
+  const posts = await Post.find({ user_id }).sort({ createdAt: -1 })
 
+  res.status(200).json(posts)
+}
+
+// get all posts for a specific user
+const getUserPosts = async (req, res) => {
+  const user_id = req.params.id
   const posts = await Post.find({ user_id }).sort({ createdAt: -1 })
 
   res.status(200).json(posts)
@@ -54,9 +60,6 @@ const createPost = async (req, res) => {
     const user_id = req.user._id
     const post = await Post.create({ postName, description, skills, user_id })
 
-    // add post to user's post list
-    user = User.addPost(user_id, post._id)
-
     res.status(200).json(post)
   } catch (error) {
     res.status(400).json({ error: error.message })
@@ -66,7 +69,6 @@ const createPost = async (req, res) => {
 // delete a project post
 const deletePost = async (req, res) => {
   const { id } = req.params
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: 'No such project post' })
   }
@@ -87,7 +89,6 @@ const updatePost = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: 'No such project post' })
   }
-
   const post = await Post.findOneAndUpdate({ _id: id }, {
     ...req.body
   })
@@ -101,6 +102,7 @@ const updatePost = async (req, res) => {
 
 module.exports = {
   getPosts,
+  getUserPosts,
   getPost,
   createPost,
   deletePost,
