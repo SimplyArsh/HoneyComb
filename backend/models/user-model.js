@@ -10,6 +10,8 @@ const userSchema = new Schema({
   aboutMe: { type: String, required: true },
   numberOfLikes: { type: Number, default: 0 },
   numberOfPosts: { type: Number, default: 0 },
+  followers: {type: [mongoose.Schema.Types.ObjectId], default: []},
+  following: {type: [mongoose.Schema.Types.ObjectId], default: []}
 }, {
   timestamps: true,
 });
