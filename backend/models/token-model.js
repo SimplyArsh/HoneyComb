@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { stringify } = require("nodemon/lib/utils");
 const Schema = mongoose.Schema
 
+//Each token has: creator userID, token string/value, timestamp of creation
 const tokenSchema = new Schema({
     userID: {
         type: Schema.Types.ObjectId,

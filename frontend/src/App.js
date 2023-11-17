@@ -8,6 +8,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './views/Home'
 import Login from './views/Login'
 import SignUp from './views/Sign-Up'
+import RequestResetPassword from './views/Pass-Request-Reset'
+import ResetPassword from './views/Pass-Reset'
 import CreateProject from './views/Create-Project'
 import Profile from './views/Profile'
 import Navbar from './components/Navbar'
@@ -37,6 +39,14 @@ function App() {
             <Route
               path='/signup'
               element={!user ? <SignUp /> : <Navigate to='/' />} // if logged in, display homepage. If not logged in, display signup page
+            />
+            <Route
+              path='/requestResetPass'
+              element={<RequestResetPassword />}  //Allow user to request password reset even if not logged in; future: maybe redirect to profile/settings page
+            />
+            <Route
+              path='/resetPass'
+              element={<ResetPassword />}  //Allow user to reset password reset even if not logged in
             />
             <Route
               path='/createProject'
