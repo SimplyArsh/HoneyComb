@@ -18,7 +18,7 @@ const Navbar = () => {
     };
 
     const handleCreateClick = () => {
-        navigate('/create');
+        navigate('/createproject');
     };
 
     const handleProfileClick = () => {
