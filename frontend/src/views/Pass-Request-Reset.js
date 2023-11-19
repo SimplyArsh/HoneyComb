@@ -23,7 +23,7 @@ const RequestResetPassword = () => {
                         setEmail(e.target.value)
                     }}
                 />
-                <button disabled={isLoading}>Send Request</button>
+                <button className="btn submit-button" disabled={isLoading}>Send Request</button>
                 {error && <div className="error">{error}</div>}
             </form>
         </div>

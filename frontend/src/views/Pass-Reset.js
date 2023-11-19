@@ -35,7 +35,7 @@ const ResetPassword = () => {
                         setConfirmPassword(e.target.value)
                     }} placeholder='Confirm new password'
                 />
-                <button type='submit' disabled={isLoading}>Reset Password</button>
+                <button className="btn submit-button" type='submit' disabled={isLoading}>Reset Password</button>
                 {error && <div className="error">{error}</div>}
                 {confirmError && <div className='error'>{confirmError}</div>}
             </form>

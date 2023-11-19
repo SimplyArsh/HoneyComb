@@ -2,7 +2,8 @@
   text-align: center;
 }
 
-.App-logo {
+/* These are all for DEFAULT REACT APP styling */
+/* .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
@@ -14,7 +15,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #2a9b41;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -26,8 +27,89 @@
 
 .App-link {
   color: #61dafb;
+} */
+
+
+
+/* Bootstrap styling elements for CSS */
+
+.btn-primary {
+  background-color: #007bff; /* Customize the background color */
+  border-color: #007bff; /* Customize the border color */
 }
 
+.custom-button {
+  /* Use Bootstrap button styling */
+  color: #333;
+  background-color: #007bff;
+  /*border-color: #f07bff;*/
+}
+
+.custom-button:hover {
+  background-color: #f07bff;
+}
+
+.submit-button {
+  background-color: #1aac83
+}
+
+.submit-button:hover {
+  color: #000;
+  background-color: #AFE1AF;
+}
+
+.navbar-items-left {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  padding: 10px;
+  margin-right: 300px;
+}
+
+.navbar-items-right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  padding: 10px;
+  margin-left: 300px;
+}
+
+.navbar-items-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.navbar-items a,
+.navbar-items-left button {
+  margin-right: 30px; /*Adjust the spacing between items */
+}
+.navbar-items-right button {
+  margin-right: 30px; /*Adjust the spacing between items */
+}
+
+
+
+
+
+
+
+
+.spacer {
+  width: 10px; /* Adjust the width as needed */
+  height: 40px; /* Adjust the height as needed */
+  display: inline-block; /* or use display: block; */
+}
+
+.small-spacer {
+  width: 10px; /* Adjust the width as needed */
+  height: 20px; /* Adjust the height as needed */
+  display: inline-block; /* or use display: block; */
+}
+
+/* DEFAULT React app logo
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +117,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
