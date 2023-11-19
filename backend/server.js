@@ -1,11 +1,12 @@
 require('dotenv').config();
 
-const express = require('express')
+const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
 const userRouter = require('./routes/user');
-const postRouter = require('./routes/post')
+const postRouter = require('./routes/post');
+const authRouter = require('./routes/auth');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -17,6 +18,7 @@ app.use(express.json());
 // Routers
 app.use('/api/user', userRouter)
 app.use('/api/post', postRouter)
+app.use('/api/auth', authRouter)
 
 // Connect to MongoDB
 const uri = process.env.ATLAS_URI;

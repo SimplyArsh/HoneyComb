@@ -57,7 +57,10 @@ const CreateProject = () => {
 
     return (
         <div className="createProject">
-            <h1>Create project</h1>
+            <div class="spacer"></div>
+            <h2>Create project</h2>
+            <div class="spacer"></div>
+
             <form className="create" onSubmit={handleSubmit}>
                 <label>Name:</label>
                 <input
@@ -80,7 +83,7 @@ const CreateProject = () => {
                         setSkills(e.target.value)
                     }}
                 />
-                <button disabled={isLoading}>Submit</button>
+                <button className="btn submit-button" disabled={isLoading}>Submit</button>
                 {error && <div className="error">{error}</div>}
             </form>
         </div>

@@ -30,7 +30,8 @@ body {
 }
 
 header {
-  background: #fff;
+  background: #FFD36E;
+  font-size: 5rem;
 }
 
 header .container {
