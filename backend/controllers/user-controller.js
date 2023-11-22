@@ -93,7 +93,6 @@ const updateUserLikes = async (req, res) => {
 
   if (checkUserLikeStatus.postsLiked.includes(post_id)) {
     // removing the like
-    console.log("User unliked")
     liked = false; 
     post = await User.findOneAndUpdate({ _id: user_id }, {
       $set: {
@@ -106,7 +105,6 @@ const updateUserLikes = async (req, res) => {
   } else {
     //inserting a like
     liked = true; 
-    console.log("User liked")
     post = await User.findOneAndUpdate({ _id: user_id }, {
       $set: {
         numberOfLikes: checkUserLikeStatus.numberOfLikes - 1,
