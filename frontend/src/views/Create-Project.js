@@ -57,9 +57,9 @@ const CreateProject = () => {
 
     return (
         <div className="createProject">
-            <div class="spacer"></div>
+            <div className="spacer"></div>
             <h2>Create project</h2>
-            <div class="spacer"></div>
+            <div className="spacer"></div>
 
             <form className="create" onSubmit={handleSubmit}>
                 <label>Name:</label>

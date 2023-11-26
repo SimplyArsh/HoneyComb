@@ -29,16 +29,16 @@ const Login = () => {
                 />
                 <label>Password:</label>
                 <input
-                    type="text"
+                    type="password"
                     onChange={(e) => {
                         setPassword(e.target.value)
                     }}
                 />
                 <button className="btn submit-button" disabled={isLoading}>Login</button>
-                
+
                 {error && <div className="error">{error}</div>}
 
-                
+
                 <div>Don't have an account yet?</div>
                 <Link to='/signup'>
                     <p>Sign Up</p>
