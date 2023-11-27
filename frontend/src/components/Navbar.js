@@ -1,13 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from "../hooks/use-auth-context"
-import { useSettingsContext } from "../hooks/use-settings-context"
 import { Settings, SettingsIcon } from "./Settings"
 
 
 const Navbar = () => {
 
     const { user } = useAuthContext()
-    const { visible } = useSettingsContext()
     const navigate = useNavigate();
 
     const handleHomeClick = () => {
@@ -34,8 +32,8 @@ const Navbar = () => {
                         {user && ( // only display createProject and profile if user logged in
                             <>
                                 <div className="navbar-items-left">
-                                    <button className="btn custom-button" onClick={handleHomeClick}>Home</button>
-                                    <button className="btn custom-button" onClick={handleCreateClick}>Create</button>
+                                    <button className="btn btn-secondary" onClick={handleHomeClick}>Home</button>
+                                    <button className="btn btn-secondary" onClick={handleCreateClick}>Create</button>
                                 </div>
                                 <h1>HoneyComb</h1>
                                 <div className="navbar-items-right">
@@ -45,8 +43,8 @@ const Navbar = () => {
                         )}
                         {!user && ( // only display signup and login if user not logged in
                             <div className="navbar-items-right">
-                                <button className="btn custom-button" onClick={handleSignupClick}>Signup</button>
-                                <button className="btn custom-button" onClick={handleLoginClick}>Login</button>
+                                <button className="btn btn-secondary" onClick={handleSignupClick}>Signup</button>
+                                <button className="btn btn-secondary" onClick={handleLoginClick}>Login</button>
                             </div>
                         )}
                     </div>

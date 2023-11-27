@@ -44,15 +44,25 @@ export const Settings = () => {
     const handleDarkModeClick = () => {
         dispatch({ type: 'CHANGE_DARK_MODE' })
         dispatch({ type: 'SET_INVISIBLE' }) // close settings after button clicked
+
     };
 
     return (
-        visible &&
-        <div ref={settingsRef}> {/* Assign the ref to the div */}
-            <button className="btn custom-button" onClick={handleLogoutClick}>Logout</button>
-            <button className="btn custom-button" onClick={handleProfileClick}>Profile</button>
-            <button className="btn custom-button" onClick={handleDarkModeClick}>Dark Mode</button>
-        </div>
+        visible && (
+            <div className="settings-container">
+                <div className="card" style={{ width: '18rem' }} ref={settingsRef}>
+                    <div className="card-header" style={{ fontSize: 20 }}>
+                        Settings
+                    </div>
+                    <ul className="list-group list-group-flush">
+                        <button className="btn btn-secondary" onClick={handleLogoutClick}>Logout</button>
+                        <button className="btn btn-secondary" onClick={handleProfileClick}>Profile</button>
+                        <button className="btn btn-secondary" onClick={handleDarkModeClick}>Dark Mode</button>
+                        <button className="btn btn-secondary" onClick={handleDarkModeClick}>Language</button>
+                    </ul>
+                </div>
+            </div>
+        )
     )
 }
 
