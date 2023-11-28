@@ -8,13 +8,17 @@ const Comment = ({
     comment,
     handleInsertNode,
     handleEditNode,
-    handleDeleteNode
+    handleDeleteNode,
+    userId,
+    editable
 }) => {
     const [input, setInput] = useState(""); // user input into the comment/replies box
     const [editMode, setEditMode] = useState(false); // editing comment/reply?
     const [showReplyInput, setShowReplyInput] = useState(false);  // reply prompt
     const [expand, setExpand] = useState(false); // expands the tree of reply 
     const inputRef = useRef(null) // editing comments will actually change them in a tree
+    
+    // if mainComment
 
     useEffect(() => {
         inputRef?.current?.focus(); 
@@ -103,18 +107,23 @@ const Comment = ({
                                           }
                                         handleClick={handleNewComment}
                                     />
-                                    <CommentAction 
-                                        className="reply" 
-                                        type="EDIT" 
-                                        handleClick={() => {
-                                            setEditMode(true); 
-                                        }}
-                                    />
-                                    <CommentAction 
-                                        className="reply"
-                                        type="DELETE" 
-                                        handleClick={handleDelete}
-                                    />
+                                    {editable && (
+                                        <>
+                                            <CommentAction 
+                                            className="reply" 
+                                            type="EDIT" 
+                                            handleClick={() => {
+                                                setEditMode(true); 
+                                            }}
+                                            />
+                                            <CommentAction 
+                                                className="reply"
+                                                type="DELETE" 
+                                                handleClick={handleDelete}
+                                            />
+                                        </>
+                                    )}
+                                    
                                 </>
                             )}
                          </div>
@@ -146,7 +155,7 @@ const Comment = ({
                         />
                     </div>
                 )}
-                {comment?.items?.map((comment) => { //comments? "?" is for undefined comments
+                {comment?.comments?.map((comment) => { //comments? "?" is for undefined comments
                     return (
                     <Comment 
                         key={comment.id} 
@@ -154,6 +163,7 @@ const Comment = ({
                         handleInsertNode={handleInsertNode}
                         handleEditNode={handleEditNode}
                         handleDeleteNode={handleDeleteNode}
+                        
                     />)
                 })}
             </div>

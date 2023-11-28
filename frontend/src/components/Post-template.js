@@ -6,13 +6,52 @@ const PostCard = ({
   post, 
   handleLike,
   color,
-  comment,
   handleInsertNode,
   handleEditNode,
-  handleDeleteNode
+  handleDeleteNode,
+  userId
 }) => {
-  let avatarURL = "https://img.freepik.com/free-photo/fashion-boy-with-yellow-jacket-blue-pants_71767-96.jpg?w=1380&t=st=1700010094~exp=1700010694~hmac=b9d7f8d56b66ac184e10e6b6fc4df817beaf81b63a6e495f32ad81e1eebbbb1a"
+
+  const [comments, setComments] = useState() // sets all comments for a post
   const [openCommentPanel, setOpenCommentPanel] = useState(false)
+
+  const mainNodeStructure = { // this is a "fake" main comment & is the root of all real comments
+
+  }
+
+  // handles fetching and displaying comments
+  // const handleOpenCommandPanel = async () => {
+
+  //  if (!openCommentPanel) { // adds & displays comments if the comment panel is opened
+  //   try {
+  //     const response = await fetch ('/api/post/comments/' + post._id, { 
+  //         headers: { // include token in header
+  //             'Content-Type': 'application/json',
+  //             'Authorization': 'Bearer ' + user.token,
+  //         },
+  //         method: 'GET'
+  //     })
+  //     const allComments = await response.json()
+  //     setComments(allComments)
+  //     console.log(res)
+
+  //     if (comments) {
+  //       setOpenCommentPanel(!openCommentPanel)
+  //     }
+
+  //   } catch (error) {
+  //     console.log(error)
+
+  //   }} else if (openCommentPanel) { // if the comment panel is already open, then close it and "clear out comment cache"
+
+  //     setOpenCommentPanel(!openCommentPanel)
+  //     setComments(null)
+  //   }
+
+  // }
+
+  let avatarURL = "https://img.freepik.com/free-photo/fashion-boy-with-yellow-jacket-blue-pants_71767-96.jpg?w=1380&t=st=1700010094~exp=1700010694~hmac=b9d7f8d56b66ac184e10e6b6fc4df817beaf81b63a6e495f32ad81e1eebbbb1a"
+  
   return (
     <>
       <div className="post-card">
@@ -48,10 +87,12 @@ const PostCard = ({
       <div>
         {openCommentPanel ? (
           <Comment 
-            comment={comment} 
+            comment={comments} 
             handleInsertNode={handleInsertNode}
             handleEditNode={handleEditNode}
             handleDeleteNode={handleDeleteNode}
+            userId={userId}
+            editable={true}
           />
         ):(
           <></>

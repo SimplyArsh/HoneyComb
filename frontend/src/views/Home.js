@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { useAuthContext } from '../hooks/use-auth-context'
 import { useHomeContext } from '../hooks/use-home-context'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import Comment from "../components/Comments"
 import useNode from "../hooks/comment-node.js"
 // import { useInfiniteQuery } from '@tanstack/react-query'
 
@@ -16,6 +15,7 @@ const comments = {
 const Home = () => {
     const [pageNumber, pageNumberUpdate] = useState(1)
     const { user } = useAuthContext()
+    const [homePageUserId, setHomePageUserId] = useState()
     const { recomendedPosts, editFetchNeeded, dispatch, userLikes } = useHomeContext()
     const isInitialRender = useRef(true);
     const [commentsData, setCommentsData] = useState(comments); 
@@ -49,7 +49,7 @@ const Home = () => {
                     dispatch({ type: 'EDIT_TOGGLE', payload: false})
                 } 
             for(let i = 0; i < data.length; i++) {
-                console.log(data[i]._id)
+                // console.log(data[i]._id)
             }
         })
 
@@ -64,6 +64,7 @@ const Home = () => {
                 return response.json();
         }).then(
             (data) => {
+                setHomePageUserId(data.userId)
                 dispatch({ type: 'SET_USER_LIKES', payload: data})
         })
     }; 
@@ -74,6 +75,7 @@ const Home = () => {
                 <p> You must be logged in! </p>
             )
         }
+        // console.log(recomendedPosts)
         fetchMoreData(); // Initial fetch when the component mounts
       }, [editFetchNeeded]); // editToggle will fetch new data whenever there is a change. 
 
@@ -122,19 +124,18 @@ const Home = () => {
     }
 
     const handleAddComment = async () => {
-        console.log("wow")
         // try {
         //     const response = await fetch('/api/post/addComment?' 
         //     + new URLSearchParams({
-        //         "parentCommentId":"6559af4bc4256aaea0270d12",
-        //         "idSelect":"1"
+        //         "parentCommentId":"6559c27c37797e4fb897ebea",
+        //         "idSelect":"0" // 0 if reply to a comment
         //     }), {
         //         headers: { // include token in header
         //             'Content-Type': 'application/json',
         //             'Authorization': 'Bearer ' + user.token,
         //         },
         //         body: JSON.stringify({
-        //             "comment":"that mf aint got shit on me"
+        //             "comment":"wow more stuff lol"
         //         }),
         //         method:"POST" 
         //     })
@@ -143,17 +144,39 @@ const Home = () => {
         // } catch (error) {
         //     console.log(error)
         // }
+
+        // try {
+        //     const response = await fetch ('/api/post/getComments', { 
+        //         headers: { // include token in header
+        //             'Content-Type': 'application/json',
+        //             'Authorization': 'Bearer ' + user.token,
+        //         },
+        //         method: 'PATCH',
+        //         body: JSON.stringify({
+        //             id: "6559c3c837797e4fb897ebf0",
+        //             editedComment: "this is the new value"
+        //         })
+        //     })
+        //     const res = await response.json()
+        //     console.log(res)
+        // } catch (error) {
+        //     console.log(error)
+        // }
+
         try {
             const response = await fetch ('/api/post/comments/' + "6559af4bc4256aaea0270d12", { 
                 headers: { // include token in header
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + user.token,
-                }})
+                },
+                method: 'GET'
+            })
             const res = await response.json()
             console.log(res)
         } catch (error) {
             console.log(error)
         }
+
     }
 
     return(
@@ -173,8 +196,8 @@ const Home = () => {
                             key={post._id} 
                             post={post}
                             handleLike={handleLike}
+                            userId={homePageUserId}
                             color={userLikes.includes(post._id)}
-                            comment={commentsData} 
                             handleInsertNode={handleInsertNode}
                             handleEditNode={handleEditNode}
                             handleDeleteNode={handleDeleteNode}

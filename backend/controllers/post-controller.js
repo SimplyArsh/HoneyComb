@@ -123,7 +123,7 @@ const deletePost = async (req, res) => {
 // update a post
 const updatePost = async (req, res) => {
   const { id } = req.params
-
+  console.log(id)
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: 'No such project post' })
   }
@@ -285,6 +285,63 @@ const getCommentsForPost = async (req, res) => {
 
   }
 
+  // recursively deletes all replies when a comment is deleted
+  const deleteCommentThread = async (comment) => {
+
+    try {
+      const commentId = new mongoose.Types.ObjectId(comment)
+      const commentFound = await Comment.findOne(commentId).lean()
+      console.log("comment:", commentFound)
+
+      commentFound.comments.forEach(async (reply) => {
+        console.log("replyId: ", reply)
+        deleteCommentThread(reply)
+      })
+
+      const deletedPost = await Comment.findOneAndDelete(commentId).lean()
+      if (!deletedPost) {
+        return res.status(404).json({ error: 'BRO Could not find comment to delete'})
+      }
+    } catch (error) {
+      res.status(404).json({ error: "There was an error"})
+    }
+  }
+
+  const deleteComment = async (req, res) => {
+    console.log("here")
+    try {
+
+      const commentId = new mongoose.Types.ObjectId(req.params.id)
+      if (!commentId) {
+        return res.status(404).json({ error: 'BRO Post id passed is undefined'})
+      }
+      console.log(commentId)
+      deleteCommentThread(commentId)
+
+      res.status(200)
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
+  //editing a comment
+  const editComment = async (req, res) => {
+
+    const editCommentId = new mongoose.Types.ObjectId(req.body.id)
+    try {
+      console.log("here")
+      const CommentToEdit = await Comment.findOneAndUpdate(editCommentId)
+      
+      CommentToEdit.comment = req.body.editedComment
+      CommentToEdit.save()
+
+      res.status(200)
+    } catch (error) {
+      res.status(404).json({ error:"There was some error in editing the comment"})
+    }
+  }
+
 module.exports = {
   getPosts,
   getUserPosts,
@@ -295,5 +352,7 @@ module.exports = {
   getRecomendationPosts,
   updateLikeCount,
   getCommentsForPost,
-  addComment
+  addComment,
+  deleteComment,
+  editComment
 }

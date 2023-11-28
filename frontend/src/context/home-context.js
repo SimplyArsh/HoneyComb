@@ -1,3 +1,4 @@
+import { zhCN } from 'date-fns/locale'
 import { createContext, useReducer } from 'react'
 
 export const HomeContext = createContext() // Allow other files to access this global context
