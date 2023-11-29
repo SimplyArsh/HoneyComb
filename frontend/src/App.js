@@ -12,6 +12,7 @@ import RequestResetPassword from './views/Pass-Request-Reset'
 import ResetPassword from './views/Pass-Reset'
 import CreateProject from './views/Create-Project'
 import Profile from './views/Profile'
+import PageNotFound from './views/Page-Not-Found'
 import Navbar from './components/Navbar'
 import { useAuthContext } from './hooks/use-auth-context'
 import { useSettingsContext } from "./hooks/use-settings-context"
@@ -64,6 +65,12 @@ function App() {
                 path='/profile/:id' // view a specific profile
                 element={user ? <Profile /> : <Navigate to='/login' />} // if logged in, display profile page. If not logged in, display login
               />
+              <Route
+                path='/pageNotFound'
+                element={<PageNotFound />}  //Allow user to reset password reset even if not logged in
+              />
+              {/* Catch-all route */}
+              <Route path='*' element={<Navigate to='/pageNotFound' />} />
             </Routes>
           </div>
         </div>

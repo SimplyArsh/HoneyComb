@@ -129,7 +129,6 @@ const updateSettings = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: 'No such user' })
   }
-
   const user = await User.findOneAndUpdate({ _id: id },
     { settings: req.body }, {
     new: true, // Return the updated document instead of the original

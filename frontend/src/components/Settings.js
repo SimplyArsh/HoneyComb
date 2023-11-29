@@ -11,7 +11,7 @@ export const Settings = () => {
     const { user } = useAuthContext()
     const navigate = useNavigate()
 
-    const { visible, dispatch, preferences } = useSettingsContext();
+    const { visible, dispatch, settings } = useSettingsContext();
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -27,11 +27,10 @@ export const Settings = () => {
         };
 
         document.addEventListener('mouseup', handleClickOutside);
-
         return () => {
             document.removeEventListener('mouseup', handleClickOutside);
         };
-    }, [visible, dispatch]);
+    }, [visible, dispatch, settings]);
 
     const handleLogoutClick = () => {
         logout()
@@ -43,7 +42,7 @@ export const Settings = () => {
         dispatch({ type: 'SET_INVISIBLE' }) // close settings after button clicked
     };
 
-    const handleDarkModeClick = async () => {
+    const handleThemeClick = async () => {
         dispatch({ type: 'CHANGE_THEME' })
         dispatch({ type: 'SET_INVISIBLE' }) // close settings after button clicked
 
@@ -54,7 +53,7 @@ export const Settings = () => {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + user.token,
                 },
-                body: JSON.stringify(preferences),
+                body: JSON.stringify(settings),
                 method: 'PATCH'
             })
 
@@ -62,13 +61,41 @@ export const Settings = () => {
                 console.log(response)
                 return
             }
-            console.log(response)
 
         } catch (error) {
             return error;
         }
 
     };
+
+    const handleLanguageClick = async (language) => {
+        dispatch({ type: 'SET_LANGUAGE', payload: language })
+        dispatch({ type: 'SET_INVISIBLE' }) // close settings after button clicked
+        settings.language = language
+
+        // Call API to update the post
+        try {
+            const response = await fetch('/api/user/settings', {
+                headers: { // include token in header
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + user.token,
+                },
+                body: JSON.stringify(settings),
+                method: 'PATCH'
+            })
+
+            if (!response.ok) {
+                console.log(response)
+                return
+            }
+        } catch (error) {
+            return error;
+        }
+    };
+
+    const handleChangePasswordClick = () => {
+        navigate('/changePassword');
+    }
 
     return (
         visible && (
@@ -78,21 +105,22 @@ export const Settings = () => {
                         Settings
                     </div>
                     <ul className="list-group list-group-flush" >
-                        <button className="btn btn-secondary" onClick={handleLogoutClick}>Logout</button>
                         <button className="btn btn-secondary" onClick={handleProfileClick}>Profile</button>
-                        <button className="btn btn-secondary" onClick={handleDarkModeClick}>Dark Mode</button>
-                        <div className="dropdown" style={{ padding: 0 }}>
-                            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Language
+                        <button className="btn btn-secondary" onClick={handleThemeClick}>Change Theme</button>
+                        <div className="dropdown">
+                            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                                Language: {settings.language}
                             </button>
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <button className="dropdown-item">English</button>
-                                <button className="dropdown-item">Chinese</button>
+                                <button className="dropdown-item" onClick={() => { handleLanguageClick('English') }}>English</button>
+                                <button className="dropdown-item" onClick={() => { handleLanguageClick('Chinese') }} >Chinese</button>
                             </div>
                         </div>
+                        <button className="btn btn-secondary" onClick={handleChangePasswordClick}>Change password</button>
+                        <button className="btn btn-secondary" onClick={handleLogoutClick}>Logout</button>
                     </ul>
-                </div>
-            </div>
+                </div >
+            </div >
         )
     )
 }

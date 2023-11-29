@@ -8,11 +8,14 @@ export const settingsReducer = (state, action) => { // action comes from dispatc
             return { ...state, visible: true };
         case 'SET_INVISIBLE':
             return { ...state, visible: false };
+        case 'SET_LANGUAGE':
+            console.log('LANGUAGE CHANGED TO ', action.payload)
+            return { ...state, settings: { ...state.settings, language: action.payload } };
         case 'CHANGE_THEME': // swap themes
-            if (state.preferences.theme === 'light') {
-                return { ...state, preferences: { ...state.preferences, theme: 'dark' } }
+            if (state.settings.theme === 'light') {
+                return { ...state, settings: { ...state.settings, theme: 'dark' } }
             }
-            return { ...state, preferences: { ...state.preferences, theme: 'light' } }
+            return { ...state, settings: { ...state.settings, theme: 'light' } }
         default:
             return state
     }
@@ -21,7 +24,7 @@ export const settingsReducer = (state, action) => { // action comes from dispatc
 export const SettingsContextProvider = ({ children }) => { // the object wrapped by this context is called children. In our case, the entire app is the child
     const [state, dispatch] = useReducer(settingsReducer, {
         visible: false,
-        preferences: ({ theme: 'light', language: 'English' })
+        settings: ({ theme: 'light', language: 'English' })
     }) // similar to useState, but more powerful. To update the state object, first call the dispatch function. When you call the dispatch function, the reducer functon is invoked. 
 
     return ( // we want to wrap this around whatever needs settings context
