@@ -10,8 +10,12 @@ const userSchema = new Schema({
   aboutMe: { type: String, required: true },
   numberOfLikes: { type: Number, default: 0 },
   numberOfPosts: { type: Number, default: 0 },
-  followers: {type: [mongoose.Schema.Types.ObjectId], default: []},
-  following: {type: [mongoose.Schema.Types.ObjectId], default: []}
+  followers: { type: [mongoose.Schema.Types.ObjectId], default: [] },
+  following: { type: [mongoose.Schema.Types.ObjectId], default: [] },
+  settings: {
+    language: { type: String, default: 'English' }, // default language
+    theme: { type: String, default: 'light' }, // default theme
+  }
 }, {
   timestamps: true,
 });

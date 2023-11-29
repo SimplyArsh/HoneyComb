@@ -2,40 +2,13 @@
   text-align: center;
 }
 
-/* These are all for DEFAULT REACT APP styling */
-/* .App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #2a9b41;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-} */
-
-
-
 /* Bootstrap styling elements for CSS */
 
 .btn-primary {
-  background-color: #007bff; /* Customize the background color */
-  border-color: #007bff; /* Customize the border color */
+  background-color: #007bff;
+  /* Customize the background color */
+  border-color: #007bff;
+  /* Customize the border color */
 }
 
 .custom-button {
@@ -84,37 +57,63 @@
 
 .navbar-items a,
 .navbar-items-left button {
-  margin-right: 30px; /*Adjust the spacing between items */
+  margin-right: 30px;
+  /*Adjust the spacing between items */
 }
+
 .navbar-items-right button {
-  margin-right: 30px; /*Adjust the spacing between items */
+  margin-right: 30px;
+  /*Adjust the spacing between items */
 }
-
-
-
-
-
-
 
 
 .spacer {
-  width: 10px; /* Adjust the width as needed */
-  height: 40px; /* Adjust the height as needed */
-  display: inline-block; /* or use display: block; */
+  width: 10px;
+  /* Adjust the width as needed */
+  height: 40px;
+  /* Adjust the height as needed */
+  display: inline-block;
+  /* or use display: block; */
 }
 
 .small-spacer {
-  width: 10px; /* Adjust the width as needed */
-  height: 20px; /* Adjust the height as needed */
-  display: inline-block; /* or use display: block; */
+  width: 10px;
+  /* Adjust the width as needed */
+  height: 20px;
+  /* Adjust the height as needed */
+  display: inline-block;
+  /* or use display: block; */
 }
 
-/* DEFAULT React app logo
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
+/* Settings */
+
+.settings-container {
+  position: fixed;
+  /* Fixed positioning relative to the viewport */
+  top: 50;
+  /* Adjust as needed to place the menu */
+  right: 0;
+  /* Aligns the container to the right */
+  z-index: 1000;
+  /* Ensures the menu overlays other content */
+}
+
+.settings-container .btn {
+  border-radius: 0;
+  /* This removes the border-radius */
+}
+
+.settings-overlay {
+  /* Below the settings menu but above other content */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+
+.settings-container .dropdown-toggle {
+  width: 100%;
+  /* Make the dropdown full-width */
+}
