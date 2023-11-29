@@ -3,6 +3,7 @@ const { ObjectID } = require('mongoose').Types
 
 const Schema = mongoose.Schema
 
+
 const commentSchema = new Schema({
   date: { type: Date, default: Date.now },
   username: { type: String, required: true },
@@ -10,11 +11,12 @@ const commentSchema = new Schema({
   comment: { type: String, required: true }, // the comment itself
   comments: { 
     type: [ObjectID],
-    ref:"Comment",
-    autopopulate: true, 
+    // ref:"Comment",
+    // autopopulate: true, 
     required: false
   } // the nested comments
 });
+commentSchema.plugin(require('mongoose-autopopulate'));
 
 const postSchema = new Schema({
   postName: { type: String, required: true },

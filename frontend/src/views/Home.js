@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { useAuthContext } from '../hooks/use-auth-context'
 import { useHomeContext } from '../hooks/use-home-context'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import useNode from "../hooks/comment-node.js"
 // import { useInfiniteQuery } from '@tanstack/react-query'
 
 const comments = {
@@ -18,8 +17,6 @@ const Home = () => {
     const [homePageUserId, setHomePageUserId] = useState()
     const { recomendedPosts, editFetchNeeded, dispatch, userLikes } = useHomeContext()
     const isInitialRender = useRef(true);
-    const [commentsData, setCommentsData] = useState(comments); 
-    const { insertNode, editNode, deleteNode } = useNode(); 
 
     const fetchMoreData = () => {
         if (editFetchNeeded) {
@@ -106,47 +103,30 @@ const Home = () => {
 
     // comments handle functions 
 
-    const handleInsertNode = (folderId, item) => {
-        const finalStructure = insertNode(commentsData, folderId, item);
-        setCommentsData(finalStructure); 
-    }
-
-    const handleEditNode = (folderId, value) => {
-        const finalStructure = editNode(commentsData, folderId, value);
-        setCommentsData(finalStructure);
-        console.log(commentsData)
-    }
-
-    const handleDeleteNode = (folderId) => {
-        const finalStructure = deleteNode(commentsData, folderId);
-        const temp = { ...finalStructure }
-        setCommentsData(temp); 
-    }
-
     const handleAddComment = async () => {
-        // try {
-        //     const response = await fetch('/api/post/addComment?' 
-        //     + new URLSearchParams({
-        //         "parentCommentId":"6559c27c37797e4fb897ebea",
-        //         "idSelect":"0" // 0 if reply to a comment
-        //     }), {
-        //         headers: { // include token in header
-        //             'Content-Type': 'application/json',
-        //             'Authorization': 'Bearer ' + user.token,
-        //         },
-        //         body: JSON.stringify({
-        //             "comment":"wow more stuff lol"
-        //         }),
-        //         method:"POST" 
-        //     })
-        //     const response_ = await response.json()
-        //     console.log(response_)
-        // } catch (error) {
-        //     console.log(error)
-        // }
+        try {
+            const response = await fetch('/api/post/addComment?' 
+            + new URLSearchParams({
+                "parentCommentId":"6559c27c37797e4fb897ebea",
+                "idSelect":"0" // 0 if reply to a comment
+            }), {
+                headers: { // include token in header
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + user.token,
+                },
+                body: JSON.stringify({
+                    "comment":"this is a new comment  that i just added"
+                }),
+                method:"POST" 
+            })
+            const response_ = await response.json()
+            console.log(response_)
+        } catch (error) {
+            console.log(error)
+        }
 
         // try {
-        //     const response = await fetch ('/api/post/getComments', { 
+        //     const response = await fetch ('/api/post/editComment', { 
         //         headers: { // include token in header
         //             'Content-Type': 'application/json',
         //             'Authorization': 'Bearer ' + user.token,
@@ -163,19 +143,19 @@ const Home = () => {
         //     console.log(error)
         // }
 
-        try {
-            const response = await fetch ('/api/post/comments/' + "6559af4bc4256aaea0270d12", { 
-                headers: { // include token in header
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + user.token,
-                },
-                method: 'GET'
-            })
-            const res = await response.json()
-            console.log(res)
-        } catch (error) {
-            console.log(error)
-        }
+        // try {
+        //     const response = await fetch ('/api/post/comments/' + "6559af4bc4256aaea0270d12", { 
+        //         headers: { // include token in header
+        //             'Content-Type': 'application/json',
+        //             'Authorization': 'Bearer ' + user.token,
+        //         },
+        //         method: 'GET'
+        //     })
+        //     const res = await response.json()
+        //     console.log(res)
+        // } catch (error) {
+        //     console.log(error)
+        // }
 
     }
 
@@ -184,7 +164,7 @@ const Home = () => {
             <>
             <button onClick={handleAddComment}>Button</button>
             </>
-            {/* <InfiniteScroll 
+            <InfiniteScroll 
                 dataLength={recomendedPosts.length}
                 next={fetchMoreData}
                 hasMore={true}
@@ -198,13 +178,10 @@ const Home = () => {
                             handleLike={handleLike}
                             userId={homePageUserId}
                             color={userLikes.includes(post._id)}
-                            handleInsertNode={handleInsertNode}
-                            handleEditNode={handleEditNode}
-                            handleDeleteNode={handleDeleteNode}
                         />
                     </> 
                 ))}
-            </InfiniteScroll> */}
+            </InfiniteScroll>
             
         </div>
     )

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import CommentAction from "./Comment-actions"
 import { ReactComponent as DownArrow } from "../assets/down-arrow.svg";
 import { ReactComponent as UpArrow } from "../assets/up-arrow.svg";
+import { formatDistanceToNow } from 'date-fns';
 
 
 const Comment = ({ 
@@ -10,16 +11,21 @@ const Comment = ({
     handleEditNode,
     handleDeleteNode,
     userId,
-    editable
 }) => {
     const [input, setInput] = useState(""); // user input into the comment/replies box
     const [editMode, setEditMode] = useState(false); // editing comment/reply?
     const [showReplyInput, setShowReplyInput] = useState(false);  // reply prompt
-    const [expand, setExpand] = useState(false); // expands the tree of reply 
+    const [expand, setExpand] = useState(comment._id === 1); // expands the tree of reply 
     const inputRef = useRef(null) // editing comments will actually change them in a tree
-    
-    // if mainComment
+    const editable = userId === comment.user_id
 
+    // formatting the time to be more user-friendly
+    var formattedDate = null
+    if (comment.date !== null) {
+        const originalDate = new Date(comment.date);
+        formattedDate = formatDistanceToNow(originalDate, { addSuffix: true });
+    }
+    
     useEffect(() => {
         inputRef?.current?.focus(); 
     }, [editMode])
@@ -30,7 +36,7 @@ const Comment = ({
             handleEditNode(comment.id, inputRef?.current?.innerText)
         } else {
             setExpand(true);
-            handleInsertNode(comment.id, input) // we need the parent comment id to insert
+            handleInsertNode(comment._id, input) // we need the parent comment id to insert
             // child comment after it 
             setShowReplyInput(false); 
             setInput("")
@@ -49,8 +55,8 @@ const Comment = ({
 
     return (
         <div>
-            <div className={ comment.id === 1 ? "inputContainer" : "commentContainer"}>
-                {comment.id === 1 ? ( // using this as the comment id for all comments
+            <div className={ comment._id === 1 ? "inputContainer" : "commentContainer"}>
+                {comment._id === 1 ? ( // using this as the comment id for all comments
                 // esenitally all comments are listed within comment id one
                 <>
                     <input
@@ -69,13 +75,14 @@ const Comment = ({
                 </>
                 ):(
                     <>
+                        <div>{comment.username} {formattedDate}</div> 
                         <span 
                             contentEditable={editMode}
                             suppressContentEditableWarning={editMode}
                             style={{ wordWrap: "break=word"}}
                             ref={inputRef}
                         >
-                            {comment.name}
+                            {comment.comment}
                         </span>
 
                          <div style={{display: "flex", margainTop: "5px"}}>
@@ -86,7 +93,7 @@ const Comment = ({
                                     />
                                     <CommentAction className="reply" type="CANCEL" 
                                         handleClick={() => {
-                                            inputRef.current.innerText = comment.name
+                                            inputRef.current.innerText = comment.comment
                                             setEditMode(false); 
                                         }}
                                     /> 
@@ -158,12 +165,12 @@ const Comment = ({
                 {comment?.comments?.map((comment) => { //comments? "?" is for undefined comments
                     return (
                     <Comment 
-                        key={comment.id} 
+                        key={comment._id} 
                         comment={comment}
                         handleInsertNode={handleInsertNode}
                         handleEditNode={handleEditNode}
                         handleDeleteNode={handleDeleteNode}
-                        
+                        userId={userId}
                     />)
                 })}
             </div>
