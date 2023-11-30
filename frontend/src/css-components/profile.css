@@ -1,0 +1,54 @@
+/* Profile page */
+
+.profilePage {
+    display: flex;
+    flex-direction: column;
+}
+
+.profileUserInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.postDetails {
+    background: #fff;
+    border-radius: 4px;
+    margin: 20px auto;
+    padding: 20px;
+    position: relative;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.postDetails h4 {
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+    color: var(--primary);
+}
+
+.postDetails p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.postDetails span {
+    cursor: pointer;
+    background: #f1f1f1;
+    padding: 6px;
+    border-radius: 50%;
+    color: #333;
+    margin-left: 8px;
+}
+
+.postDetails .icon-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.postDetails .icon-container span:last-child {
+    margin-right: 0;
+}

@@ -1,0 +1,30 @@
+.settings-container {
+    position: fixed;
+    /* Fixed positioning relative to the viewport */
+    top: 50;
+    /* Adjust as needed to place the menu */
+    right: 0;
+    /* Aligns the container to the right */
+    z-index: 1000;
+    /* Ensures the menu overlays other content */
+}
+
+.settings-container .btn {
+    border-radius: 0;
+    /* This removes the border-radius */
+}
+
+.settings-overlay {
+    /* Below the settings menu but above other content */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+}
+
+.settings-container .dropdown-toggle {
+    width: 100%;
+    /* Make the dropdown full-width */
+}

@@ -1,14 +1,12 @@
+@import url("css-components/navbar.css");
+@import url("css-components/settings.css");
+@import url("css-components/homepage.css");
+@import url("css-components/login.css");
+@import url("css-components/profile.css");
+@import url("css-components/create-project.css");
+
 .App {
   text-align: center;
-}
-
-/* Bootstrap styling elements for CSS */
-
-.btn-primary {
-  background-color: #007bff;
-  /* Customize the background color */
-  border-color: #007bff;
-  /* Customize the border color */
 }
 
 .custom-button {
@@ -26,47 +24,6 @@
   background-color: #1aac83
 }
 
-.submit-button:hover {
-  color: #000;
-  background-color: #AFE1AF;
-}
-
-.navbar-items-left {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: 'Poppins', sans-serif;
-  padding: 10px;
-  margin-right: 300px;
-}
-
-.navbar-items-right {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: 'Poppins', sans-serif;
-  padding: 10px;
-  margin-left: 300px;
-}
-
-.navbar-items-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-
-.navbar-items a,
-.navbar-items-left button {
-  margin-right: 30px;
-  /*Adjust the spacing between items */
-}
-
-.navbar-items-right button {
-  margin-right: 30px;
-  /*Adjust the spacing between items */
-}
-
-
 .spacer {
   width: 10px;
   /* Adjust the width as needed */
@@ -83,37 +40,4 @@
   /* Adjust the height as needed */
   display: inline-block;
   /* or use display: block; */
-}
-
-/* Settings */
-
-.settings-container {
-  position: fixed;
-  /* Fixed positioning relative to the viewport */
-  top: 50;
-  /* Adjust as needed to place the menu */
-  right: 0;
-  /* Aligns the container to the right */
-  z-index: 1000;
-  /* Ensures the menu overlays other content */
-}
-
-.settings-container .btn {
-  border-radius: 0;
-  /* This removes the border-radius */
-}
-
-.settings-overlay {
-  /* Below the settings menu but above other content */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 999;
-}
-
-.settings-container .dropdown-toggle {
-  width: 100%;
-  /* Make the dropdown full-width */
 }

@@ -1,0 +1,34 @@
+.navbar-items-left {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    padding: 10px;
+    margin-right: 300px;
+}
+
+.navbar-items-right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    padding: 10px;
+    margin-left: 300px;
+}
+
+.navbar-items-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.navbar-items a,
+.navbar-items-left button {
+    margin-right: 30px;
+    /*Adjust the spacing between items */
+}
+
+.navbar-items-right button {
+    margin-right: 30px;
+    /*Adjust the spacing between items */
+}
