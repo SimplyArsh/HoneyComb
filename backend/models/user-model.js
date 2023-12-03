@@ -12,6 +12,12 @@ const userSchema = new Schema({
   numberOfLikes: { type: Number, default: 0 },
   postsLiked: { type: [ObjectID], required: false}, 
   numberOfPosts: { type: Number, default: 0 },
+  followers: { type: [mongoose.Schema.Types.ObjectId], default: [] },
+  following: { type: [mongoose.Schema.Types.ObjectId], default: [] },
+  settings: {
+    language: { type: String, default: 'English' }, // default language
+    theme: { type: String, default: 'light' }, // default theme
+  }
 }, {
   timestamps: true,
 });
@@ -35,7 +41,8 @@ userSchema.statics.signup = async function (username, email, password, aboutMe) 
     throw Error('Email already in use')
   }
 
-  //pasword strength check & hashing+salting
+  //password strength check & hashing+salting
+  //Password requirements: minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1
   if (!validator.isStrongPassword(password)) {
     throw Error('Password not strong enough')
   }

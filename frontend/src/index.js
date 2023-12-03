@@ -7,6 +7,7 @@ import { UserContextProvider } from './context/user-context'
 import { AuthContextProvider } from './context/auth-context'
 import { HomeContextProvider } from './context/home-context'
 import { ProfileContextProvider } from './context/profile-context'
+import { SettingsContextProvider } from './context/settings-context'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,9 +15,11 @@ root.render(
     <AuthContextProvider>
       <UserContextProvider>
         <ProfileContextProvider>
-          <HomeContextProvider>
-            <App />
-          </HomeContextProvider>
+          <SettingsContextProvider>
+            <HomeContextProvider>
+              <App />
+            </HomeContextProvider>
+          </SettingsContextProvider>
         </ProfileContextProvider>
       </UserContextProvider>
     </AuthContextProvider>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useState } from "react"
 import { useLogin } from "../hooks/use-login"
 
@@ -15,7 +16,9 @@ const Login = () => {
 
     return (
         <div className="login">
-            <h1>Login</h1>
+            <div className="spacer"></div>
+            <h2>Login</h2>
+            <div className="spacer"></div>
             <form className="create" onSubmit={handleSubmit}>
                 <label>Email:</label>
                 <input
@@ -26,13 +29,25 @@ const Login = () => {
                 />
                 <label>Password:</label>
                 <input
-                    type="text"
+                    type="password"
                     onChange={(e) => {
                         setPassword(e.target.value)
                     }}
                 />
-                <button disabled={isLoading}>Login</button>
+                <button className="btn submit-button" disabled={isLoading}>Login</button>
+
                 {error && <div className="error">{error}</div>}
+
+
+                <div>Don't have an account yet?</div>
+                <Link to='/signup'>
+                    <p>Sign Up</p>
+                </Link>
+
+                <div>Forgot your Password?</div>
+                <Link to='/requestResetPass'>
+                    <p>Reset Password</p>
+                </Link>
             </form>
         </div>
     )

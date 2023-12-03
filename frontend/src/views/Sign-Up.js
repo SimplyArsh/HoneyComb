@@ -37,7 +37,7 @@ const SignUp = () => {
                 />
                 <label>Password:</label>
                 <input
-                    type="text"
+                    type="password"
                     onChange={(e) => {
                         setPassword(e.target.value)
                     }}
@@ -49,7 +49,7 @@ const SignUp = () => {
                         setAboutMe(e.target.value)
                     }}
                 />
-                <button disabled={isLoading}>Sign up</button>
+                <button className="btn submit-button" disabled={isLoading}>Sign up</button>
                 {error && <div className="error">{error}</div>}
             </form>
         </div>

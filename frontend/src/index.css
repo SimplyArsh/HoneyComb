@@ -30,7 +30,8 @@ body {
 }
 
 header {
-  background: #fff;
+  background: #FFD36E;
+  font-size: 5rem;
 }
 
 header .container {
@@ -53,11 +54,7 @@ header a {
   margin: 0 auto;
 }
 
-/* homepage */
-.home {
-  display: grid;
-  gap: 100px;
-}
+/* Bootstrap styling elements for CSS */
 
 /* Login */
 label,
@@ -302,4 +299,10 @@ input.error {
   color: #ffffff;
   background-color: #569dff;
   letter-spacing: 0.8px;
+}
+.btn-primary {
+  background-color: #007bff;
+  /* Customize the background color */
+  border-color: #007bff;
+  /* Customize the border color */
 }

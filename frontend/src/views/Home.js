@@ -184,6 +184,7 @@ const Home = () => {
             </InfiniteScroll>
             
         </div>
+
     )
 }
 

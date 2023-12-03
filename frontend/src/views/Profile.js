@@ -4,11 +4,13 @@ import { useAuthContext } from '../hooks/use-auth-context'
 import { useProfileContext } from '../hooks/use-profile-context';
 import ProfilePostList from '../components/Profile-Post-List'
 import ProfileUserInfo from '../components/Profile-User-Info'
+import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
     const { id } = useParams()
     const { user } = useAuthContext()
     const { dispatch } = useProfileContext()
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (!user) {
@@ -36,6 +38,7 @@ const Profile = () => {
             const json = await response.json() // get user info from server and update context
 
             if (!response.ok) {
+                navigate('/pageNotFound');
                 return "Error"
             }
 

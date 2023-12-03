@@ -1,38 +1,43 @@
+@import url("css-components/navbar.css");
+@import url("css-components/settings.css");
+@import url("css-components/homepage.css");
+@import url("css-components/login.css");
+@import url("css-components/profile.css");
+@import url("css-components/create-project.css");
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.custom-button {
+  /* Use Bootstrap button styling */
+  color: #333;
+  background-color: #007bff;
+  /*border-color: #f07bff;*/
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.custom-button:hover {
+  background-color: #f07bff;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.submit-button {
+  background-color: #1aac83
 }
 
-.App-link {
-  color: #61dafb;
+.spacer {
+  width: 10px;
+  /* Adjust the width as needed */
+  height: 40px;
+  /* Adjust the height as needed */
+  display: inline-block;
+  /* or use display: block; */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.small-spacer {
+  width: 10px;
+  /* Adjust the width as needed */
+  height: 20px;
+  /* Adjust the height as needed */
+  display: inline-block;
+  /* or use display: block; */
 }

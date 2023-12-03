@@ -143,18 +143,56 @@ const ProfilePostList = ({ id, completed }) => { // if id is null, user is looki
         dispatch({ type: 'SET_EDIT_POST_ID', payload: null })
     }
 
+    // Handle change of post completion
+    const handlePostComplete = async (post) => {
+        id = post._id.toString()
+
+        // If post is complete, then change to incomplete
+        if (post.completed) {
+            post.completed = false
+        }
+        else if (!post.completed) { // If post is not complete, then change to complete
+            post.completed = true
+        }
+
+        // Call API to update the post
+        const response = await fetch('/api/post/' + id, {
+            headers: { // include token in header
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + user.token,
+            },
+            body: JSON.stringify(post),
+            method: 'PATCH'
+        })
+
+        if (!response.ok) {
+            console.log(response)
+            return
+        }
+
+        // Update profile context about the post's completion
+        if (post.completed) { // if is now complete, update accordingly
+            dispatch({ type: 'SET_CURRENT_POSTS', payload: currentPosts.filter(post => post.completed === false) })
+            dispatch({ type: 'SET_COMPLETED_POSTS', payload: [...completedPosts, post] })
+        }
+        else if (!post.completed) { // if is now not complete, update accordingly
+            dispatch({ type: 'SET_COMPLETED_POSTS', payload: completedPosts.filter(post => post.completed === true) })
+            dispatch({ type: 'SET_CURRENT_POSTS', payload: [...currentPosts, post] })
+        }
+    };
+
     if (completed) { // display completed posts
         return (
             <div className="profilePagePosts">
                 <h1>Completed Posts:</h1>
                 {completedPosts && completedPosts.map((post) => {
                     if (editPostId === post._id) { // editing post format
-                        return ( // if id == null, user is accessing their own webpage, so they can edit their posts
+                        return (
                             <PostEditDetails key={post._id} handleSave={handleSave} editFormData={editFormData} handleFormChange={handleFormChange} handleCancel={handleCancel} />
                         );
                     } else { // normal post format
-                        return (
-                            <PostDetails post={post} key={post._id} editable={(id == null)} handleEdit={handleEdit} handleDelete={handleDelete} />
+                        return ( // if id == null, user is accessing their own webpage, so they can edit their posts
+                            <PostDetails post={post} key={post._id} editable={(id == null)} handlePostComplete={handlePostComplete} handleEdit={handleEdit} handleDelete={handleDelete} />
                         )
                     }
 
@@ -164,18 +202,18 @@ const ProfilePostList = ({ id, completed }) => { // if id is null, user is looki
         )
     }
 
-    if (!completed) { // display completed posts
+    if (!completed) { // display uncompleted posts
         return (
             <div className="profilePagePosts">
                 <h1>Current Posts:</h1>
                 {currentPosts && currentPosts.map((post) => {
                     if (editPostId === post._id) { // editing post format
-                        return ( // if id == null, user is accessing their own webpage, so they can edit their posts
+                        return (
                             <PostEditDetails key={post._id} handleSave={handleSave} editFormData={editFormData} handleFormChange={handleFormChange} handleCancel={handleCancel} />
                         );
                     } else { // normal post format
-                        return (
-                            <PostDetails post={post} key={post._id} editable={(id == null)} handleEdit={handleEdit} handleDelete={handleDelete} />
+                        return ( // if id == null, user is accessing their own webpage, so they can edit their posts
+                            <PostDetails post={post} key={post._id} editable={(id == null)} handlePostComplete={handlePostComplete} handleEdit={handleEdit} handleDelete={handleDelete} />
                         )
                     }
                 })}
