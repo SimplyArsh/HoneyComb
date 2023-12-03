@@ -161,14 +161,11 @@ const Home = () => {
 
     return(
         <div>
-            <>
-            <button onClick={handleAddComment}>Button</button>
-            </>
             <InfiniteScroll 
                 dataLength={recomendedPosts.length}
                 next={fetchMoreData}
                 hasMore={true}
-                loader={<p> Loading... </p>}
+                loader={<p></p>}
             > 
                 {recomendedPosts.map((post) => (
                     <> 
