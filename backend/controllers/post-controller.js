@@ -321,16 +321,25 @@ const getCommentsForPost = async (req, res) => {
   //   }
   // }
 
-  const deleteCommentsRecursively = async (deleteChainStart, commentDeleteId) => {
-    if (commentDeleteId !== null) {
+  const deleteCommentsRecursively = async (aPostId, deleteChainStart, comment, commentDeleteId) => {
+    if (comment !== null) {
       await Promise.all(comment?.comments?.map( async (reply_ids) => {
         const replyFetched = await Comment.findById(reply_ids).lean()
-        if (reply_ids === commentDeleteId) {
-          deleteChainStart = true
+        // console.log("ReplyId: ", reply_ids, " and Comment Delete ID is: ", commentDeleteId)
+        var deleteChainNew = deleteChainStart
+        if (reply_ids.equals(commentDeleteId)) {
+          deleteChainNew = true
+          if (aPostId) {
+            // console.log("from the prev one: ", comment._id, " deleting: ", reply_ids)
+            await Post.findOneAndUpdate(comment._id, {$pull: {comments: reply_ids}})
+          } else {
+            // console.log("from the prev one: ", comment._id, " deleting: ", reply_ids)
+            await Comment.findOneAndUpdate(comment._id, {$pull: {comments: reply_ids}}) // we are pulling reply id from the comment just above
+          }
         }
-        await deleteCommentsRecursively(deleteChainStart, replyFetched)
-        // console.log(replyFetched)
-        if (deleteChainStart) {
+        await deleteCommentsRecursively(false, deleteChainNew, replyFetched, commentDeleteId)
+        if (deleteChainNew) {
+          // console.log("In recursive delete: ", replyFetched.comment, reply_ids, deleteChainNew)
           await Comment.findOneAndDelete(reply_ids)
         }
       }));
@@ -338,29 +347,21 @@ const getCommentsForPost = async (req, res) => {
   }
 
   const deleteComment = async (req, res) => {
-    console.log("here")
     try {
 
-      const commentId = new mongoose.Types.ObjectId(req.query.commentId)
-      
+      const commentId = new mongoose.Types.ObjectId(req.query.commentId)  
 
       if (!commentId) {
         return res.status(404).json({ error: 'BRO Post id passed is undefined'})
       }
 
-      if (req.query.idSelect) {
-        const postParentId = new mongoose.Types.ObjectId(req.query.postParentId)
-        const postToEdit = await Post.findOneAndUpdate(postParentId)
-        const idxToDelete = postToEdit.comments.indexOf(commentId)
-        postToEdit.comments = postToEdit.comments.slice(idxToDelete, 1)
-        await postToEdit.save()
-      }
-      
-      deleteCommentsRecursively(false, commentId)
+      const postParentId = new mongoose.Types.ObjectId(req.query.postParentId)
+      const post = await Post.findById(postParentId).lean()
 
-      console.log(commentId)
+      //recursively deletes the comment, deletes the replies, removes any references to the comments to other objects O(n^1000) i think. yeah, ik. but stfu
+      await deleteCommentsRecursively(true, false, post, commentId)
 
-      res.status(200)
+      res.status(200).json({ sucess: "ok!"})
     } catch (error) {
       console.log(error)
     }

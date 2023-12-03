@@ -20,19 +20,22 @@ const PostCard = ({
       parentSelector = 1
       commentId = post._id
     }
-    const finalStructure = await insertNode(comments, parentSelector, commentId, item);
-    console.log("Final Structure", finalStructure)
-    setComments(finalStructure);
+    // console.log(comments)
+    const copyOfComments = {...comments}
+    const finalStructure = await insertNode(copyOfComments, parentSelector, commentId, item);
+    // console.log(finalStructure)
+    setComments(finalStructure)
   }
 
-  const handleEditNode = async (folderId, value) => {
-    const finalStructure = await editNode(comments, folderId, value);
+  const handleEditNode = async (commentId, value) => {
+    const finalStructure = await editNode(comments, commentId, value);
     setComments(finalStructure);
     console.log(finalStructure)
   }
 
-  const handleDeleteNode = (folderId) => {
-    const finalStructure = deleteNode(comments, folderId);
+  const handleDeleteNode = async (commentId) => {
+    var postParentId = post._id
+    const finalStructure = await deleteNode(comments, commentId, postParentId);
     const temp = { ...finalStructure }
     setComments(temp);
   }
@@ -49,7 +52,6 @@ const PostCard = ({
           method: 'GET'
       })
       const allComments = await response.json()
-      console.log(allComments)
       const mainNodeStructure = { // this is a "fake" main comment & is the root of all real comments
         _id: 1,
         comments: allComments,

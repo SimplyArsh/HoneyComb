@@ -5,9 +5,8 @@ const useNode = () => {
     const { user } = useAuthContext()
 
     const updateLocalNodeRecursively = (tree, commentId, newItem) => {
-        console.log("in recursion")
         if (tree._id === commentId) {
-            tree.comments.push(newItem)
+            tree.comments = [...tree.comments, newItem]
             return tree
         }
         
@@ -19,12 +18,12 @@ const useNode = () => {
         })
         /* tree.items.push alters the local tree passed in,
         when tree is returned,  */
-        return { ...tree, items: latestNode } 
+        return { ...tree, comments: latestNode } 
     }
     
     const insertNode = async (tree, parentSelector, commentId, item) => {
 
-        console.log("Inserting a new node: ", tree, parentSelector, commentId, item)
+        // console.log("Inserting a new node: ", tree, parentSelector, commentId, item)
         /* checks to see if the commentId matches the tree passed in
             (i.e. its in the first layer of replies to the comment)
         */
@@ -48,7 +47,7 @@ const useNode = () => {
                 method:"POST" 
             })
             const newItem = await response.json()
-            console.log(newItem)
+            // console.log(newItem)
 
             if (parentSelector === 1) {
                 tree.comments.push(newItem)
@@ -111,33 +110,31 @@ const useNode = () => {
     }
 
     const deleteLocalCommentsRecursively = (tree, id) => {
-        
-        for (let i = 0; i < tree.items.length; i++) {
+        for (let i = 0; i < tree.comments.length; i++) {
             const currentItem = tree.comments[i];
             if (currentItem._id === id) {
-                tree.items.splice(i, 1);
-                console.log("here")
+                tree.comments.splice(i, 1);
+                // console.log("PRINTING TREE FROM INSIDE: ", tree)
                 return tree; 
             } else {
                 deleteLocalCommentsRecursively(currentItem, id);
             }
         }
+        // console.log("PRINTING TREE: ", tree)
         return tree
     }
 
-    const deleteNode = async (tree, parentSelector, commentId, parentPostId) => {
+    const deleteNode = async (tree, commentId, parentPostId) => {
         /* loops through all the comments in the layer, and checks
         if id of "desired delete" comment matches;
         if id matches then it splices that branch;
         if id not matched then it recursively goes through the sublayers
         of that particular comment (i.e. it's replies)  */
-
         try {
             const response = await fetch('/api/post/deleteComment?' 
             + new URLSearchParams({
                 "commentId":commentId,
-                "parentPostId":parentPostId,
-                "idSelect":parentSelector // 0 if reply to a comment
+                "postParentId":parentPostId
             }), {
                 headers: { // include token in header
                     'Content-Type': 'application/json',
@@ -145,13 +142,12 @@ const useNode = () => {
                 },
                 method:"PATCH" 
             })
-
+            const res = await response.json() // without this call, code never reaches deleteLocalPart. I don't understand fetch well enough to know it's rejection process
             return deleteLocalCommentsRecursively(tree, commentId)
 
         } catch (error) {
             console.log(error)
         }
-
     }
 
     return { insertNode, editNode, deleteNode }

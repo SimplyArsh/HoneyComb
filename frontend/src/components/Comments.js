@@ -38,7 +38,7 @@ const Comment = ({
             setExpand(true);
             handleInsertNode(comment._id, input) // we need the parent comment id to insert
             // child comment after it 
-            setShowReplyInput(false); 
+            // setShowReplyInput(false); 
             setInput("")
         }
         if (editMode) setEditMode(false); 
@@ -50,7 +50,7 @@ const Comment = ({
     }
 
     const handleDelete = () => {
-        handleDeleteNode(comment.id)
+        handleDeleteNode(comment._id)
     }
 
     return (

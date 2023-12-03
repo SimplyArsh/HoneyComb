@@ -16,7 +16,6 @@ const commentSchema = new Schema({
     required: false
   } // the nested comments
 });
-commentSchema.plugin(require('mongoose-autopopulate'));
 
 const postSchema = new Schema({
   postName: { type: String, required: true },
