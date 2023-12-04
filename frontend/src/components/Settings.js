@@ -68,6 +68,7 @@ export const Settings = () => {
 
     };
 
+    /*
     const handleLanguageClick = async (language) => {
         dispatch({ type: 'SET_LANGUAGE', payload: language })
         dispatch({ type: 'SET_INVISIBLE' }) // close settings after button clicked
@@ -92,7 +93,7 @@ export const Settings = () => {
             return error;
         }
     };
-
+    */
     const handleChangePasswordClick = () => {
         navigate('/changePassword');
     }

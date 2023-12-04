@@ -1,5 +1,5 @@
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Comment from "../components/Comments"
 import useNode from "../hooks/comment-node.js"
 import { useAuthContext } from '../hooks/use-auth-context'

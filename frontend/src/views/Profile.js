@@ -55,7 +55,7 @@ const Profile = () => {
             fetchProfile()
         }
 
-    }, [user, id, dispatch]) // hook
+    }, [user, id, dispatch, navigate]) // hook
 
     return (
         <div className="profilePage">

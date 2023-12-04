@@ -1,15 +1,14 @@
 import PostDetails from "../components/Post-Details";
 import { useEffect, useState, useRef } from 'react'
-import { useParams } from 'react-router-dom';
 import { useAuthContext } from '../hooks/use-auth-context'
 import { useHomeContext } from '../hooks/use-home-context'
 import InfiniteScroll from 'react-infinite-scroll-component'
 // import { useInfiniteQuery } from '@tanstack/react-query'
 
-const comments = {
-    id: 1,
-    items: []
-}
+// const comments = {
+//     id: 1,
+//     items: []
+// }
 
 const Home = () => {
     const [pageNumber, pageNumberUpdate] = useState(1)
@@ -103,7 +102,7 @@ const Home = () => {
     };
 
     // comments handle functions 
-
+    /*
     const handleAddComment = async () => {
         try {
             const response = await fetch('/api/post/addComment?'
@@ -159,7 +158,7 @@ const Home = () => {
         // }
 
     }
-
+    */
     return (
         <div>
             <InfiniteScroll

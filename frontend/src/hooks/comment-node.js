@@ -9,7 +9,7 @@ const useNode = () => {
             tree.comments = [...tree.comments, newItem]
             return tree
         }
-        
+
         /* if the commentId does not match, then recursivley search the tree to
             find the direct parent */
         let latestNode = []; // the new node to be added
@@ -18,9 +18,9 @@ const useNode = () => {
         })
         /* tree.items.push alters the local tree passed in,
         when tree is returned,  */
-        return { ...tree, comments: latestNode } 
+        return { ...tree, comments: latestNode }
     }
-    
+
     const insertNode = async (tree, parentSelector, commentId, item) => {
 
         // console.log("Inserting a new node: ", tree, parentSelector, commentId, item)
@@ -32,19 +32,19 @@ const useNode = () => {
         }
 
         try {
-            const response = await fetch('/api/post/addComment?' 
-            + new URLSearchParams({
-                "parentCommentId":commentId,
-                "idSelect":parentSelector // 0 if reply to a comment
-            }), {
+            const response = await fetch('/api/post/addComment?'
+                + new URLSearchParams({
+                    "parentCommentId": commentId,
+                    "idSelect": parentSelector // 0 if reply to a comment
+                }), {
                 headers: { // include token in header
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + user.token,
                 },
                 body: JSON.stringify({
-                    "comment":item
+                    "comment": item
                 }),
-                method:"POST" 
+                method: "POST"
             })
             const newItem = await response.json()
             // console.log(newItem)
@@ -59,7 +59,7 @@ const useNode = () => {
         } catch (error) {
             console.log(error)
         }
-        
+
     }
 
     const editLocalNodeRecursively = (tree, commentId, newItem) => {
@@ -69,7 +69,7 @@ const useNode = () => {
             tree.comment = newItem
             return tree
         }
-        
+
         /* if the commentId does not match, then recursivley search the tree to
             find the direct parent */
         tree?.comments?.map((object) => {
@@ -77,7 +77,7 @@ const useNode = () => {
         })
         /* tree.items.push alters the local tree passed in,
         when tree is returned,  */
-        return { ...tree } 
+        return { ...tree }
     }
 
     const editNode = async (tree, commentId, value) => {
@@ -87,7 +87,7 @@ const useNode = () => {
         }
 
         try {
-            const response = await fetch ('/api/post/editComment', { 
+            const response = await fetch('/api/post/editComment', {
                 headers: { // include token in header
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + user.token,
@@ -115,7 +115,7 @@ const useNode = () => {
             if (currentItem._id === id) {
                 tree.comments.splice(i, 1);
                 // console.log("PRINTING TREE FROM INSIDE: ", tree)
-                return tree; 
+                return tree;
             } else {
                 deleteLocalCommentsRecursively(currentItem, id);
             }
@@ -131,18 +131,18 @@ const useNode = () => {
         if id not matched then it recursively goes through the sublayers
         of that particular comment (i.e. it's replies)  */
         try {
-            const response = await fetch('/api/post/deleteComment?' 
-            + new URLSearchParams({
-                "commentId":commentId,
-                "postParentId":parentPostId
-            }), {
-                headers: { // include token in header
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + user.token,
-                },
-                method:"PATCH" 
-            })
-            const res = await response.json() // without this call, code never reaches deleteLocalPart. I don't understand fetch well enough to know it's rejection process
+            // const response = await fetch('/api/post/deleteComment?'
+            //     + new URLSearchParams({
+            //         "commentId": commentId,
+            //         "postParentId": parentPostId
+            //     }), {
+            //     headers: { // include token in header
+            //         'Content-Type': 'application/json',
+            //         'Authorization': 'Bearer ' + user.token,
+            //     },
+            //     method: "PATCH"
+            // })
+            //const res = await response.json() // without this call, code never reaches deleteLocalPart. I don't understand fetch well enough to know it's rejection process
             return deleteLocalCommentsRecursively(tree, commentId)
 
         } catch (error) {

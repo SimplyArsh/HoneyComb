@@ -30,7 +30,7 @@ const Comment = ({
         inputRef?.current?.focus();
     }, [editMode])
 
-    const onAddComment = ({ }) => {
+    const onAddComment = () => {
 
         if (editMode) {
             handleEditNode(comment.id, inputRef?.current?.innerText)
