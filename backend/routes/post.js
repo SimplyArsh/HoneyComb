@@ -7,6 +7,7 @@ const {
     createPost,
     deletePost,
     updatePost,
+    searchPosts,
     getRecomendationPosts,
     updateLikeCount,
     getCommentsForPost,
@@ -32,7 +33,8 @@ router.get('/user/:id', getUserPosts)         // GET all posts for a specific us
 router.get('/:id', getPost)       // GET a single post based on post id
 
 // POSTS
-router.post('/', createPost)      // POST a new post
+router.get('/find', searchPosts)
+router.post('/create', createPost)      // POST a new post
 router.post('/addComment', addComment)   // POSTS a new comment
 
 // this is intentionally a patch comment, because we are both patching & deleting
