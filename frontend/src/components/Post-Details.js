@@ -71,12 +71,12 @@ const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handle
         }
 
     }
-    console.log(inProfilePage)
     let avatarURL = "https://img.freepik.com/free-photo/fashion-boy-with-yellow-jacket-blue-pants_71767-96.jpg?w=1380&t=st=1700010094~exp=1700010694~hmac=b9d7f8d56b66ac184e10e6b6fc4df817beaf81b63a6e495f32ad81e1eebbbb1a"
     return (
         <div className="postDetails">
-            <img className="avatar" src={avatarURL} alt="User Avatar" />
-            <h3 className="name">User: {post.profile_name}</h3>
+            {!inProfilePage && <div><img className="avatar" src={avatarURL} alt="User Avatar" />
+                <h3 className="name">User: {post.profile_name}</h3>
+            </div>}
             <h4>Post: {post.postName}</h4>
             <p><strong>Description: </strong>{post.description}</p>
             <p><strong>Skills: </strong>{post.skills}</p>
