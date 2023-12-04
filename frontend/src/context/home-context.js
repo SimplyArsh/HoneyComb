@@ -1,4 +1,3 @@
-import { zhCN } from 'date-fns/locale'
 import { createContext, useReducer } from 'react'
 
 export const HomeContext = createContext() // Allow other files to access this global context
@@ -6,25 +5,25 @@ export const HomeContext = createContext() // Allow other files to access this g
 export const homeReducer = (state, action) => { // action comes from dispatch
     switch (action.type) {
         case 'SET_RECOMENDED_POSTS':
-            return { ...state, recomendedPosts: [ ...state.recomendedPosts, ...action.payload]}
+            return { ...state, recomendedPosts: [...state.recomendedPosts, ...action.payload] }
         case 'EDIT_TOGGLE':
             return { ...state, editFetchNeeded: action.payload }
         case 'UPDATE_LIKES_ON_POST':
             return {
                 ...state,
                 recomendedPosts: state.recomendedPosts.map(post => {
-                  
-                  if (post._id === action.payload.id) {
-                    return { ...post, numberOfLikes: action.payload.count };
-                  }
-                  
-                  return post;
+
+                    if (post._id === action.payload.id) {
+                        return { ...post, numberOfLikes: action.payload.count };
+                    }
+
+                    return post;
                 }),
-              };
+            };
         case 'SET_USER_LIKES':
-              return {
+            return {
                 ...state, userLikes: action.payload.postsLiked
-              }
+            }
         case 'UPDATE_USER_LIKES':
             if (action.payload.liked) {
                 return {
