@@ -192,7 +192,7 @@ const ProfilePostList = ({ id, completed }) => { // if id is null, user is looki
                         );
                     } else { // normal post format
                         return ( // if id == null, user is accessing their own webpage, so they can edit their posts
-                            <PostDetails post={post} key={post._id} editable={(id == null)} handlePostComplete={handlePostComplete} handleEdit={handleEdit} handleDelete={handleDelete} />
+                            <PostDetails post={post} key={post._id} inProfilePage={true} editable={(id == null)} handlePostComplete={handlePostComplete} handleEdit={handleEdit} handleDelete={handleDelete} />
                         )
                     }
 
@@ -213,7 +213,7 @@ const ProfilePostList = ({ id, completed }) => { // if id is null, user is looki
                         );
                     } else { // normal post format
                         return ( // if id == null, user is accessing their own webpage, so they can edit their posts
-                            <PostDetails post={post} key={post._id} editable={(id == null)} handlePostComplete={handlePostComplete} handleEdit={handleEdit} handleDelete={handleDelete} />
+                            <PostDetails post={post} key={post._id} editable={(id == null)} inProfilePage={true} handlePostComplete={handlePostComplete} handleEdit={handleEdit} handleDelete={handleDelete} />
                         )
                     }
                 })}

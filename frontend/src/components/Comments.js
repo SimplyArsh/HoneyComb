@@ -5,7 +5,7 @@ import { ReactComponent as UpArrow } from "../assets/up-arrow.svg";
 import { formatDistanceToNow } from 'date-fns';
 
 
-const Comment = ({ 
+const Comment = ({
     comment,
     handleInsertNode,
     handleEditNode,
@@ -25,12 +25,12 @@ const Comment = ({
         const originalDate = new Date(comment.date);
         formattedDate = formatDistanceToNow(originalDate, { addSuffix: true });
     }
-    
+
     useEffect(() => {
-        inputRef?.current?.focus(); 
+        inputRef?.current?.focus();
     }, [editMode])
 
-    const onAddComment = ({}) => {
+    const onAddComment = ({ }) => {
 
         if (editMode) {
             handleEditNode(comment.id, inputRef?.current?.innerText)
@@ -41,7 +41,7 @@ const Comment = ({
             // setShowReplyInput(false); 
             setInput("")
         }
-        if (editMode) setEditMode(false); 
+        if (editMode) setEditMode(false);
     }
 
     const handleNewComment = () => {
@@ -55,89 +55,95 @@ const Comment = ({
 
     return (
         <div>
-            <div className={ comment._id === 1 ? "inputContainer" : "commentContainer"}>
+            <div className={comment._id === 1 ? "inputContainer" : "commentContainer"}>
                 {comment._id === 1 ? ( // using this as the comment id for all comments
-                // esenitally all comments are listed within comment id one
-                <>
-                    <input
-                        type="text"
-                        className="inputContainer__input first_input"
-                        autoFocus
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        placeholder="comment..."
-                    />
-                    <CommentAction 
-                        className="reply comment"
-                        type="COMMENT"
-                        handleClick={onAddComment}
-                    />
-                </>
-                ):(
+                    // esenitally all comments are listed within comment id one
                     <>
-                        <div>{comment.username} {formattedDate}</div> 
-                        <span 
-                            contentEditable={editMode}
-                            suppressContentEditableWarning={editMode}
-                            style={{ wordWrap: "break=word"}}
-                            ref={inputRef}
-                        >
-                            {comment.comment}
-                        </span>
-
-                         <div style={{display: "flex", margainTop: "5px"}}>
+                        <input
+                            type="text"
+                            className="inputContainer__input first_input"
+                            autoFocus
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            placeholder="comment..."
+                        />
+                        <CommentAction
+                            className="reply comment"
+                            type="COMMENT"
+                            handleClick={onAddComment}
+                        />
+                    </>
+                ) : (
+                    <>
+                        <div>{comment.username} {formattedDate}</div>
+                        <div style={{
+                            border: "none",
+                            outline: "none"
+                        }}>
+                            <span
+                                contentEditable={editMode}
+                                suppressContentEditableWarning={editMode}
+                                style={{
+                                    wordWrap: "break=word"
+                                }}
+                                ref={inputRef}
+                            >
+                                {comment.comment}
+                            </span>
+                        </div>
+                        <div style={{ display: "flex", margainTop: "5px" }}>
                             {editMode ? (
                                 <>
-                                    <CommentAction className="reply" type="SAVE" 
+                                    <CommentAction className="reply" type="SAVE"
                                         handleClick={onAddComment}
                                     />
-                                    <CommentAction className="reply" type="CANCEL" 
+                                    <CommentAction className="reply" type="CANCEL"
                                         handleClick={() => {
                                             inputRef.current.innerText = comment.comment
-                                            setEditMode(false); 
+                                            setEditMode(false);
                                         }}
-                                    /> 
+                                    />
                                 </>
-                            ):(
+                            ) : (
                                 <>
-                                    <CommentAction 
-                                        className="reply" 
+                                    <CommentAction
+                                        className="reply"
                                         type={
                                             <>
-                                              {expand ? (
-                                                <UpArrow width="10px" height="10px" />
-                                              ) : (
-                                                <DownArrow width="10px" height="10px" />
-                                              )}{" "}
-                                              REPLY
+                                                {expand ? (
+                                                    <UpArrow width="10px" height="10px" />
+                                                ) : (
+                                                    <DownArrow width="10px" height="10px" />
+                                                )}{" "}
+                                                REPLY
                                             </>
-                                          }
+                                        }
                                         handleClick={handleNewComment}
                                     />
                                     {editable && (
                                         <>
-                                            <CommentAction 
-                                            className="reply" 
-                                            type="EDIT" 
-                                            handleClick={() => {
-                                                setEditMode(true); 
-                                            }}
-                                            />
-                                            <CommentAction 
+                                            <CommentAction
                                                 className="reply"
-                                                type="DELETE" 
+                                                type="EDIT"
+                                                handleClick={() => {
+                                                    setEditMode(true);
+                                                }}
+                                            />
+                                            <CommentAction
+                                                className="reply"
+                                                type="DELETE"
                                                 handleClick={handleDelete}
                                             />
                                         </>
                                     )}
-                                    
+
                                 </>
                             )}
-                         </div>
+                        </div>
                     </>
                 )}
             </div>
-            <div style={{ display: expand ? "block" : "none", paddingLeft: 25}}>
+            <div style={{ display: expand ? "block" : "none", paddingLeft: 25 }}>
                 {showReplyInput && (
                     <div className="inputContainer">
                         <input
@@ -148,30 +154,30 @@ const Comment = ({
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="comment..."
                         ></input>
-                        <CommentAction 
-                            className="reply" 
-                            type="REPLY" 
+                        <CommentAction
+                            className="reply"
+                            type="REPLY"
                             handleClick={onAddComment}
                         />
-                        <CommentAction 
-                            className="reply" 
+                        <CommentAction
+                            className="reply"
                             type="CANCEL"
                             handleClick={() => {
-                                setShowReplyInput(false); 
+                                setShowReplyInput(false);
                             }}
                         />
                     </div>
                 )}
                 {comment?.comments?.map((comment) => { //comments? "?" is for undefined comments
                     return (
-                    <Comment 
-                        key={comment._id} 
-                        comment={comment}
-                        handleInsertNode={handleInsertNode}
-                        handleEditNode={handleEditNode}
-                        handleDeleteNode={handleDeleteNode}
-                        userId={userId}
-                    />)
+                        <Comment
+                            key={comment._id}
+                            comment={comment}
+                            handleInsertNode={handleInsertNode}
+                            handleEditNode={handleEditNode}
+                            handleDeleteNode={handleDeleteNode}
+                            userId={userId}
+                        />)
                 })}
             </div>
         </div>
