@@ -33,7 +33,7 @@ router.get('/user/:id', getUserPosts)         // GET all posts for a specific us
 router.get('/:id', getPost)       // GET a single post based on post id
 
 // POSTS
-router.get('/find', searchPosts)
+router.get('/search', searchPosts)
 router.post('/create', createPost)      // POST a new post
 router.post('/addComment', addComment)   // POSTS a new comment
 

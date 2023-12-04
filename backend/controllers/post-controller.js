@@ -385,23 +385,23 @@ const getCommentsForPost = async (req, res) => {
     }
   }
 
-const searchPosts = async (req, res, next) => {
-  // We look for a query parameter "search"
-  const { search } = req.query
-  let posts
-  if (search) {
-    // If search exists, the user typed in the search bar
-    posts = await Post.aggregate([
-      {
+const searchPosts = async (req, res) => {
+
+    const { search } = req.query
+    let posts
+    if (search) {
+      // If search exists, the user typed in the search bar
+      posts = await Post.aggregate([
+        {
         '$search': {
           'index': 'postSearch', 
-          'autocomplete': {
+          'text': {
             'query': search, 
             'path': 'postName'
           }
         }
       }, {
-        '$limit': 10
+        '$limit': 5
       }, {
         '$project': {
           '_id': 1, 
@@ -415,11 +415,16 @@ const searchPosts = async (req, res, next) => {
     ])
   } else {
     // The search is empty so the value of "search" is undefined
-    posts = await Post.find().sort({ createdAt: -1 })
+    posts = await Post.find().sort({ createdAt: 'desc' })
   }
 
-  res.status(200).json(post)
+  return res.status(200).json({
+    statusCode: 200,
+    message: 'Fetched posts',
+    data: { posts },
+  })
 }
+
 
 
 module.exports = {

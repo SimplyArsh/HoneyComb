@@ -25,7 +25,7 @@ const CreateProject = () => {
        e.preventDefault() // Don't refresh the page by default
 
 
-       const response = await fetch('/api/post', { // create post, which automatically updates user's post list in the backend
+       const response = await fetch('/api/post/create', { // create post, which automatically updates user's post list in the backend
            method: 'POST',
            body: JSON.stringify({ postName, description, skills }),
            headers: {
