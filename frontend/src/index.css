@@ -29,9 +29,17 @@ body {
   font-family: "Poppins";
 }
 
+/* Navbar */
 header {
   background: #FFD36E;
   font-size: 5rem;
+}
+
+/*Navbar buttons + Like/Comment buttons (secondary color) */
+.btn-secondary {
+  background-color: #000; /* Change this to the color you want for the button */
+  /*border-color: /* Change this to the color you want for the button border */
+ /* color: #fff; /* Change this to the desired text color on the button */
 }
 
 header .container {

@@ -51,18 +51,38 @@
   margin-right: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  background-color: #d3dade;
-  color: rgb(255, 255, 255)fff;
+  /*background-color: #d3dade;
+  border-color: #d3dade;
+  color: rgb(255, 255, 255)fff;*/
+  /*these buttons will have default secondary color, depending on theme setting*/
 }
 
 .like-button.colored {
   padding: 8px;
   margin-right: 8px;
   cursor: pointer;
-  background-color: #4892bc;
+  background-color: #FAA0A0;
+  color: #861818;
+  border-color: #FAA0A0;
+}
+
+.like-button:hover {
+  background-color: #FFC0CB;
+  border-color: #FFC0CB;
+}
+
+.comment-button.colored {
+  padding: 8px;
+  margin-right: 8px;
+  cursor: pointer;
+  background-color: #FFD36E;
   color: #861818;
 }
 
+.comment-button:hover {
+  background-color: #FFE5B4;
+  border-color: #FFE5B4;
+}
 .likes {
   margin-right: 8px;
   color: #888;
@@ -70,7 +90,7 @@
 
 .commentContainer {
   margin-top: 6px;
-  background-color: #d3d3d3e0;
+  background-color: #FFE5B4;
   display: flex;
   flex-direction: column;
   padding: 5px 10px;
@@ -80,7 +100,7 @@
 }
 
 .commentContainer:hover {
-  background-color: #d3d3d3bf;
+  background-color: #FFD36E;
 }
 
 .inputContainer {

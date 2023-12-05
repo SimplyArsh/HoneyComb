@@ -7,6 +7,7 @@
 
 .App {
   text-align: center;
+  background-color: #f5eccd;
 }
 
 .custom-button {
@@ -37,6 +38,16 @@
   width: 10px;
   /* Adjust the width as needed */
   height: 20px;
+  /* Adjust the height as needed */
+  display: inline-block;
+  /* or use display: block; */
+}
+
+
+.very-long-spacer {
+  width: 10px;
+  /* Adjust the width as needed */
+  height: 200px;
   /* Adjust the height as needed */
   display: inline-block;
   /* or use display: block; */
