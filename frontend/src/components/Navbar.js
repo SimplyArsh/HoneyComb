@@ -100,11 +100,16 @@ const Navbar = () => {
           </div>
           <div className="navbar-right">
             {user && (
-              <>
+                <>
+                <form className="d-flex" role="search">
+                    <input className="form-control me-2 search-input" type="search" style={{ width: '220px' }} placeholder="Search for projects..." aria-label="Search" />
+                    <button className="btn btn-secondary btn-outline-success" type="submit">Search</button>
+                </form>
+
                 <button className="btn btn-secondary" onClick={handleHomeClick}>Home</button>
                 <button className="btn btn-secondary" onClick={handleCreateClick}>Create</button>
-                <SettingsIcon/>
-              </>
+                <SettingsIcon />
+                </>
             )}
             {!user && (
               <>

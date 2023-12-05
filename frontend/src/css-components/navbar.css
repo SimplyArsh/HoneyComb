@@ -31,3 +31,21 @@
   .border-black {
     border: 2px solid #000 !important; 
  }
+
+.form-control {
+    height: 30px;
+}
+
+
+.navbar-form {
+    margin-bottom: 0; 
+  }
+
+
+  .navbar input.form-control {
+    margin-bottom: 0; 
+  }
+
+  .btn-outline-success {
+    border-color: #000;
+  }
