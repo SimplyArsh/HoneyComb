@@ -1,34 +1,33 @@
-.navbar-items-left {
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: 'Poppins', sans-serif;
-    padding: 10px;
-    margin-right: 300px;
-}
-
-.navbar-items-right {
+    padding: 17px 0 0px;
+  }
+  
+  .navbar-left {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    font-family: 'Poppins', sans-serif;
-    padding: 10px;
-    margin-left: 300px;
-}
-
-.navbar-items-container {
+  }
+  
+  .navbar-logo {
+    margin-right: auto; /* Pushes the logo to the left as much as possible */
+  }
+  
+   .navbar-right {
     display: flex;
-    justify-content: space-between;
-}
+    gap: 10px;
+    align-items: right;
+    padding: 0px 0;
+  } 
 
-
-.navbar-items a,
-.navbar-items-left button {
-    margin-right: 30px;
-    /*Adjust the spacing between items */
-}
-
-.navbar-items-right button {
-    margin-right: 30px;
-    /*Adjust the spacing between items */
-}
+  /* for horizontal black line */
+  .border-black {
+    border: 2px solid #000 !important; 
+ }

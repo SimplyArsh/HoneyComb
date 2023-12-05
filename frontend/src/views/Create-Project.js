@@ -65,58 +65,6 @@ const CreateProject = () => {
    }
 
 
-  /* return (
-      
-   
-       <div className="createProject">
-           <div className="spacer"></div>
-           <h2>Create project</h2>
-           <div className="spacer"></div>
-               <div class="container mt-6">
-
-
-               
-               <div class="card">
-               <div class="card-body">
-               <div class="row">
-                   <div class="col-md-6">
-           <form className="create" onSubmit={handleSubmit}>
-               <label>Name:</label>
-               <input
-                   type="text"
-                   onChange={(e) => {
-                       setPostName(e.target.value)
-                   }}
-               />
-               <label>Description:</label>
-               <input
-                   type="text"
-                   onChange={(e) => {
-                       setDescription(e.target.value)
-                   }}
-               />
-              
-               <label>Skills required (tags):</label>
-               <input
-                   type="text"
-                   onChange={(e) => {
-                       setSkills(e.target.value)
-                   }}
-               />
-               <button className="btn submit-button" disabled={isLoading}>Submit</button>
-               {error && <div className="error">{error}</div>}
-           </form>
-           </div>
-                       </div>
-                   </div>
-               </div>
-               </div>
-           </div>
-   )
-}
-*/
-
-
 return (
     <div className="createProject">
       <div className="spacer"></div>
@@ -178,6 +126,8 @@ return (
           </div>
         </div>
       </div>
+      <div className="very-long-spacer"></div>
+      <div className="very-long-spacer"></div>
     </div>
   );
 };

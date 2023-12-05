@@ -73,7 +73,8 @@ const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handle
     }
     let avatarURL = "https://img.freepik.com/free-photo/fashion-boy-with-yellow-jacket-blue-pants_71767-96.jpg?w=1380&t=st=1700010094~exp=1700010694~hmac=b9d7f8d56b66ac184e10e6b6fc4df817beaf81b63a6e495f32ad81e1eebbbb1a"
     return (
-        <div className="postDetails">
+        <div className="container mt-6">
+        <div className="card postDetails">
             {!inProfilePage && <div><img className="avatar" src={avatarURL} alt="User Avatar" />
                 <h3 className="name">User: {post.profile_name}</h3>
             </div>}
@@ -91,14 +92,14 @@ const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handle
             {!inProfilePage && <div>
                 <div className="actions">
                     <button
-                        className={`like-button ${color ? 'colored' : ''}`}
+                        className={`btn btn-secondary like-button ${color ? 'colored' : ''}`}
                         onClick={() => handleLike(post)}
                     >
                         Like
                     </button>
                     <span className="likes">{post.numberOfLikes} Likes</span>
                     <button
-                        className="comment-button"
+                        className="btn btn-secondary comment-button"
                         onClick={handleOpenCommandPanel}
 
                     >
@@ -124,7 +125,7 @@ const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handle
             }
 
         </div>
-
+        </div>
     )
 }
 

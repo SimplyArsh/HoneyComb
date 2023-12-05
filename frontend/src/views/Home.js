@@ -160,7 +160,11 @@ const Home = () => {
     }
     */
     return (
-        <div>
+        <div className="homePage">
+        <div className="spacer"> </div>
+
+        <div><h2>Explore projects</h2> {/* Header */}<div>
+        <div className="small-spacer"> </div>
             <InfiniteScroll
                 dataLength={recomendedPosts.length}
                 next={fetchMoreData}
@@ -176,6 +180,8 @@ const Home = () => {
                 ))}
             </InfiniteScroll>
 
+        </div>
+        </div>
         </div>
 
     )
