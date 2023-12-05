@@ -1,7 +1,26 @@
-/* All of these are imported or came with the template. Change it however you wish */
-
-/* google font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+
+/* Defined variables*/
+
+:root {
+  --body_background: #f5eccd;
+  --body_color: black;
+  --link_color: navy;
+  --primary: #1aac83;
+  --error: #e7195a;
+}
+
+[data-theme="dark"] {
+  --body_background: #282c34;
+  --body_color: white;
+  --link_color: cyan;
+}
+
+/* theme change*/
+
+* {
+  transition: all 0.3s ease-in-out;
+}
 
 body {
   margin: 0;
@@ -10,23 +29,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: "Poppins";
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-/* layout */
-:root {
-  --primary: #1aac83;
-  --error: #e7195a;
-}
-
-body {
-  background: #f1f1f1;
-  margin: 0;
-  font-family: "Poppins";
 }
 
 /* Navbar */
@@ -37,9 +45,10 @@ header {
 
 /*Navbar buttons + Like/Comment buttons (secondary color) */
 .btn-secondary {
-  background-color: #000; /* Change this to the color you want for the button */
+  background-color: #000;
+  /* Change this to the color you want for the button */
   /*border-color: /* Change this to the color you want for the button border */
- /* color: #fff; /* Change this to the desired text color on the button */
+  /* color: #fff; /* Change this to the desired text color on the button */
 }
 
 header .container {

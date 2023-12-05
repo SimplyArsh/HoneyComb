@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useLogout } from '../hooks/use-logout'
 import { useSettingsContext } from "../hooks/use-settings-context"
 import { useAuthContext } from '../hooks/use-auth-context';
+import DarkMode from './Dark-Mode';
 
 export const Settings = () => {
 
@@ -107,6 +108,7 @@ export const Settings = () => {
                     </div>
                     <ul className="list-group list-group-flush" >
                         <button className="btn btn-secondary" onClick={handleProfileClick}>Profile</button>
+                        <DarkMode />
                         <button className="btn btn-secondary" onClick={handleThemeClick}>Change Theme</button>
                         {/* 
                         TODO LATER:

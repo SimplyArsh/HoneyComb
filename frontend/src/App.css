@@ -5,9 +5,19 @@
 @import url("css-components/profile.css");
 @import url("css-components/create-project.css");
 
+.App-header {
+  background: var(--body_background);
+  color: var(--body_color);
+}
+
 .App {
   text-align: center;
-  background-color: #f5eccd;
+  background: var(--body_background);
+  color: var(--body_color);
+}
+
+.App-link {
+  color: var(--link_color);
 }
 
 .custom-button {
