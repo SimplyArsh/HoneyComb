@@ -2,7 +2,6 @@ const { Post, Comment } = require('../models/post-model')
 const User = require('../models/user-model')
 const mongoose = require('mongoose')
 
-
 // get all posts for the authenticated user
 const getPosts = async (req, res) => {
   const user_id = req.user._id
@@ -383,6 +382,38 @@ const editComment = async (req, res) => {
     res.status(404).json({ error: "There was some error in editing the comment" })
   }
 }
+const getSearchedPosts = async (req, res) => {
+  try {
+    const pageSize = req.query.pageSize;
+    const pageNumber = req.query.pageNumber;
+
+    const lookup = req.query.lookup;
+
+    const skip = (pageNumber - 1) * pageSize;
+
+    const result = await Post.find({ postName: lookup }, '-comments').skip(skip).limit(pageSize);
+
+    const resultWithProfileNames = await Promise.all(result.map(async (post) => {
+      const userId = post.user_id;
+
+      const profileResponse = await User.findById(userId)
+
+      const profileName = profileResponse.username;
+
+      return {
+        ...post._doc,
+        profile_name: profileName,
+      };
+
+    }));
+
+    res.status(200).json(resultWithProfileNames);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error: ', details: { message: error.message } });
+  }
+}
+
 
 module.exports = {
   getPosts,
@@ -391,6 +422,7 @@ module.exports = {
   createPost,
   deletePost,
   updatePost,
+  getSearchedPosts,
   getRecomendationPosts,
   updateLikeCount,
   getCommentsForPost,

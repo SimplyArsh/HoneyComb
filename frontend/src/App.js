@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 // Pages & components
 
 import Home from './views/Home'
+import Search from './views/Search'
 import Login from './views/Login'
 import SignUp from './views/Sign-Up'
 import RequestResetPassword from './views/Pass-Request-Reset'
@@ -36,6 +37,10 @@ function App() {
               <Route
                 path='/'
                 element={user ? <Home /> : <Navigate to='/login' />} // if logged in, display homepage. If not logged in, display login page
+              />
+              <Route
+                path='/search'
+                element={user ? <Search /> : <Navigate to='/login' />} //if logged in redirect search results. If not send
               />
               <Route
                 path='/login'
