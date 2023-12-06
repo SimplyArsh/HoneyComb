@@ -1,28 +1,44 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useReset } from "../hooks/use-reset-pass"
-import { useLocation } from 'react-router-dom'
+import { useAuthContext } from '../hooks/use-auth-context'
+import { useNavigate } from "react-router-dom"
 
-const ResetPassword = () => {
+const ResetPasswordLoggedIn = () => {
     const [newPassword, setNewPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [currentPassword, setCurrentPassword] = useState('')
     const { reset, isLoading, error, confirmError, successMessage } = useReset()
-    const location = useLocation()
+    const { user } = useAuthContext()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!user) {
+            navigate('/login')
+        }
+    }, [user, navigate]);   // Runs whenever user or navigate changes
 
     const handleSubmit = async (e) => {
         e.preventDefault() // Don't refresh the page by default
-
-        const params = new URLSearchParams(location.search)
-        const userID = params.get('id')
-        const token = params.get('token')
-
-        await reset(userID, newPassword, confirmPassword, null, token, null)
+        const authToken = user.token
+        if (user) {
+            await reset(null, newPassword, confirmPassword, currentPassword, null, authToken)
+        } else {
+            return
+        }
     }
 
     return (
         <div className="login">
             <h1>Reset Your Password</h1>
             <form className="create" onSubmit={handleSubmit}>
-                <label>Password:</label>
+                <label>Enter Your Current Password:</label>
+                <input
+                    type="password"
+                    onChange={(e) => {
+                        setCurrentPassword(e.target.value)
+                    }} placeholder='Enter current password'
+                />
+                <label>Choose a New Password:</label>
                 <input
                     type="password"
                     onChange={(e) => {
@@ -44,4 +60,4 @@ const ResetPassword = () => {
     )
 }
 
-export default ResetPassword
+export default ResetPasswordLoggedIn

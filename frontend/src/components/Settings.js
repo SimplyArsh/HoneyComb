@@ -96,7 +96,7 @@ export const Settings = () => {
     };
     */
     const handleChangePasswordClick = () => {
-        navigate('/changePassword');
+        navigate('/changePass');
     }
 
     return (
