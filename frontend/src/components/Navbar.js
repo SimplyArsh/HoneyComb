@@ -85,7 +85,7 @@ const Navbar = () => {
   const handleSignupClick = () => {
     navigate('/signup');
   };
-    
+
   const handleLoginClick = () => {
     navigate('/login');
   };
@@ -100,16 +100,16 @@ const Navbar = () => {
           </div>
           <div className="navbar-right">
             {user && (
-                <>
+              <>
                 <form className="d-flex" role="search">
-                    <input className="form-control me-2 search-input" type="search" style={{ width: '220px' }} placeholder="Search for projects..." aria-label="Search" />
-                    <button className="btn btn-secondary btn-outline-success" type="submit">Search</button>
+                  <input className="form-control me-2 search-input" type="search" style={{ width: '220px' }} placeholder="Search for projects..." aria-label="Search" />
+                  <button className="btn btn-secondary btn-outline-success" type="submit">Search</button>
                 </form>
 
                 <button className="btn btn-secondary" onClick={handleHomeClick}>Home</button>
                 <button className="btn btn-secondary" onClick={handleCreateClick}>Create</button>
                 <SettingsIcon />
-                </>
+              </>
             )}
             {!user && (
               <>
@@ -121,33 +121,33 @@ const Navbar = () => {
             )}
           </div>
         </nav>
-        <hr class="hr" />
+        <hr className="hr" />
 
       </div>
-        <Settings></Settings>
-        <hr class="border-black opacity-100" />
+      <Settings></Settings>
+      <hr className="border-black opacity-100" />
     </header>
 
-  
-
-/* <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container">
-
-    <a class="navbar-brand" href="#">Left Element</a>
 
 
-    <div class="ml-auto">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Right Element</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav> */
+    /* <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+    
+        <a class="navbar-brand" href="#">Left Element</a>
+    
+    
+        <div class="ml-auto">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Right Element</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav> */
   );
-            }
+}
 
- 
+
 export default Navbar;
 

@@ -161,27 +161,27 @@ const Home = () => {
     */
     return (
         <div className="homePage">
-        <div className="spacer"> </div>
+            <div className="spacer"> </div>
 
-        <div><h2>Explore projects</h2> {/* Header */}<div>
-        <div className="small-spacer"> </div>
-            <InfiniteScroll
-                dataLength={recomendedPosts.length}
-                next={fetchMoreData}
-                hasMore={true}
-                loader={<p></p>}
-            >
-                {recomendedPosts.map((post) => (
-                    <>
-                        <PostDetails editable={false} inProfilePage={false} post={post} key={post._id} handleLike={handleLike}
-                            userId={homePageUserId}
-                            color={userLikes.includes(post._id)}></PostDetails>
-                    </>
-                ))}
-            </InfiniteScroll>
+            <div><h2>Explore projects</h2> {/* Header */}<div>
+                <div className="small-spacer"> </div>
+                <InfiniteScroll
+                    dataLength={recomendedPosts.length}
+                    next={fetchMoreData}
+                    hasMore={true}
+                    loader={<p></p>}
+                >
+                    {recomendedPosts.map((post) => (
+                        <>
+                            <PostDetails editable={false} inProfilePage={false} post={post} key={post._id} handleLike={handleLike}
+                                userId={homePageUserId}
+                                color={userLikes.includes(post._id)}></PostDetails>
+                        </>
+                    ))}
+                </InfiniteScroll>
 
-        </div>
-        </div>
+            </div>
+            </div>
         </div>
 
     )
