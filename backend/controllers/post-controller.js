@@ -1,8 +1,7 @@
-const {Post, Comment} = require('../models/post-model')
+const { Post, Comment } = require('../models/post-model')
 const User = require('../models/user-model')
 const mongoose = require('mongoose')
-const jwt = require('jsonwebtoken')
-const { post } = require('../routes/post')
+
 
 // get all posts for the authenticated user
 const getPosts = async (req, res) => {
@@ -29,12 +28,12 @@ const getRecomendationPosts = async (req, res) => {
     const skip = (pageNumber - 1) * pageSize;
 
     const result = await Post.find({}, '-comments').skip(skip).limit(pageSize)
-    
+
     const resultWithProfileNames = await Promise.all(result.map(async (post) => {
       const userId = post.user_id;
-      
+
       const profileResponse = await User.findById(userId)
-      
+
       const profileName = profileResponse.username;
 
       return {
@@ -47,7 +46,7 @@ const getRecomendationPosts = async (req, res) => {
     res.status(200).json(resultWithProfileNames);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error: ', details:{ message: error.message } });
+    res.status(500).json({ error: 'Internal Server Error: ', details: { message: error.message } });
   }
 }
 
@@ -91,12 +90,12 @@ const createPost = async (req, res) => {
   try {
     // create post 
     const user_id = req.user._id
-    const post = await Post.create({ 
-      postName:postName,
-      description:description,
-      skills:skills,
-      user_id:user_id
-     })
+    const post = await Post.create({
+      postName: postName,
+      description: description,
+      skills: skills,
+      user_id: user_id
+    })
 
     res.status(200).json(post)
   } catch (error) {
@@ -150,7 +149,7 @@ const updateLikeCount = async (req, res) => {
   }
 
   const postCheckLikeStatus = await Post.findOne({ _id: id })
-  let post; 
+  let post;
 
 
   if (postCheckLikeStatus.usersWhoLiked.includes(user_id)) {
@@ -162,7 +161,7 @@ const updateLikeCount = async (req, res) => {
       $pull: {
         usersWhoLiked: user_id
       },
-    }, {new: true}) 
+    }, { new: true })
   } else {
     //inserting a like
     post = await Post.findOneAndUpdate({ _id: id }, {
@@ -172,14 +171,14 @@ const updateLikeCount = async (req, res) => {
       $push: {
         usersWhoLiked: user_id
       },
-    }, {new: true}) 
-  } 
+    }, { new: true })
+  }
 
   if (!post) {
     return res.status(400).json({ error: 'No such project post' })
   }
 
-  res.status(200).json({ ...post._doc}) // ...post._doc, 
+  res.status(200).json({ ...post._doc }) // ...post._doc, 
 }
 
 // this function recursively fetches all the nested comments in the post
@@ -198,7 +197,7 @@ const updateLikeCount = async (req, res) => {
 const populateComments = async (comment) => {
   let response = []
   if (comment !== null) {
-    await Promise.all(comment?.comments?.map( async (reply_ids) => {
+    await Promise.all(comment?.comments?.map(async (reply_ids) => {
       const replyFetched = await Comment.findById(reply_ids).lean()
       replyFetched.comments = await populateComments(replyFetched)
       // console.log(replyFetched)
@@ -214,13 +213,13 @@ const getCommentsForPost = async (req, res) => {
   try {
     const post_id = new mongoose.Types.ObjectId(req.params.id)
     if (!post_id) {
-      return res.status(404).json({ error: 'BRO Post id passed in is undefined'})
+      return res.status(404).json({ error: 'BRO Post id passed in is undefined' })
     }
 
     const post = await Post.findById(post_id)
 
     if (!post) {
-      return res.status(404).json({ error: 'BRO Post could not be found'})
+      return res.status(404).json({ error: 'BRO Post could not be found' })
     }
 
     const response = await populateComments(post)
@@ -229,161 +228,161 @@ const getCommentsForPost = async (req, res) => {
     res.status(200).json(response)
   } catch (error) {
     console.error(error)
-    res.status(500).json({error: 'Internal Server Error'})
+    res.status(500).json({ error: 'Internal Server Error' })
   }
 }
 
-  
-  // add a comment to a post
-  const addComment = async (req, res) => {
 
-    const comment = req.body.comment 
-    /* parentCommentId contains either the parent comment,
-    or if doesn't exist, the post; selected by the idSelect part
-    of the query */
-    const parentCommentId = req.query.parentCommentId 
-    const idSelect = parseInt(req.query.idSelect) // string -> int
+// add a comment to a post
+const addComment = async (req, res) => {
 
-    try {
-      if (!comment) {
-        return res.status(404).json({ error: 'BRO Comment fields not filled'})
-      }
+  const comment = req.body.comment
+  /* parentCommentId contains either the parent comment,
+  or if doesn't exist, the post; selected by the idSelect part
+  of the query */
+  const parentCommentId = req.query.parentCommentId
+  const idSelect = parseInt(req.query.idSelect) // string -> int
 
-      const userId = req.user._id 
-
-      // mongoose doc recomends using lean b/c it's responds w/ a cheaper obj
-      const user = await User.find(userId).lean()
-      if (!user) {
-        return res.status(404).json({ error: 'BRO userId was undefined'})
-      }
-
-      const newComment = await Comment.create({
-        username: user[0].username, 
-        user_id: userId,
-        comment: comment
-      })
-      if (!newComment) {
-        return res.status(404).json({ error: 'BRO comment could not be created'})
-      }
-
-      // need to convert from string to Object (object is the native type)
-      // for ID types in mongoose 
-      var commentOrPostId = new mongoose.Types.ObjectId(parentCommentId)
-      if (idSelect === 0) {
-        // adds to a comment (i.e. this is a reply)
-        const updateParentComment = await Comment.findOne(commentOrPostId)
-        if (!updateParentComment) {
-          return res.status(404).json({ error: 'BRO could not add comment to comment'})
-        }
-        updateParentComment.comments.push(newComment._id)
-        await updateParentComment.save()
-        
-        res.status(200).json(newComment)
-      } else {
-        // adds to a post (i.e. this is direct comment)
-        const parentPost = await Post.findOne(commentOrPostId)
-        if (!parentPost) {
-          return res.status(404).json({ error: 'BRO could not add comment to parent'})
-        }
-        parentPost.comments.push(newComment._id)
-        await parentPost.save()
-
-        res.status(200).json(newComment) // tells us that the comment was added successfully
-      }
-
-    } catch (error) {
-      console.log(error)
+  try {
+    if (!comment) {
+      return res.status(404).json({ error: 'BRO Comment fields not filled' })
     }
 
-  }
+    const userId = req.user._id
 
-  // recursively deletes all replies when a comment is deleted
-  // this recursive function has the more optimized performance, however, it doesnt work ):
-  // if someone wants to debug they can
-  // const deleteCommentThread = async (comment) => {
-
-  //   try {
-  //     const commentId = new mongoose.Types.ObjectId(comment)
-  //     const commentFound = await Comment.findOne(commentId).lean()
-  //     console.log("comment:", commentFound)
-
-  //     commentFound.comments.forEach(async (reply) => {
-  //       console.log("replyId: ", reply)
-  //       await deleteCommentThread(reply)
-  //     })
-
-  //     const deletedPost = await Comment.findOneAndDelete(commentId).lean()
-  //     if (!deletedPost) {
-  //       return res.status(404).json({ error: 'BRO Could not find comment to delete'})
-  //     }
-  //   } catch (error) {
-  //     res.status(404).json({ error: "There was an error"})
-  //   }
-  // }
-
-  const deleteCommentsRecursively = async (aPostId, deleteChainStart, comment, commentDeleteId) => {
-    if (comment !== null) {
-      await Promise.all(comment?.comments?.map( async (reply_ids) => {
-        const replyFetched = await Comment.findById(reply_ids).lean()
-        // console.log("ReplyId: ", reply_ids, " and Comment Delete ID is: ", commentDeleteId)
-        var deleteChainNew = deleteChainStart
-        if (reply_ids.equals(commentDeleteId)) {
-          deleteChainNew = true
-          if (aPostId) {
-            // console.log("from the prev one: ", comment._id, " deleting: ", reply_ids)
-            await Post.findOneAndUpdate(comment._id, {$pull: {comments: reply_ids}})
-          } else {
-            // console.log("from the prev one: ", comment._id, " deleting: ", reply_ids)
-            await Comment.findOneAndUpdate(comment._id, {$pull: {comments: reply_ids}}) // we are pulling reply id from the comment just above
-          }
-        }
-        await deleteCommentsRecursively(false, deleteChainNew, replyFetched, commentDeleteId)
-        if (deleteChainNew) {
-          // console.log("In recursive delete: ", replyFetched.comment, reply_ids, deleteChainNew)
-          await Comment.findOneAndDelete(reply_ids)
-        }
-      }));
+    // mongoose doc recomends using lean b/c it's responds w/ a cheaper obj
+    const user = await User.find(userId).lean()
+    if (!user) {
+      return res.status(404).json({ error: 'BRO userId was undefined' })
     }
-  }
 
-  const deleteComment = async (req, res) => {
-    try {
+    const newComment = await Comment.create({
+      username: user[0].username,
+      user_id: userId,
+      comment: comment
+    })
+    if (!newComment) {
+      return res.status(404).json({ error: 'BRO comment could not be created' })
+    }
 
-      const commentId = new mongoose.Types.ObjectId(req.query.commentId)  
-
-      if (!commentId) {
-        return res.status(404).json({ error: 'BRO Post id passed is undefined'})
+    // need to convert from string to Object (object is the native type)
+    // for ID types in mongoose 
+    var commentOrPostId = new mongoose.Types.ObjectId(parentCommentId)
+    if (idSelect === 0) {
+      // adds to a comment (i.e. this is a reply)
+      const updateParentComment = await Comment.findOne(commentOrPostId)
+      if (!updateParentComment) {
+        return res.status(404).json({ error: 'BRO could not add comment to comment' })
       }
+      updateParentComment.comments.push(newComment._id)
+      await updateParentComment.save()
 
-      const postParentId = new mongoose.Types.ObjectId(req.query.postParentId)
-      const post = await Post.findById(postParentId).lean()
+      res.status(200).json(newComment)
+    } else {
+      // adds to a post (i.e. this is direct comment)
+      const parentPost = await Post.findOne(commentOrPostId)
+      if (!parentPost) {
+        return res.status(404).json({ error: 'BRO could not add comment to parent' })
+      }
+      parentPost.comments.push(newComment._id)
+      await parentPost.save()
 
-      //recursively deletes the comment, deletes the replies, removes any references to the comments to other objects O(n^1000) i think. yeah, ik. but stfu
-      await deleteCommentsRecursively(true, false, post, commentId)
-
-      res.status(200).json({ sucess: "ok!"})
-    } catch (error) {
-      console.log(error)
+      res.status(200).json(newComment) // tells us that the comment was added successfully
     }
 
+  } catch (error) {
+    console.log(error)
   }
 
-  //editing a comment
-  const editComment = async (req, res) => {
+}
 
-    const editCommentId = new mongoose.Types.ObjectId(req.body.id)
-    try {
-      console.log("here")
-      const CommentToEdit = await Comment.findOneAndUpdate(editCommentId)
-      
-      CommentToEdit.comment = req.body.editedComment
-      CommentToEdit.save()
-      console.log(CommentToEdit)
-      res.status(200)
-    } catch (error) {
-      res.status(404).json({ error:"There was some error in editing the comment" })
+// recursively deletes all replies when a comment is deleted
+// this recursive function has the more optimized performance, however, it doesnt work ):
+// if someone wants to debug they can
+// const deleteCommentThread = async (comment) => {
+
+//   try {
+//     const commentId = new mongoose.Types.ObjectId(comment)
+//     const commentFound = await Comment.findOne(commentId).lean()
+//     console.log("comment:", commentFound)
+
+//     commentFound.comments.forEach(async (reply) => {
+//       console.log("replyId: ", reply)
+//       await deleteCommentThread(reply)
+//     })
+
+//     const deletedPost = await Comment.findOneAndDelete(commentId).lean()
+//     if (!deletedPost) {
+//       return res.status(404).json({ error: 'BRO Could not find comment to delete'})
+//     }
+//   } catch (error) {
+//     res.status(404).json({ error: "There was an error"})
+//   }
+// }
+
+const deleteCommentsRecursively = async (aPostId, deleteChainStart, comment, commentDeleteId) => {
+  if (comment !== null) {
+    await Promise.all(comment?.comments?.map(async (reply_ids) => {
+      const replyFetched = await Comment.findById(reply_ids).lean()
+      // console.log("ReplyId: ", reply_ids, " and Comment Delete ID is: ", commentDeleteId)
+      var deleteChainNew = deleteChainStart
+      if (reply_ids.equals(commentDeleteId)) {
+        deleteChainNew = true
+        if (aPostId) {
+          // console.log("from the prev one: ", comment._id, " deleting: ", reply_ids)
+          await Post.findOneAndUpdate(comment._id, { $pull: { comments: reply_ids } })
+        } else {
+          // console.log("from the prev one: ", comment._id, " deleting: ", reply_ids)
+          await Comment.findOneAndUpdate(comment._id, { $pull: { comments: reply_ids } }) // we are pulling reply id from the comment just above
+        }
+      }
+      await deleteCommentsRecursively(false, deleteChainNew, replyFetched, commentDeleteId)
+      if (deleteChainNew) {
+        // console.log("In recursive delete: ", replyFetched.comment, reply_ids, deleteChainNew)
+        await Comment.findOneAndDelete(reply_ids)
+      }
+    }));
+  }
+}
+
+const deleteComment = async (req, res) => {
+  try {
+
+    const commentId = new mongoose.Types.ObjectId(req.query.commentId)
+
+    if (!commentId) {
+      return res.status(404).json({ error: 'BRO Post id passed is undefined' })
     }
+
+    const postParentId = new mongoose.Types.ObjectId(req.query.postParentId)
+    const post = await Post.findById(postParentId).lean()
+
+    //recursively deletes the comment, deletes the replies, removes any references to the comments to other objects O(n^1000) i think. yeah, ik. but stfu
+    await deleteCommentsRecursively(true, false, post, commentId)
+
+    res.status(200).json({ sucess: "ok!" })
+  } catch (error) {
+    console.log(error)
   }
+
+}
+
+//editing a comment
+const editComment = async (req, res) => {
+
+  const editCommentId = new mongoose.Types.ObjectId(req.body.id)
+  try {
+    console.log("here")
+    const CommentToEdit = await Comment.findOneAndUpdate(editCommentId)
+
+    CommentToEdit.comment = req.body.editedComment
+    CommentToEdit.save()
+    console.log(CommentToEdit)
+    res.status(200)
+  } catch (error) {
+    res.status(404).json({ error: "There was some error in editing the comment" })
+  }
+}
 
 module.exports = {
   getPosts,
