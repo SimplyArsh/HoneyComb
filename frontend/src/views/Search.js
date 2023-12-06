@@ -13,10 +13,10 @@ import { useLocation } from 'react-router-dom';
 //     items: []
 // }
 
-const Home = () => {
+const Search = () => {
     const [pageNumber, pageNumberUpdate] = useState(1)
     const { user } = useAuthContext()
-    const [homePageUserId, setHomePageUserId] = useState()
+    const [searchPageUserId, setSearchPageUserId] = useState()
     const { recomendedPosts, editFetchNeeded, dispatch, userLikes } = useHomeContext()
     const isInitialRender = useRef(true);
 
@@ -29,7 +29,7 @@ const Home = () => {
         navigate(`/search?results=${searchTerm}`, {state:{lookup: searchTerm}});
         window.location.reload();
     }
- 
+
     const fetchMoreData = () => {
         if (editFetchNeeded) {
             pageNumberUpdate(pageNumber-1)
@@ -39,9 +39,10 @@ const Home = () => {
             isInitialRender.current = false;
             return;
         }
-        fetch('api/post/recomendations?' + new URLSearchParams({
+        fetch('api/post/find?' + new URLSearchParams({
             "pageNumber": pageNumber,
-            "pageSize": 4
+            "pageSize": 4,
+            "lookup": location.state.lookup,
         }), { 
             headers: {"Authorization": 'Bearer ' + user.token}
         }).then(
@@ -73,7 +74,7 @@ const Home = () => {
                 return response.json();
         }).then(
             (data) => {
-                setHomePageUserId(data.userId)
+                setSearchPageUserId(data.userId)
                 dispatch({ type: 'SET_USER_LIKES', payload: data})
         })
     }; 
@@ -138,76 +139,76 @@ const Home = () => {
        }
 
 
-        // try {
-        //     const response = await fetch ('/api/post/editComment', { 
-        //         headers: { // include token in header
-        //             'Content-Type': 'application/json',
-        //             'Authorization': 'Bearer ' + user.token,
-        //         },
-        //         method: 'PATCH',
-        //         body: JSON.stringify({
-        //             id: "6559c3c837797e4fb897ebf0",
-        //             editedComment: "this is the new value"
-        //         })
-        //     })
-        //     const res = await response.json()
-        //     console.log(res)
-        // } catch (error) {
-        //     console.log(error)
-        // }
+       // try {
+       //     const response = await fetch ('/api/post/editComment', {
+       //         headers: { // include token in header
+       //             'Content-Type': 'application/json',
+       //             'Authorization': 'Bearer ' + user.token,
+       //         },
+       //         method: 'PATCH',
+       //         body: JSON.stringify({
+       //             id: "6559c3c837797e4fb897ebf0",
+       //             editedComment: "this is the new value"
+       //         })
+       //     })
+       //     const res = await response.json()
+       //     console.log(res)
+       // } catch (error) {
+       //     console.log(error)
+       // }
 
-        // try {
-        //     const response = await fetch ('/api/post/comments/' + "6559af4bc4256aaea0270d12", { 
-        //         headers: { // include token in header
-        //             'Content-Type': 'application/json',
-        //             'Authorization': 'Bearer ' + user.token,
-        //         },
-        //         method: 'GET'
-        //     })
-        //     const res = await response.json()
-        //     console.log(res)
-        // } catch (error) {
-        //     console.log(error)
-        // }
 
-    }
-    */
-    return (
-        <div className="homePage">
-            <div className="spacer"> </div>
+       // try {
+       //     const response = await fetch ('/api/post/comments/' + "6559af4bc4256aaea0270d12", {
+       //         headers: { // include token in header
+       //             'Content-Type': 'application/json',
+       //             'Authorization': 'Bearer ' + user.token,
+       //         },
+       //         method: 'GET'
+       //     })
+       //     const res = await response.json()
+       //     console.log(res)
+       // } catch (error) {
+       //     console.log(error)
+       // }
 
-            <div><h2>Explore projects</h2> {/* Header */}<div>
-                <div className="small-spacer"> </div>
-                {/* Search bar */}
-                <input
-                    type="text"
-                    placeholder="Search for posts..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <button onClick={handleSearchClick}>Search</button>
 
-                <InfiniteScroll
-                    dataLength={recomendedPosts.length}
-                    next={fetchMoreData}
-                    hasMore={true}
-                    loader={<p></p>}
-                >
-                    {recomendedPosts.map((post) => (
-                        <>
-                            <PostDetails editable={false} inProfilePage={false} post={post} key={post._id} handleLike={handleLike}
-                                userId={homePageUserId}
-                                color={userLikes.includes(post._id)}></PostDetails>
-                        </>
-                    ))}
-                </InfiniteScroll>
+   }
+   */
 
-            </div>
-            </div>
+
+    return(
+        <div>
+            {/* Search bar */}
+            <input
+                type="text"
+                placeholder="Search for posts..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button onClick={handleSearchClick}>Search</button>
+
+            <InfiniteScroll 
+                dataLength={recomendedPosts.length}
+                next={fetchMoreData}
+                hasMore={true}
+                loader={<p>Loading ...</p>}
+            > 
+                {recomendedPosts.map((post) => (
+                    <PostDetails
+                        editable={false}
+                        inProfilePage={false}
+                        post={post}
+                        key={post._id}
+                        handleLike={handleLike}
+                        userId={searchPageUserId}
+                        color={userLikes.includes(post._id)}
+                    ></PostDetails>
+                ))}
+            </InfiniteScroll>
         </div>
-
-    )
+    );
 }
 
-export default Home
+export default Search
 

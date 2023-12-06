@@ -13,7 +13,8 @@ const {
     getCommentsForPost,
     addComment,
     deleteComment,
-    editComment
+    editComment,
+    getSearchedPosts
 } = require('../controllers/post-controller')
 const requireAuth = require('../middleware/require-auth')
 const router = express.Router()
@@ -27,13 +28,13 @@ router.patch('/editComment', editComment) // patch a comment
 
 //GETS
 router.get('/recomendations', getRecomendationPosts)
-router.get('/comments/:id', getCommentsForPost) // GETS all comments for a post
-router.get('/', getPosts)         // GET all posts
+router.get('/find', getSearchedPosts)        //perform a search of posts and GET them
 router.get('/user/:id', getUserPosts)         // GET all posts for a specific user
+router.get('/comments/:id', getCommentsForPost) // GETS all comments for a post
 router.get('/:id', getPost)       // GET a single post based on post id
+router.get('/', getPosts)         // GET all posts
 
 // POSTS
-router.get('/search', searchPosts)
 router.post('/create', createPost)      // POST a new post
 router.post('/addComment', addComment)   // POSTS a new comment
 
@@ -44,10 +45,6 @@ router.patch('/deleteComment', deleteComment) //Delete a comment (all the replie
 //OTHERS
 router.delete('/:id', deletePost) // DELETE a post based on post id
 router.patch('/:id', updatePost)  // UPDATE a post based on post id
-
-
-
-
 
 
 module.exports = router

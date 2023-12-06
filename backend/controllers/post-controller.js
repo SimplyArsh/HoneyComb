@@ -2,7 +2,7 @@ const {Post, Comment} = require('../models/post-model')
 const User = require('../models/user-model')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
-const { post } = require('../routes/post')
+const { post, all } = require('../routes/post')
 
 // get all posts for the authenticated user
 const getPosts = async (req, res) => {
@@ -385,46 +385,37 @@ const getCommentsForPost = async (req, res) => {
     }
   }
 
-const searchPosts = async (req, res) => {
+  const getSearchedPosts = async (req, res) => {
+    try {
+      const pageSize = req.query.pageSize;
+      const pageNumber = req.query.pageNumber;
 
-    const { search } = req.query
-    let posts
-    if (search) {
-      // If search exists, the user typed in the search bar
-      posts = await Post.aggregate([
-        {
-        '$search': {
-          'index': 'postSearch', 
-          'text': {
-            'query': search, 
-            'path': 'postName'
-          }
-        }
-      }, {
-        '$limit': 5
-      }, {
-        '$project': {
-          '_id': 1, 
-          'postName': 1, 
-          'user_id': 1, 
-          'createdAt': 1, 
-          'completed': 1, 
-          'numberOfLikes': 1
-        }
-      }
-    ])
-  } else {
-    // The search is empty so the value of "search" is undefined
-    posts = await Post.find().sort({ createdAt: 'desc' })
+      const lookup = req.query.lookup;
+  
+      const skip = (pageNumber - 1) * pageSize;
+
+      const result = await Post.find({ postName: lookup }, '-comments').skip(skip).limit(pageSize);
+        
+      const resultWithProfileNames = await Promise.all(result.map(async (post) => {
+        const userId = post.user_id;
+        
+        const profileResponse = await User.findById(userId)
+        
+        const profileName = profileResponse.username;
+  
+        return {
+          ...post._doc,
+          profile_name: profileName,
+        };
+  
+      }));
+  
+      res.status(200).json(resultWithProfileNames);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error: ', details:{ message: error.message } });
+    }
   }
-
-  return res.status(200).json({
-    statusCode: 200,
-    message: 'Fetched posts',
-    data: { posts },
-  })
-}
-
 
 
 module.exports = {
@@ -434,7 +425,7 @@ module.exports = {
   createPost,
   deletePost,
   updatePost,
-  searchPosts,
+  getSearchedPosts,
   getRecomendationPosts,
   updateLikeCount,
   getCommentsForPost,
