@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { UserContextProvider } from './context/user-context'
 import { AuthContextProvider } from './context/auth-context'
+import { HomeContextProvider } from './context/home-context'
 import { ProfileContextProvider } from './context/profile-context'
 import { SettingsContextProvider } from './context/settings-context'
 
@@ -15,7 +16,9 @@ root.render(
       <UserContextProvider>
         <ProfileContextProvider>
           <SettingsContextProvider>
-            <App />
+            <HomeContextProvider>
+              <App />
+            </HomeContextProvider>
           </SettingsContextProvider>
         </ProfileContextProvider>
       </UserContextProvider>

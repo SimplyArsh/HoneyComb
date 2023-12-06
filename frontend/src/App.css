@@ -5,8 +5,19 @@
 @import url("css-components/profile.css");
 @import url("css-components/create-project.css");
 
+.App-header {
+  background: var(--body_background);
+  color: var(--body_color);
+}
+
 .App {
   text-align: center;
+  background: var(--body_background);
+  color: var(--body_color);
+}
+
+.App-link {
+  color: var(--link_color);
 }
 
 .custom-button {
@@ -37,6 +48,16 @@
   width: 10px;
   /* Adjust the width as needed */
   height: 20px;
+  /* Adjust the height as needed */
+  display: inline-block;
+  /* or use display: block; */
+}
+
+
+.very-long-spacer {
+  width: 10px;
+  /* Adjust the width as needed */
+  height: 200px;
   /* Adjust the height as needed */
   display: inline-block;
   /* or use display: block; */

@@ -19,6 +19,9 @@ const Login = () => {
             <div className="spacer"></div>
             <h2>Login</h2>
             <div className="spacer"></div>
+            <div className="container mt-6">
+                <div className="card">
+            <div className="spacer"></div>
             <form className="create" onSubmit={handleSubmit}>
                 <label>Email:</label>
                 <input
@@ -38,7 +41,7 @@ const Login = () => {
 
                 {error && <div className="error">{error}</div>}
 
-
+                  
                 <div>Don't have an account yet?</div>
                 <Link to='/signup'>
                     <p>Sign Up</p>
@@ -49,6 +52,9 @@ const Login = () => {
                     <p>Reset Password</p>
                 </Link>
             </form>
+            </div>
+            <div className="very-long-spacer"></div>
+        </div>
         </div>
     )
 }

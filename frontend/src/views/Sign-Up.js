@@ -2,6 +2,9 @@ import { useState } from "react"
 import { useSignup } from '../hooks/use-signup'
 
 const SignUp = () => {
+    // const { token, dispatch } = useUserContext()
+    // const navigate = useNavigate()
+
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')

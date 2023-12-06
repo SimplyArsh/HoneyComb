@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useLogout } from '../hooks/use-logout'
 import { useSettingsContext } from "../hooks/use-settings-context"
 import { useAuthContext } from '../hooks/use-auth-context';
+import DarkMode from './Dark-Mode';
 
 export const Settings = () => {
 
@@ -68,6 +69,7 @@ export const Settings = () => {
 
     };
 
+    /*
     const handleLanguageClick = async (language) => {
         dispatch({ type: 'SET_LANGUAGE', payload: language })
         dispatch({ type: 'SET_INVISIBLE' }) // close settings after button clicked
@@ -92,7 +94,7 @@ export const Settings = () => {
             return error;
         }
     };
-
+    */
     const handleChangePasswordClick = () => {
         navigate('/changePass');
     }
@@ -106,7 +108,10 @@ export const Settings = () => {
                     </div>
                     <ul className="list-group list-group-flush" >
                         <button className="btn btn-secondary" onClick={handleProfileClick}>Profile</button>
+                        <DarkMode />
                         <button className="btn btn-secondary" onClick={handleThemeClick}>Change Theme</button>
+                        {/* 
+                        TODO LATER:
                         <div className="dropdown">
                             <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
                                 Language: {settings.language}
@@ -116,6 +121,7 @@ export const Settings = () => {
                                 <button className="dropdown-item" onClick={() => { handleLanguageClick('Chinese') }} >Chinese</button>
                             </div>
                         </div>
+                        */}
                         <button className="btn btn-secondary" onClick={handleChangePasswordClick}>Change password</button>
                         <button className="btn btn-secondary" onClick={handleLogoutClick}>Logout</button>
                     </ul>

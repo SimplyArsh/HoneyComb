@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken')
 
 const requireAuth = async (req, res, next) => {
   // verify user is authenticated
-  const { authorization } = req.headers // one of the header properties is authorization. The idea is to add the authorization property (includes token) when sending requests from the frontend to backend
 
+  const { authorization } = req.headers // one of the header properties is authorization. The idea is to add the authorization property (includes token) when sending requests from the frontend to backend
   if (!authorization) {
     return res.status(401).json({ error: 'Authorization token required' })
   }

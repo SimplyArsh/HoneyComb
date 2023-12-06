@@ -1,5 +1,134 @@
 /* homepage */
 .home {
-    display: grid;
-    gap: 100px;
+  display: grid;
+  gap: 100px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.name {
+  margin: 0;
+}
+
+.date {
+  margin: 0;
+  color: #888;
+}
+
+.content {
+  margin-top: 8px;
+}
+
+.project_name {
+  padding-left: 5px;
+}
+
+.description {
+  margin: 0;
+  padding-left: 8px;
+  /* Adjust the indentation as needed */
+}
+
+.actions {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.like-button,
+.comment-button {
+  padding: 8px;
+  margin-right: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  /*background-color: #d3dade;
+  border-color: #d3dade;
+  color: rgb(255, 255, 255)fff;*/
+  /*these buttons will have default secondary color, depending on theme setting*/
+}
+
+.like-button.colored {
+  padding: 8px;
+  margin-right: 8px;
+  cursor: pointer;
+  background-color: #FAA0A0;
+  color: #861818;
+  border-color: #FAA0A0;
+}
+
+.like-button:hover {
+  background-color: #FFC0CB;
+  border-color: #FFC0CB;
+}
+
+.comment-button.colored {
+  padding: 8px;
+  margin-right: 8px;
+  cursor: pointer;
+  background-color: #FFD36E;
+  color: #861818;
+}
+
+.comment-button:hover {
+  background-color: #FFE5B4;
+  border-color: #FFE5B4;
+}
+.likes {
+  margin-right: 8px;
+  color: #888;
+}
+
+.commentContainer {
+  margin-top: 6px;
+  background-color: #FFE5B4;
+  display: flex;
+  flex-direction: column;
+  padding: 5px 10px;
+  width: 300px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.commentContainer:hover {
+  background-color: #FFD36E;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.first_input {
+  margin: 0;
+}
+
+.commentContainer>span {
+  margin: 0 5px;
+}
+
+.reply {
+  margin-top: 1px;
+  font-size: 12px;
+  padding: 5px;
+  border-radius: 6px;
+  color: #4e4e4e;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.comment {
+  color: #ffffff;
+  background-color: #569dff;
+  letter-spacing: 0.8px;
 }

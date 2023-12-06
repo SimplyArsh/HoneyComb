@@ -47,7 +47,7 @@ const getUserOwnProfile = async (req, res) => {
     return res.status(404).json({ error: 'No such user' })
   }
   user = user._doc
-  user = { username: user.username, email: user.email, aboutMe: user.aboutMe, postList: user.postList, numberOfLikes: user.numberOfLikes, numberOfPosts: user.numberOfPosts, createdAt: user.createdAt } // only include basic user info, not passwords etc
+  user = { username: user.username, email: user.email, aboutMe: user.aboutMe, postList: user.postList, numberOfLikes: user.numberOfLikes, numberOfPosts: user.numberOfPosts, createdAt: user.createdAt, postsLiked:user.postsLiked, userId: id } // only include basic user info, not passwords etc
 
   res.status(200).json(user) // change this later to only include basic info
 }
@@ -70,6 +70,59 @@ const getProfile = async (req, res) => {
 
   res.status(200).json(user) // change this later to only include basic info
 }
+
+const updateUserLikes = async (req, res) => {
+
+  // checking if the user has already liked
+  // user has already been authorzied, so token guarnteed at this point
+  const user_id = req.user._id
+  const post_id = req.params.id
+  
+
+  if (!mongoose.Types.ObjectId.isValid(post_id)) {
+    return res.status(404).json({ error: 'Project doesnt exist' })
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(user_id)) {
+    return res.status(404).json({ error: 'User doesnt exist' })
+  }
+
+  const checkUserLikeStatus = await User.findOne({ _id: user_id })
+  let post; 
+  let liked = null;
+
+  if (checkUserLikeStatus.postsLiked.includes(post_id)) {
+    // removing the like
+    liked = false; 
+    post = await User.findOneAndUpdate({ _id: user_id }, {
+      $set: {
+        numberOfLikes: checkUserLikeStatus.numberOfLikes - 1,
+      },
+      $pull: {
+        postsLiked: post_id
+      },
+    }, {new: true}) 
+  } else {
+    //inserting a like
+    liked = true; 
+    post = await User.findOneAndUpdate({ _id: user_id }, {
+      $set: {
+        numberOfLikes: checkUserLikeStatus.numberOfLikes - 1,
+      },
+      $push: {
+        postsLiked: post_id
+      },
+    }, {new: true}) 
+  } 
+
+
+  if (!post) {
+    return res.status(400).json({ error: 'There was an internal error updating the user information' })
+  }
+
+  res.status(200).json({ ...post._doc, liked: liked }) // ...post._doc, 
+}
+
 
 //put /follow/:id
 const follow = async (req, res) => {
@@ -144,4 +197,4 @@ const updateSettings = async (req, res) => {
 }
 
 
-module.exports = { userSignup, userLogin, getProfile, getUserOwnProfile, follow, unfollow, updateSettings }
+module.exports = { userSignup, userLogin, getProfile, getUserOwnProfile, updateUserLikes, follow, unfollow, updateSettings }

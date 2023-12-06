@@ -1,4 +1,26 @@
-/* All of these are imported or came with the template. Change it however you wish*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+
+/* Defined variables*/
+
+:root {
+  --body_background: #f5eccd;
+  --body_color: black;
+  --link_color: navy;
+  --primary: #1aac83;
+  --error: #e7195a;
+}
+
+[data-theme="dark"] {
+  --body_background: #282c34;
+  --body_color: white;
+  --link_color: cyan;
+}
+
+/* theme change*/
+
+* {
+  transition: all 0.3s ease-in-out;
+}
 
 body {
   margin: 0;
@@ -7,6 +29,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: "Poppins";
 }
 
 code {
@@ -14,24 +37,18 @@ code {
     monospace;
 }
 
-/* google font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
-
-/* layout */
-:root {
-  --primary: #1aac83;
-  --error: #e7195a;
-}
-
-body {
-  background: #f1f1f1;
-  margin: 0;
-  font-family: "Poppins";
-}
-
+/* Navbar */
 header {
   background: #FFD36E;
   font-size: 5rem;
+}
+
+/*Navbar buttons + Like/Comment buttons (secondary color) */
+.btn-secondary {
+  background-color: #000;
+  /* Change this to the color you want for the button */
+  /*border-color: /* Change this to the color you want for the button border */
+  /* color: #fff; /* Change this to the desired text color on the button */
 }
 
 header .container {
@@ -55,6 +72,59 @@ header a {
 }
 
 /* Bootstrap styling elements for CSS */
+
+/* Login */
+label,
+input {
+  display: block;
+}
+
+input {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+form button {
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+div.error {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+input.error {
+  border: 1px solid var(--error);
+}
+
+/* Profile page */
+
+.profilePage {
+  display: flex;
+  flex-direction: column;
+}
+
+.profileUserInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 
 .btn-primary {
   background-color: #007bff;
