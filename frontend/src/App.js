@@ -10,6 +10,7 @@ import Login from './views/Login'
 import SignUp from './views/Sign-Up'
 import RequestResetPassword from './views/Pass-Request-Reset'
 import ResetPassword from './views/Pass-Reset'
+import ResetPasswordLoggedIn from './views/Pass-Reset-Logged-In';
 import CreateProject from './views/Create-Project'
 import Profile from './views/Profile'
 import PageNotFound from './views/Page-Not-Found'
@@ -51,6 +52,10 @@ function App() {
               <Route
                 path='/resetPass'
                 element={<ResetPassword />}  //Allow user to reset password reset even if not logged in
+              />
+              <Route
+                path='/changePass'
+                element={<ResetPasswordLoggedIn />}  //Allow user to reset password reset even if not logged in
               />
               <Route
                 path='/createProject'
