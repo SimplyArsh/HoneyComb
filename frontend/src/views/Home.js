@@ -1,4 +1,5 @@
 import PostDetails from "../components/Post-Details";
+import React from 'react'; // Add this line at the top of your file
 import { useEffect, useState, useRef } from 'react'
 import { useAuthContext } from '../hooks/use-auth-context'
 import { useHomeContext } from '../hooks/use-home-context'
@@ -172,12 +173,13 @@ const Home = () => {
                     loader={<p></p>}
                 >
                     {recomendedPosts.map((post) => (
-                        <>
-                            <PostDetails editable={false} inProfilePage={false} post={post} key={post._id} handleLike={handleLike}
+                        <React.Fragment key={post._id}>
+                            <PostDetails editable={false} inProfilePage={false} post={post} handleLike={handleLike}
                                 userId={homePageUserId}
-                                color={userLikes.includes(post._id)}></PostDetails>
-                        </>
+                                color={userLikes.includes(post._id)} />
+                        </React.Fragment>
                     ))}
+
                 </InfiniteScroll>
 
             </div>
