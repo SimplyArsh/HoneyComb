@@ -4,7 +4,7 @@ import { useRequestReset } from "../hooks/use-request-reset-pass"
 const RequestResetPassword = () => {
 
     const [email, setEmail] = useState('')
-    const { request_reset, isLoading, error } = useRequestReset()
+    const { request_reset, isLoading, error, successMessage } = useRequestReset()
 
     const handleSubmit = async (e) => {
         e.preventDefault() // Don't refresh the page by default
@@ -24,6 +24,7 @@ const RequestResetPassword = () => {
                     }}
                 />
                 <button className="btn submit-button" disabled={isLoading}>Send Request</button>
+                {successMessage && <div className="success">{successMessage}</div>}
                 {error && <div className="error">{error}</div>}
             </form>
         </div>

@@ -3,29 +3,35 @@ import { useState } from "react"
 export const useRequestReset = () => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
+    const [successMessage, setSuccessMessage] = useState(null)
 
     const request_reset = async (email) => {
         setIsLoading(true)
         setError(null)
+        setSuccessMessage(null)
 
-        const response = await fetch('/api/auth/requestResetPassword', { // check if login is valid
-            method: 'POST',
-            body: JSON.stringify({email}),
-            headers: {
-                'Content-Type': 'application/json'
+        try {
+            const response = await fetch('/api/auth/requestResetPassword', {
+                method: 'POST',
+                body: JSON.stringify({email}),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            const json = await response.json()  //Get back response
+
+            if (!response.ok) {
+                setError(json.error)
+            } else {
+                setSuccessMessage(json.message)
             }
-        })
-
-        const json = await response.json() // get back response
-
-        if (!response.ok) {
-            setIsLoading(false)
-            setError(json.error)
         }
-
-        if (response.ok) {
+        catch (error) {
+            setError("An error occurred while sending the request.")
+        } 
+        finally {
             setIsLoading(false)
         }
     }
-    return { request_reset, isLoading, error }
+    return { request_reset, isLoading, error, successMessage }
 }
