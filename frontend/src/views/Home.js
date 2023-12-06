@@ -67,6 +67,7 @@ const Home = () => {
                 })
     };
 
+
     useEffect(() => {
         if (!user) { // is user logged in? 
             return (
@@ -75,6 +76,7 @@ const Home = () => {
         }
         // console.log(recomendedPosts)
         fetchMoreData(); // Initial fetch when the component mounts
+        // eslint-disable-next-line
     }, [editFetchNeeded]); // editToggle will fetch new data whenever there is a change. 
 
     const handleLike = async (post) => {
