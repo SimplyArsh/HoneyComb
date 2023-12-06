@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactComponent as Sun } from "../assets/Sun.svg";
 import { ReactComponent as Moon } from "../assets/Moon.svg";
-import "../css-components/Dark-Mode.css";
+import "../css-components/dark-mode.css";
 
 const DarkMode = () => {
     const setDarkMode = () => {
