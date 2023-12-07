@@ -26,6 +26,9 @@ Honeycomb is a collaborative platform designed to connect individuals with share
 - **Login/Signup:**
   - Create a personalized account to unlock the full suite of features and join the Honeycomb community.
 
+- **Addressing Security**
+  - Forgot your password? Don't sweat it! Recieve an email from honeycomb with your reset password link in the blink of an eye
+
 - **Post Management:**
   - Create, edit, delete, and mark your posts as complete, maintaining an organized and up-to-date profile.
 
@@ -37,6 +40,9 @@ Honeycomb is a collaborative platform designed to connect individuals with share
 
 - **Theme Options:**
   - Choose between light and dark mode to create a comfortable and customizable user experience.
+
+- **Unique Profiles**
+  - Customize your experience with Honeycomb's exclusive ~~waifus~~ avatars
 
 ## Contribution Guidelines
 
@@ -54,4 +60,37 @@ We encourage contributors to adhere to the following guidelines:
 - **Positive Environment:**
   - Maintain a positive atmosphere. We believe that a supportive environment enhances creativity and productivity.
 
+## Setup
+After cloning the repository via 
+
+```
+git clone https://github.com/SimplyArsh/35l_project.git
+```
+
+move into the backend folder and install node.js packages via:
+
+```
+cd backend
+npm install
+```
+
+<details>
+
+<summary>bcrypt error</summary>
+
+Occasionally, after cloning the repo and calling "npm install", you will encounter this error:
+
+![Bcrypt Image](https://github.com/SimplyArsh/35l_project/assets/115979938/cdbae67d-39e8-40dc-98d1-f49572850d4e)
+
+To resolve, uninstall and then reinstall bcrypt
+
+
+Now, do the same for the frontend!
+
+</details>
+
+Do the same for frontend
+
+## Final Words ##
 Remember, the Honeycomb community thrives on collaboration, respect, and shared passion. Let's build something amazing together!
+
