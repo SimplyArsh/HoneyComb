@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Comment from "../components/Comments"
 import useNode from "../hooks/comment-node.js"
 import { useAuthContext } from '../hooks/use-auth-context'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 // format for post displays
 const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handleEdit, handleDelete, handleLike,
@@ -12,6 +13,13 @@ const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handle
     const [comments, setComments] = useState(null) // sets all comments for a post
     const [openCommentPanel, setOpenCommentPanel] = useState(false)
     const { user } = useAuthContext()
+    const navigate = useNavigate()
+    const location = useLocation()
+    
+    const handleAvatar = async () => {
+        navigate('/profile/:id', {state:{id: post.user_id}})
+        console.log(post.user_id)
+    }
 
     const handleInsertNode = async (commentId, item) => {
         var parentSelector = 0
@@ -71,11 +79,18 @@ const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handle
         }
 
     }
+    
     let avatarURL = "https://img.freepik.com/free-photo/fashion-boy-with-yellow-jacket-blue-pants_71767-96.jpg?w=1380&t=st=1700010094~exp=1700010694~hmac=b9d7f8d56b66ac184e10e6b6fc4df817beaf81b63a6e495f32ad81e1eebbbb1a"
     return (
         <div className="container mt-6">
             <div className="card postDetails">
-                {!inProfilePage && <div><img className="avatar" src={avatarURL} alt="User Avatar" />
+                {!inProfilePage && <div>
+                    <button
+                        className="button"
+                        onClick={() => handleAvatar(post)}
+                    > 
+                        <img className="avatar" src={avatarURL} alt="User Avatar" />
+                    </button> 
                     <h3 className="name">User: {post.profile_name}</h3>
                 </div>}
                 <h4 className="postName">Post: {post.postName}</h4>
