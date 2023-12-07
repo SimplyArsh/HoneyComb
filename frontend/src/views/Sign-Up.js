@@ -11,7 +11,7 @@ function AvatarButton({ isHighlighted, value, onSquareClick }) {
     let avatarNumber = null
     switch(value) {
         case "1":
-            avatarNumber = require(`../assets/i1.jpeg`);
+            avatarNumber = require('../assets/i1.jpeg');
             break;
         case "2":
             avatarNumber = require(`../assets/i2.jpeg`);
@@ -66,52 +66,59 @@ const SignUp = () => {
 
     return (
         <div className="signUp">
+            <div className="spacer"></div>
             <h1>Sign up</h1>
-            <form className="create" onSubmit={handleSubmit}>
-                <label>Username:</label>
-                <input
-                    type="text"
-                    onChange={(e) => {
-                        setUsername(e.target.value)
-                    }}
-                />
-                <label>Email:</label>
-                <input
-                    type="text"
-                    onChange={(e) => {
-                        setEmail(e.target.value)
-                    }}
-                />
-                <label>Password:</label>
-                <input
-                    type="password"
-                    onChange={(e) => {
-                        setPassword(e.target.value)
-                    }}
-                />
-                <label>About me:</label>
-                <input
-                    type="text"
-                    onChange={(e) => {
-                        setAboutMe(e.target.value)
-                    }}
-                />
-                <label>Choose your avatar!</label>
-                <div className="avatar-row">
-                    <AvatarButton value="1" onSquareClick={() => handleCLick(0)} />
-                    <AvatarButton value="2" onSquareClick={() => handleCLick(1)} />
-                    <AvatarButton value="3" onSquareClick={() => handleCLick(2)} />
+            <div className="spacer"></div>
+            <div className="container mt-6">
+                <div className="card">
+                    <form className="create" onSubmit={handleSubmit}>
+                        <div className="spacer"></div>
+                        <label>Username:</label>
+                        <input
+                            type="text"
+                            onChange={(e) => {
+                                setUsername(e.target.value)
+                            }}
+                        />
+                        <label>Email:</label>
+                        <input
+                            type="text"
+                            onChange={(e) => {
+                                setEmail(e.target.value)
+                            }}
+                        />
+                        <label>Password:</label>
+                        <input
+                            type="password"
+                            onChange={(e) => {
+                                setPassword(e.target.value)
+                            }}
+                        />
+                        <label>About me:</label>
+                        <input
+                            type="text"
+                            onChange={(e) => {
+                                setAboutMe(e.target.value)
+                            }}
+                        />
+                        <label>Choose your avatar!</label>
+                        <div className="avatar-row">
+                            <AvatarButton value="1" onSquareClick={() => handleCLick(0)} />
+                            <AvatarButton value="2" onSquareClick={() => handleCLick(1)} />
+                            <AvatarButton value="3" onSquareClick={() => handleCLick(2)} />
+                        </div>
+                        <div className="avatar-row">
+                            <AvatarButton value="4" onSquareClick={() => handleCLick(3)} />
+                            <AvatarButton value="5" onSquareClick={() => handleCLick(4)} />
+                            <AvatarButton value="6" onSquareClick={() => handleCLick(5)} />
+                        </div>
+                        
+                        <button className="btn submit-button" disabled={isLoading}>Sign up</button>
+                        {error && <div className="error">{error}</div>}
+                    </form>
+                    <div className="spacer"></div>
                 </div>
-                <div className="avatar-row">
-                    <AvatarButton value="4" onSquareClick={() => handleCLick(3)} />
-                    <AvatarButton value="5" onSquareClick={() => handleCLick(4)} />
-                    <AvatarButton value="6" onSquareClick={() => handleCLick(5)} />
-                </div>
-                
-                
-                <button className="btn submit-button" disabled={isLoading}>Sign up</button>
-                {error && <div className="error">{error}</div>}
-            </form>
+            </div>
             <div className="very-long-spacer"></div>
                 
 
