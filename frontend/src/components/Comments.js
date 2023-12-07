@@ -33,7 +33,6 @@ const Comment = ({
     const onAddComment = () => {
 
         if (editMode) {
-
             handleEditNode(comment._id, inputRef?.current?.innerText)
         } else {
             setExpand(true);

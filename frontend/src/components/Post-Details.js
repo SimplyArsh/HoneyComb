@@ -5,6 +5,24 @@ import useNode from "../hooks/comment-node.js"
 import { useAuthContext } from '../hooks/use-auth-context'
 import { useNavigate } from 'react-router-dom'
 
+
+function ChooseImage({avatarNumber}) {
+    switch(avatarNumber) {
+        case 0:
+            return (<img style={{ width: 40, height: 40 }} src={require('../assets/i1.jpeg')} />)
+        case 1:
+            return (<img style={{ width: 40, height: 40 }} src={require('../assets/i2.jpeg')} />)
+        case 2:
+            return (<img style={{ width: 40, height: 40 }} src={require('../assets/i3.jpeg')} />)
+        case 3:
+            return (<img style={{ width: 40, height: 40 }} src={require('../assets/i4.jpeg')} />)
+        case 4:
+            return (<img style={{ width: 40, height: 40 }} src={require('../assets/i5.jpeg')} />)
+        case 5:
+            return (<img style={{ width: 40, height: 40 }} src={require('../assets/i6.jpeg')} />)
+    }    
+}
+
 // format for post displays
 const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handleEdit, handleDelete, handleLike,
     color,
@@ -14,10 +32,13 @@ const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handle
     const [openCommentPanel, setOpenCommentPanel] = useState(false)
     const { user } = useAuthContext()
     const navigate = useNavigate()
+    // const location = useLocation()
 
+    let avatarNumber = 2; 
+
+    
     const handleAvatar = async () => {
         navigate('/profile/:id', { state: { id: post.user_id } })
-        console.log(post.user_id)
     }
 
     const handleInsertNode = async (commentId, item) => {
@@ -79,6 +100,10 @@ const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handle
 
     }
 
+    if (post.profile_user_avatar != null) {
+        avatarNumber = post.profile_user_avatar
+    }
+    
     let avatarURL = "https://img.freepik.com/free-photo/fashion-boy-with-yellow-jacket-blue-pants_71767-96.jpg?w=1380&t=st=1700010094~exp=1700010694~hmac=b9d7f8d56b66ac184e10e6b6fc4df817beaf81b63a6e495f32ad81e1eebbbb1a"
 
 
@@ -95,7 +120,7 @@ const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handle
                             className="btn circular-button"
                             onClick={() => handleAvatar(post)}
                         >
-                            <img className="avatar" src={avatarURL} alt="User Avatar" />
+                            <ChooseImage avatarNumber={avatarNumber}></ChooseImage>
                         </button>
                         <h3 className="name" style={{ paddingLeft: '10px' }}>{post.profile_name}</h3>
                     </div>

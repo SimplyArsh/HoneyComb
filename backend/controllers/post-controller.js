@@ -23,21 +23,23 @@ const getRecomendationPosts = async (req, res) => {
   try {
     const pageSize = req.query.pageSize;
     const pageNumber = req.query.pageNumber;
+    const userId = req.query.userId
 
-    const skip = (pageNumber - 1) * pageSize;
+    console.log(req.query.pageSize, req.query.pageNumber, req.query.userId);
 
-    const result = await Post.find({}, '-comments').skip(skip).limit(pageSize)
+    const skip = (pageNumber) * pageSize;
+
+    const result = await Post.find({'user_id': {$ne: userId}}, '-comments').skip(skip).limit(pageSize)
 
     const resultWithProfileNames = await Promise.all(result.map(async (post) => {
       const userId = post.user_id;
 
       const profileResponse = await User.findById(userId)
 
-      const profileName = profileResponse.username;
-
       return {
         ...post._doc,
-        profile_name: profileName,
+        profile_name: profileResponse.username,
+        profile_user_avatar:profileResponse.avatarNumber 
       };
 
     }));
@@ -370,10 +372,10 @@ const editComment = async (req, res) => {
 
   const editCommentId = new mongoose.Types.ObjectId(req.body.id)
   try {
-    const CommentToEdit = await Comment.findOneAndUpdate(editCommentId)
 
-    CommentToEdit.comment = req.body.editedComment
-    CommentToEdit.save()
+    const CommentToEdit = await Comment.updateOne({_id: editCommentId}, 
+      { comment: req.body.editedComment})
+    
     res.status(200)
   } catch (error) {
     res.status(404).json({ error: "There was some error in editing the comment" })

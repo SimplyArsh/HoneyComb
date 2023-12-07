@@ -9,17 +9,14 @@ import { useNavigate } from 'react-router-dom'
 // import { useLocation } from 'react-router-dom';
 // import { useInfiniteQuery } from '@tanstack/react-query'
 
-// const comments = {
-//     id: 1, 
-//     items: []
-// }
+
 
 const Home = () => {
     const [pageNumber, pageNumberUpdate] = useState(1)
     const { user } = useAuthContext()
-    const [homePageUserId, setHomePageUserId] = useState()
+    const [homePageUserId, setHomePageUserId] = useState(null)
     const { recomendedPosts, editFetchNeeded, dispatch, userLikes } = useHomeContext()
-    const isInitialRender = useRef(true);
+    const isInitialRender = useRef(false);
 
     const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
@@ -29,6 +26,24 @@ const Home = () => {
         console.log("searchTerm is now: " + searchTerm + " " + typeof (searchTerm))
         navigate(`/search?results=${searchTerm}`, { state: { lookup: searchTerm } });
         window.location.reload();
+    }
+
+    const fetchUserData = async () => {
+        fetch('/api/user/profile', {
+            headers: { // include token in header
+                'Authorization': 'Bearer ' + user.token
+            }
+        }).then(
+            (response) => {
+            if (!response.ok) {
+                throw new Error('Error fetching user Likes')
+            }
+            return response.json();
+        }).then(
+            (data) => {
+                setHomePageUserId(data.userId)
+                dispatch({ type: 'SET_USER_LIKES', payload: data })
+        })
     }
 
     const fetchMoreData = async () => {
@@ -42,7 +57,8 @@ const Home = () => {
         }
         fetch('api/post/recomendations?' + new URLSearchParams({
             "pageNumber": pageNumber,
-            "pageSize": 4
+            "pageSize": 4,
+            "userId": homePageUserId
         }), {
             headers: { "Authorization": 'Bearer ' + user.token }
         }).then(
@@ -51,46 +67,38 @@ const Home = () => {
                     throw new Error('Home Page post fetch error')
                 }
                 return response.json();
-            }).then(
-                (data) => {
-                    pageNumberUpdate(pageNumber + 1)
-                    dispatch({ type: 'SET_RECOMENDED_POSTS', payload: data })
-                    if (editFetchNeeded) {
-                        dispatch({ type: 'EDIT_TOGGLE', payload: false })
-                    }
-                    for (let i = 0; i < data.length; i++) {
-                        // console.log(data[i]._id)
-                    }
-                })
-
-        fetch('/api/user/profile', {
-            headers: { // include token in header
-                'Authorization': 'Bearer ' + user.token
-            }
         }).then(
-            (response) => {
-                if (!response.ok) {
-                    throw new Error('Error fetching user Likes')
+            (data) => {
+                pageNumberUpdate(pageNumber + 1)
+                dispatch({ type: 'SET_RECOMENDED_POSTS', payload: data })
+                if (editFetchNeeded) {
+                    dispatch({ type: 'EDIT_TOGGLE', payload: false })
                 }
-                return response.json();
-            }).then(
-                (data) => {
-                    setHomePageUserId(data.userId)
-                    dispatch({ type: 'SET_USER_LIKES', payload: data })
-                })
+                for (let i = 0; i < data.length; i++) {
+                    // console.log(data[i]._id)
+                }
+        })
+
     };
 
-
     useEffect(() => {
+        
         if (!user) { // is user logged in? 
             return (
                 <p> You must be logged in! </p>
             )
         }
-        // console.log(recomendedPosts)
-        fetchMoreData(); // Initial fetch when the component mounts
+        fetchUserData();
+
         // eslint-disable-next-line
-    }, [editFetchNeeded]); // editToggle will fetch new data whenever there is a change. 
+    }, []); // editToggle will fetch new data whenever there is a change. 
+
+    useEffect(() => {
+        
+        if (homePageUserId != null) {
+            fetchMoreData();
+        }
+    }, [homePageUserId])
 
     const handleLike = async (post) => {
         const postResponse = await fetch('/api/post/like/' + post._id, {
@@ -117,6 +125,51 @@ const Home = () => {
         dispatch({ type: 'UPDATE_USER_LIKES', payload: { id: post._id, liked: userResBdy.liked } })
     };
 
+
+    return (
+        <div className="homePage">
+            <div className="spacer"> </div>
+
+            <div><h2>Explore projects</h2> {/* Header */}<div>
+                <div className="small-spacer"> </div>
+                {/* Search bar */}
+                <input
+                    type="text"
+                    placeholder="Search for posts..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button onClick={handleSearchClick}>Search</button>
+
+                <InfiniteScroll
+                    dataLength={recomendedPosts.length}
+                    next={fetchMoreData}
+                    hasMore={true}
+                    loader={<p></p>}
+                >
+                    {recomendedPosts.map((post) => (
+                        <React.Fragment key={post._id}>
+                            <PostDetails editable={false} inProfilePage={false} post={post} handleLike={handleLike}
+                                userId={homePageUserId}
+                                color={userLikes.includes(post._id)} />
+                        </React.Fragment>
+                    ))}
+
+                </InfiniteScroll>
+
+            </div>
+            </div>
+        </div>
+
+    )
+}
+
+export default Home
+
+
+
+
+/* JUNK CODE BELOW */
     // comments handle functions
     /*
     const handleAddComment = async () => {
@@ -176,44 +229,44 @@ const Home = () => {
  
      }
      */
-    return (
-        <div className="homePage">
-            <div className="spacer"> </div>
+//     return (
+//         <div className="homePage">
+//             <div className="spacer"> </div>
 
-            <div><h2>Explore projects</h2> {/* Header */}<div>
-                <div className="small-spacer"> </div>
-                {/* Search bar */}
-                <div className="col-md-8 mx-auto">
-                <input
-                    type="text"
-                    placeholder="Search for posts..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <button className="btn btn-secondary" onClick={handleSearchClick}>Search</button>
+//             <div><h2>Explore projects</h2> {/* Header */}<div>
+//                 <div className="small-spacer"> </div>
+//                 {/* Search bar */}
+//                 <div className="col-md-8 mx-auto">
+//                 <input
+//                     type="text"
+//                     placeholder="Search for posts..."
+//                     value={searchTerm}
+//                     onChange={(e) => setSearchTerm(e.target.value)}
+//                 />
+//                 <button className="btn btn-secondary" onClick={handleSearchClick}>Search</button>
                 
-                <InfiniteScroll
-                    dataLength={recomendedPosts.length}
-                    next={fetchMoreData}
-                    hasMore={true}
-                    loader={<p></p>}
-                >
-                    {recomendedPosts.map((post) => (
-                        <React.Fragment key={post._id}>
-                            <PostDetails editable={false} inProfilePage={false} post={post} handleLike={handleLike}
-                                userId={homePageUserId}
-                                color={userLikes.includes(post._id)}  />
-                        </React.Fragment>
-                    ))}
+//                 <InfiniteScroll
+//                     dataLength={recomendedPosts.length}
+//                     next={fetchMoreData}
+//                     hasMore={true}
+//                     loader={<p></p>}
+//                 >
+//                     {recomendedPosts.map((post) => (
+//                         <React.Fragment key={post._id}>
+//                             <PostDetails editable={false} inProfilePage={false} post={post} handleLike={handleLike}
+//                                 userId={homePageUserId}
+//                                 color={userLikes.includes(post._id)}  />
+//                         </React.Fragment>
+//                     ))}
 
-                </InfiniteScroll>
-                </div>
-            </div>
-            </div>
-        </div>
+//                 </InfiniteScroll>
+//                 </div>
+//             </div>
+//             </div>
+//         </div>
 
-    )
-}
+//     )
+// }
 
-export default Home
+// export default Home
 

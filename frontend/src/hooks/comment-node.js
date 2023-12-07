@@ -64,7 +64,7 @@ const useNode = () => {
 
     const editLocalNodeRecursively = (tree, commentId, newItem) => {
 
-        console.log("in recursion")
+
         if (tree._id === commentId) {
             tree.comment = newItem
             return tree
@@ -143,6 +143,7 @@ const useNode = () => {
                 },
                 method: "PATCH"
             })
+            const res = await response.json()
             if (!response.ok) {
                 console.log(response)
             }
