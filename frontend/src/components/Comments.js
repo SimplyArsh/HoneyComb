@@ -33,7 +33,7 @@ const Comment = ({
     const onAddComment = () => {
 
         if (editMode) {
-            handleEditNode(comment.id, inputRef?.current?.innerText)
+            handleEditNode(comment._id, inputRef?.current?.innerText)
         } else {
             setExpand(true);
             handleInsertNode(comment._id, input) // we need the parent comment id to insert
