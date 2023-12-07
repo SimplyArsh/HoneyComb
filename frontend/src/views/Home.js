@@ -139,8 +139,8 @@ const Home = () => {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button onClick={handleSearchClick}>Search</button>
-
+                <button className="btn btn-secondary" onClick={handleSearchClick}>Search</button>
+                <div className="col-md-8 mx-auto">
                 <InfiniteScroll
                     dataLength={recomendedPosts.length}
                     next={fetchMoreData}
@@ -156,7 +156,7 @@ const Home = () => {
                     ))}
 
                 </InfiniteScroll>
-
+                </div>
             </div>
             </div>
         </div>
