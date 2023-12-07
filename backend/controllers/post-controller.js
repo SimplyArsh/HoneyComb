@@ -29,7 +29,7 @@ const getRecomendationPosts = async (req, res) => {
 
     const skip = (pageNumber) * pageSize;
 
-    const result = await Post.find({'user_id': {$ne: userId}}, '-comments').skip(skip).limit(pageSize)
+    const result = await Post.find({'user_id': {$ne: userId}}, '-comments').sort({_id:-1}).skip(skip).limit(pageSize)
 
     const resultWithProfileNames = await Promise.all(result.map(async (post) => {
       const userId = post.user_id;
