@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useLogout } from '../hooks/use-logout'
 import { useSettingsContext } from "../hooks/use-settings-context"
 import { useAuthContext } from '../hooks/use-auth-context'
@@ -42,7 +42,7 @@ export const Settings = () => {
     }
 
     const handleProfileClick = () => {
-        navigate('/profile');
+        navigate('/profile', {state:{id: null}});
         dispatch({ type: 'SET_INVISIBLE' }) // close settings after button clicked
     };
 
