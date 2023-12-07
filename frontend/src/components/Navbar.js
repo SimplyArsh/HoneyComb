@@ -10,30 +10,30 @@ const Navbar = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
-    const handleHomeClick = () => {
-        navigate('/');
-        window.location.reload();
-    };
-
-    const handleCreateClick = () => {
-        navigate('/createproject');
-        window.location.reload();
-    };
-
-    const handleAboutClick = () => {
-      navigate('/about');
-      window.location.reload();
+  const handleHomeClick = () => {
+    navigate('/');
+    window.location.reload();
   };
 
-    const handleSignupClick = () => {
-        navigate('/signup');
-        window.location.reload();
-    };
+  const handleCreateClick = () => {
+    navigate('/createproject');
+    window.location.reload();
+  };
 
-    const handleLoginClick = () => {
-        navigate('/login');
-        window.location.reload();
-    };
+  const handleSignupClick = () => {
+    navigate('/signup');
+    window.location.reload();
+  };
+
+  const handleAboutClick = () => {
+    navigate('/about');
+    window.location.reload();
+  };
+
+  const handleLoginClick = () => {
+    navigate('/login');
+    window.location.reload();
+  };
 
   return (
     <header>
@@ -42,7 +42,7 @@ const Navbar = () => {
           <div className="navbar-left">
             <h1 className="navbar-logo">
               <Link to="/">HoneyComb</Link>
-              </h1>
+            </h1>
           </div>
           <div className="navbar-right">
             {user && (
