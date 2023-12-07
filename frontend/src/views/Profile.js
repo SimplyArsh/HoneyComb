@@ -4,13 +4,14 @@ import { useAuthContext } from '../hooks/use-auth-context'
 import { useProfileContext } from '../hooks/use-profile-context';
 import ProfilePostList from '../components/Profile-Post-List'
 import ProfileUserInfo from '../components/Profile-User-Info'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const Profile = () => {
-    const { id } = useParams()
+    const location = useLocation()
     const { user } = useAuthContext()
     const { dispatch } = useProfileContext()
     const navigate = useNavigate()
+    
 
     useEffect(() => {
         if (!user) {
@@ -20,7 +21,7 @@ const Profile = () => {
 
         const fetchProfile = async () => {
             let response
-            if (id == null) { // fetch user own data if no id after profile. Otherwise look for specific id
+            if (location.state.id == null) { // fetch user own data if no id after profile. Otherwise look for specific id
                 response = await fetch('/api/user/profile', {
                     headers: { // include token in header
                         'Authorization': 'Bearer ' + user.token
@@ -28,7 +29,7 @@ const Profile = () => {
                 })
             }
             else { // look at profile for specific user
-                response = await fetch('/api/user/profile/' + id, {
+                response = await fetch('/api/user/profile/' + location.state.id, {
                     headers: { // include token in header
                         'Authorization': 'Bearer ' + user.token
                     }
@@ -55,13 +56,13 @@ const Profile = () => {
             fetchProfile()
         }
 
-    }, [user, id, dispatch, navigate]) // hook
+    }, [user, location.state.id, dispatch, navigate]) // hook
 
     return (
         <div className="profilePage">
             <ProfileUserInfo />
-            <ProfilePostList completed={false} id={id} />
-            <ProfilePostList completed={true} id={id} />
+            <ProfilePostList completed={false} id={location.state.id} />
+            <ProfilePostList completed={true} id={location.state.id} />
         </div>
     )
 }

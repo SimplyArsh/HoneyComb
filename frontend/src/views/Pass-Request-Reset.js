@@ -27,6 +27,8 @@ const RequestResetPassword = () => {
                 {successMessage && <div className="success">{successMessage}</div>}
                 {error && <div className="error">{error}</div>}
             </form>
+            <div className="extremely-extremely-long-spacer"></div>
+
         </div>
     )
 }
