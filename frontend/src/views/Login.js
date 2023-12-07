@@ -21,40 +21,39 @@ const Login = () => {
             <div className="spacer"></div>
             <div className="container mt-6">
                 <div className="card">
-            <div className="spacer"></div>
-            <form className="create" onSubmit={handleSubmit}>
-                <label>Email:</label>
-                <input
-                    type="text"
-                    onChange={(e) => {
-                        setEmail(e.target.value)
-                    }}
-                />
-                <label>Password:</label>
-                <input
-                    type="password"
-                    onChange={(e) => {
-                        setPassword(e.target.value)
-                    }}
-                />
-                <button className="btn submit-button" disabled={isLoading}>Login</button>
+                    <div className="spacer"></div>
+                    <form className="create" onSubmit={handleSubmit}>
+                        <label>Email:</label>
+                        <input
+                            type="text"
+                            onChange={(e) => {
+                                setEmail(e.target.value)
+                            }}
+                        />
+                        <label>Password:</label>
+                        <input
+                            type="password"
+                            onChange={(e) => {
+                                setPassword(e.target.value)
+                            }}
+                        />
+                        <button className="btn submit-button" disabled={isLoading}>Login</button>
 
-                {error && <div className="error">{error}</div>}
+                        {error && <div className="error">{error}</div>}
 
-                  
-                <div>Don't have an account yet?</div>
-                <Link to='/signup'>
-                    <p>Sign Up</p>
-                </Link>
+                        <div>Don't have an account yet?</div>
+                        <Link to='/signup'>
+                            <p>Sign Up</p>
+                        </Link>
 
-                <div>Forgot your Password?</div>
-                <Link to='/requestResetPass'>
-                    <p>Reset Password</p>
-                </Link>
-            </form>
-            </div>
+                        <div>Forgot your Password?</div>
+                        <Link to='/requestResetPass'>
+                            <p>Reset Password</p>
+                        </Link>
+                    </form>
+                </div>
             <div className="very-long-spacer"></div>
-        </div>
+            </div>
         </div>
     )
 }

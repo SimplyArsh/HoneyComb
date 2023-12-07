@@ -1,51 +1,81 @@
-  .container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 17px 0 0px;
-  }
-  
-  .navbar-left {
-    display: flex;
-    align-items: center;
-  }
-  
-  .navbar-logo {
-    margin-right: auto; /* Pushes the logo to the left as much as possible */
-  }
-  
-   .navbar-right {
-    display: flex;
-    gap: 10px;
-    align-items: right;
-    padding: 0px 0;
-  } 
+:root,
+[data-theme="light"] {
+  --navBackground: #FFD36E;
+  --navDetails: #555;
+  --navtextColor: black;
+}
 
-  /* for horizontal black line */
-  .border-black {
-    border: 2px solid #000 !important; 
- }
+[data-theme="dark"] {
+  --navBackground: #FFD36E;
+  --navTextColor: black;
+  --navDetails: #4B4B4B;
+}
+
+/* Navbar */
+header {
+  color: var(--navTextColor);
+  background: var(--navBackground);
+  font-size: 5rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 17px 0 0px;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo {
+  margin-right: auto;
+  /* Pushes the logo to the left as much as possible */
+}
+
+.navbar-right {
+  display: flex;
+  gap: 10px;
+  align-items: right;
+  padding: 0px 0;
+}
+
+/* for horizontal black line */
+.border-black {
+  border: 2px solid #000 !important;
+}
 
 .form-control {
-    height: 30px;
+  height: 30px;
 }
 
 
 .navbar-form {
-    margin-bottom: 0; 
-  }
+  margin-bottom: 0;
+}
 
 
-  .navbar input.form-control {
-    margin-bottom: 0; 
-  }
+.navbar input.form-control {
+  margin-bottom: 0;
+}
 
-  .btn-outline-success {
-    border-color: #000;
-  }
+.btn-outline-success {
+  border-color: #000;
+}
+
+
+.logo-img {
+  width: 60px; /* Adjust the size as needed */
+  height: 60px; /* Adjust the size as needed */
+  border-radius: 50%; /* Makes it circular */
+  margin-right: 10px; /* Adjust the spacing between the image and text */
+}
+

@@ -10,39 +10,41 @@ const Navbar = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
-    const handleHomeClick = () => {
-        navigate('/');
-        window.location.reload();
-    };
-
-    const handleCreateClick = () => {
-        navigate('/createproject');
-        window.location.reload();
-    };
-
-    const handleAboutClick = () => {
-      navigate('/about');
-      window.location.reload();
+  const handleHomeClick = () => {
+    navigate('/');
+    window.location.reload();
   };
 
-    const handleSignupClick = () => {
-        navigate('/signup');
-        window.location.reload();
-    };
+  const handleCreateClick = () => {
+    navigate('/createproject');
+    window.location.reload();
+  };
 
-    const handleLoginClick = () => {
-        navigate('/login');
-        window.location.reload();
-    };
+  const handleSignupClick = () => {
+    navigate('/signup');
+    window.location.reload();
+  };
+
+  const handleAboutClick = () => {
+    navigate('/about');
+    window.location.reload();
+  };
+
+  const handleLoginClick = () => {
+    navigate('/login');
+    window.location.reload();
+  };
 
   return (
     <header>
       <div className="navbar navbar-expand-lg">
         <nav className="container">
           <div className="navbar-left">
+          
+           <img src={require('../favicon.ico')} alt="Logo" className="logo-img"/>
             <h1 className="navbar-logo">
               <Link to="/">HoneyComb</Link>
-              </h1>
+            </h1>
           </div>
           <div className="navbar-right">
             {user && (
@@ -61,6 +63,7 @@ const Navbar = () => {
             {!user && (
               <>
                 <div className="navbar-right">
+                  <button className="btn btn-secondary" onClick={handleAboutClick}>About</button>
                   <button className="btn btn-secondary" onClick={handleSignupClick}>Sign Up</button>
                   <button className="btn btn-secondary" onClick={handleLoginClick}>Login</button>
                 </div>

@@ -71,7 +71,6 @@ const Home = () => {
             (data) => {
                 pageNumberUpdate(pageNumber + 1)
                 dispatch({ type: 'SET_RECOMENDED_POSTS', payload: data })
-                console.log(data)
                 if (editFetchNeeded) {
                     dispatch({ type: 'EDIT_TOGGLE', payload: false })
                 }
@@ -230,3 +229,44 @@ export default Home
  
      }
      */
+//     return (
+//         <div className="homePage">
+//             <div className="spacer"> </div>
+
+//             <div><h2>Explore projects</h2> {/* Header */}<div>
+//                 <div className="small-spacer"> </div>
+//                 {/* Search bar */}
+//                 <div className="col-md-8 mx-auto">
+//                 <input
+//                     type="text"
+//                     placeholder="Search for posts..."
+//                     value={searchTerm}
+//                     onChange={(e) => setSearchTerm(e.target.value)}
+//                 />
+//                 <button className="btn btn-secondary" onClick={handleSearchClick}>Search</button>
+                
+//                 <InfiniteScroll
+//                     dataLength={recomendedPosts.length}
+//                     next={fetchMoreData}
+//                     hasMore={true}
+//                     loader={<p></p>}
+//                 >
+//                     {recomendedPosts.map((post) => (
+//                         <React.Fragment key={post._id}>
+//                             <PostDetails editable={false} inProfilePage={false} post={post} handleLike={handleLike}
+//                                 userId={homePageUserId}
+//                                 color={userLikes.includes(post._id)}  />
+//                         </React.Fragment>
+//                     ))}
+
+//                 </InfiniteScroll>
+//                 </div>
+//             </div>
+//             </div>
+//         </div>
+
+//     )
+// }
+
+// export default Home
+

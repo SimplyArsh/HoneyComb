@@ -56,10 +56,13 @@ const CreateProject = () => {
    if (projectCreated) {
        return (
            <div className="projectCreated">
-               <h1>Project created!</h1>
-               <Link to="/createProject" onClick={() => { setProjectCreated(false) }}>
-                   <h1>Create new project</h1>
+               <h2>Project created!</h2>
+               <div className="spacer"></div>
+               <Link to="/" onClick={() => { setProjectCreated(false) }}>
+                   <h2>Explore more projects</h2>
                </Link>
+               <div className="spacer"></div>
+               <div className="extremely-extremely-long-spacer"></div>
            </div>
        )
    }
@@ -70,6 +73,7 @@ return (
       <div className="spacer"></div>
       <h2>Create project</h2>
       <div className="spacer"></div>
+      <div className="col-md-10 mx-auto">
       <div className="container mt-6">
         <div className="card">
           <div className="card-body">
@@ -125,6 +129,7 @@ return (
             </div>
           </div>
         </div>
+      </div>
       </div>
       <div className="extremely-long-spacer"></div>
       <div className="very-long-spacer"></div>

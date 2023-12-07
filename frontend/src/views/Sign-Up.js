@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useSignup } from '../hooks/use-signup'
+import '../css-components/sign-up.css'
 
 function AvatarButton({ isHighlighted, value, onSquareClick }) {
     // return (

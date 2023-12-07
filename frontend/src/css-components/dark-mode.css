@@ -43,6 +43,7 @@
     width: 0;
     height: 0;
     visibility: hidden;
+    margin: 0;
 }
 
 .dark_mode_input:checked+.dark_mode_label {

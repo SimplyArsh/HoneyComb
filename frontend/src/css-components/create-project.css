@@ -1,3 +1,26 @@
+:root,
+[data-theme="light"] {
+    --postBackground: #fff;
+    --postDetails: #555;
+    --textColor: black;
+}
+
+[data-theme="dark"] {
+    --postBackground: #878787;
+    --textColor: black;
+    --postDetails: #4B4B4B;
+}
+
+[data-theme="dark"] {
+    --postBackground: #fff;
+    --postDetails: #555;
+    --textColor: rgb(0, 0, 0);
+}
+
+.card {
+    background-color: var(--postBackground);
+}
+
 .submit-button:hover {
     color: #000;
     background-color: #AFE1AF;
