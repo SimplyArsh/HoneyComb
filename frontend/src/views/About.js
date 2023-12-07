@@ -19,7 +19,7 @@ const About = () => {
       </p>
       </div>
       </div>
-      <div className='extremely-long-spacer'></div>
+      <div className='extremely-extremely-long-spacer'></div>
 
       </div>
     );

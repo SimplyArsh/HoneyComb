@@ -61,6 +61,7 @@ const Navbar = () => {
             {!user && (
               <>
                 <div className="navbar-right">
+                  <button className="btn btn-secondary" onClick={handleAboutClick}>About</button>
                   <button className="btn btn-secondary" onClick={handleSignupClick}>Sign Up</button>
                   <button className="btn btn-secondary" onClick={handleLoginClick}>Login</button>
                 </div>
