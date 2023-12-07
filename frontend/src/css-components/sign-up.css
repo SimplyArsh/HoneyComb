@@ -1,0 +1,20 @@
+.pass-requirements {
+    padding: 10px;
+    font-size: small;
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 250px;
+}
+
+.pass-req-box {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.about-me {
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
