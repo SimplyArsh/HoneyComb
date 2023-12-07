@@ -10,12 +10,10 @@ const DarkMode = () => {
     const { user } = useAuthContext();
 
     const setDarkMode = () => {
-        console.log("dark!")
         document.querySelector("body").setAttribute('data-theme', 'dark');
         localStorage.setItem('theme', 'dark');
     }
     const setLightMode = () => {
-        console.log("light!")
         document.querySelector("body").setAttribute('data-theme', 'light');
         localStorage.setItem('theme', 'light');
     }
@@ -23,10 +21,8 @@ const DarkMode = () => {
     // Separate useEffect for setting theme on component mount or when settings change
     useEffect(() => {
         if (settings.theme === 'light') {
-            console.log("new theme light!")
             setLightMode();
         } else if (settings.theme === 'dark') {
-            console.log("new theme dark!")
             setDarkMode();
         }
     }, [settings.theme]);
@@ -34,7 +30,6 @@ const DarkMode = () => {
     const updateThemeSettings = async (theme) => {
 
         dispatch({ type: 'SET_THEME', payload: theme });
-        console.log(theme)
 
         try {
             const response = await fetch('/api/user/settings', {
