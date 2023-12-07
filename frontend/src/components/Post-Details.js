@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Comment from "../components/Comments"
 import useNode from "../hooks/comment-node.js"
 import { useAuthContext } from '../hooks/use-auth-context'
+import { useNavigate } from 'react-router-dom'
 
 // format for post displays
 const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handleEdit, handleDelete, handleLike,
@@ -12,6 +13,12 @@ const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handle
     const [comments, setComments] = useState(null) // sets all comments for a post
     const [openCommentPanel, setOpenCommentPanel] = useState(false)
     const { user } = useAuthContext()
+    const navigate = useNavigate()
+
+    const handleAvatar = async () => {
+        navigate('/profile/:id', { state: { id: post.user_id } })
+        console.log(post.user_id)
+    }
 
     const handleInsertNode = async (commentId, item) => {
         var parentSelector = 0
@@ -71,62 +78,76 @@ const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handle
         }
 
     }
+
     let avatarURL = "https://img.freepik.com/free-photo/fashion-boy-with-yellow-jacket-blue-pants_71767-96.jpg?w=1380&t=st=1700010094~exp=1700010694~hmac=b9d7f8d56b66ac184e10e6b6fc4df817beaf81b63a6e495f32ad81e1eebbbb1a"
+
+
     return (
         <div className="container mt-6">
-            <div className="card postDetails">
-                {!inProfilePage && <div><img className="avatar" src={avatarURL} alt="User Avatar" />
-                    <h3 className="name">User: {post.profile_name}</h3>
-                </div>}
-                <h4 className="postName">Post: {post.postName}</h4>
-                <p><strong>Description: </strong>{post.description}</p>
+            <div className="card postDetails" style={{ display: 'flex', flexDirection: 'column', position: 'relative' }}>
+                <p style={{ position: 'absolute', top: 0, right: 0, margin: '10px', fontSize: '14px', color: '#888' }}>
+                    {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
+                </p>
+
+                {!inProfilePage && (
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <button
+                            className="btn circular-button"
+                            onClick={() => handleAvatar(post)}
+                        >
+                            <img className="avatar" src={avatarURL} alt="User Avatar" />
+                        </button>
+                        <h3 className="name" style={{ paddingLeft: '10px' }}>{post.profile_name}</h3>
+                    </div>
+                )}
+                <h2 className="postName">{post.postName}</h2>
+                <p><strong>Description:</strong> {post.description}</p>
                 <p><strong>Skills: </strong>{post.skills}</p>
-                <p><strong>Number of likes: </strong>{post.numberOfLikes}</p>
-                <p>{formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}</p>
-                {editable && <div className="icon-container">
-                    <span className="material-symbols-outlined" onClick={() => { handlePostComplete(post) }}>swap_vert</span>
-                    <span className="material-symbols-outlined" onClick={() => { handleEdit(post) }}>edit</span>
-                    <span className="material-symbols-outlined" onClick={() => { handleDelete(post._id) }}>delete</span>
-                </div>}
-
-                {!inProfilePage && <div>
-                    <div className="actions">
-                        <button
-                            className={`btn btn-secondary like-button ${color ? 'colored' : ''}`}
-                            onClick={() => handleLike(post)}
-                        >
-                            Like
-                        </button>
-                        <span className="likes">{post.numberOfLikes} Likes</span>
-                        <button
-                            className="btn btn-secondary comment-button"
-                            onClick={handleOpenCommandPanel}
-
-                        >
-                            Comment
-                        </button>
+                {/*<p><strong>Number of likes: </strong>{post.numberOfLikes}</p>*/}
+                {editable && (
+                    <div className="icon-container">
+                        <span className="material-symbols-outlined" onClick={() => { handlePostComplete(post) }}>swap_vert</span>
+                        <span className="material-symbols-outlined" onClick={() => { handleEdit(post) }}>edit</span>
+                        <span className="material-symbols-outlined" onClick={() => { handleDelete(post._id) }}>delete</span>
                     </div>
+                )}
+
+                {!inProfilePage && (
                     <div>
-                        {openCommentPanel ? (
-                            <Comment
-                                comment={comments}
-                                handleInsertNode={handleInsertNode}
-                                handleEditNode={handleEditNode}
-                                handleDeleteNode={handleDeleteNode}
-                                userId={userId}
-                            />
-                        ) : (
-                            <></>
-                        )}
+                        <div className="actions">
+                            <button
+                                className={`btn btn-secondary like-button ${color ? 'colored' : ''}`}
+                                onClick={() => handleLike(post)}
+                            >
+                                Like
+                            </button>
+                            <span className="likes">{post.numberOfLikes} Likes</span>
+                            <button
+                                className="btn btn-secondary comment-button"
+                                onClick={handleOpenCommandPanel}
+                            >
+                                Comment
+                            </button>
+                        </div>
+                        <div>
+                            {openCommentPanel ? (
+                                <Comment
+                                    comment={comments}
+                                    handleInsertNode={handleInsertNode}
+                                    handleEditNode={handleEditNode}
+                                    handleDeleteNode={handleDeleteNode}
+                                    userId={userId}
+                                />
+                            ) : (
+                                <></>
+                            )}
+                        </div>
                     </div>
-                    <>
-                    </>
-                </div>
-                }
-
+                )}
             </div>
         </div>
-    )
+    );
+
 }
 
 export default PostDetails
