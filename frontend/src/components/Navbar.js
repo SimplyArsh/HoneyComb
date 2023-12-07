@@ -40,6 +40,8 @@ const Navbar = () => {
       <div className="navbar navbar-expand-lg">
         <nav className="container">
           <div className="navbar-left">
+          
+           <img src={require('../favicon.ico')} alt="Logo" className="logo-img"/>
             <h1 className="navbar-logo">
               <Link to="/">HoneyComb</Link>
             </h1>
