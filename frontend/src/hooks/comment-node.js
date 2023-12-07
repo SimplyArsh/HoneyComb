@@ -72,7 +72,7 @@ const useNode = () => {
 
         /* if the commentId does not match, then recursivley search the tree to
             find the direct parent */
-        tree?.comments?.map((object) => {
+        tree?.comments?.forEach((object) => {
             editLocalNodeRecursively(object, commentId, newItem)
         })
         /* tree.items.push alters the local tree passed in,
@@ -98,8 +98,9 @@ const useNode = () => {
                     editedComment: value
                 })
             })
-            const res = await response.json()
-            console.log(res)
+            if (!response.ok) {
+                console.log(response)
+            }
 
             return editLocalNodeRecursively(tree, commentId, value)
 
@@ -142,7 +143,9 @@ const useNode = () => {
                 },
                 method: "PATCH"
             })
-            const res = await response.json() // without this call, code never reaches deleteLocalPart. I don't understand fetch well enough to know it's rejection process
+            if (!response.ok) {
+                console.log(response)
+            }
             return deleteLocalCommentsRecursively(tree, commentId)
 
         } catch (error) {

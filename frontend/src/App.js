@@ -35,7 +35,6 @@ function App() {
 
     // Apply the theme immediately
     document.querySelector("body").setAttribute('data-theme', localTheme);
-    console.log("App.js updated to", localTheme)
 
     const fetchSettings = async () => {
       let response
@@ -134,11 +133,11 @@ function App() {
               />
               <Route
                 path='/about'
-                element={<About />}  
+                element={<About />}
               />
               <Route
                 path='/pageNotFound'
-                element={<PageNotFound />}  
+                element={<PageNotFound />}
               />
               {/* Catch-all route */}
               <Route path='*' element={<Navigate to='/pageNotFound' />} />
