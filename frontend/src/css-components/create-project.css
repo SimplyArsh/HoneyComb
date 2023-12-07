@@ -11,12 +11,6 @@
     --postDetails: #4B4B4B;
 }
 
-[data-theme="dark"] {
-    --postBackground: #fff;
-    --postDetails: #555;
-    --textColor: rgb(0, 0, 0);
-}
-
 .card {
     background-color: var(--postBackground);
 }

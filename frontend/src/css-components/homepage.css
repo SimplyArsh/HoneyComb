@@ -1,3 +1,12 @@
+:root,
+[data-theme="light"] {
+  --dateColor: #888;
+}
+
+[data-theme="dark"] {
+  --dateColor: black;
+}
+
 /* homepage */
 .home {
   display: grid;
@@ -22,7 +31,7 @@
 
 .date {
   margin: 0;
-  color: #888;
+  color: #569dff;
 }
 
 .content {
@@ -83,6 +92,7 @@
   background-color: #FFE5B4;
   border-color: #FFE5B4;
 }
+
 .likes {
   margin-right: 8px;
   color: #888;
