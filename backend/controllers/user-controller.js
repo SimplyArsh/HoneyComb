@@ -22,9 +22,9 @@ const userLogin = async (req, res) => {
 
 //user signup
 const userSignup = async (req, res) => {
-  const { username, email, password, aboutMe } = req.body
+  const { username, email, password, aboutMe, avatarNumber } = req.body
   try {
-    const user = await User.signup(username, email, password, aboutMe)
+    const user = await User.signup(username, email, password, aboutMe, avatarNumber)
     const token = createToken(user._id)
     res.status(200).json({ email, token })
   }
@@ -54,8 +54,9 @@ const getUserOwnProfile = async (req, res) => {
 
 // get profile/:id
 const getProfile = async (req, res) => {
+  
   const { id } = req.params
-
+  console.log(id)
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: 'No such user' })
   }

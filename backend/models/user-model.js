@@ -9,6 +9,7 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true }, // Email must be unique
   password: { type: String, required: true },
   aboutMe: { type: String, required: true },
+  avatarNumber: {type: Number, required: false},
   numberOfLikes: { type: Number, default: 0 },
   postsLiked: { type: [ObjectID], required: false}, 
   numberOfPosts: { type: Number, default: 0 },
@@ -23,7 +24,7 @@ const userSchema = new Schema({
 });
 
 // static signup method
-userSchema.statics.signup = async function (username, email, password, aboutMe) {
+userSchema.statics.signup = async function (username, email, password, aboutMe, avatarNumber) {
   // validation
   console.log(username, email, password, aboutMe)
   if (!username || !email || !password || !aboutMe) {
@@ -51,7 +52,7 @@ userSchema.statics.signup = async function (username, email, password, aboutMe) 
   const hash = await bcrypt.hash(password, salt)
 
   //create user object
-  const user = await this.create({ username, email, password: hash, aboutMe })
+  const user = await this.create({ username, email, password: hash, aboutMe, avatarNumber})
 
   return user
 }

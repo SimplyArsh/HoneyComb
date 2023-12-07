@@ -9,10 +9,7 @@ import { useNavigate } from 'react-router-dom'
 // import { useLocation } from 'react-router-dom';
 // import { useInfiniteQuery } from '@tanstack/react-query'
 
-// const comments = {
-//     id: 1, 
-//     items: []
-// }
+
 
 const Home = () => {
     const [pageNumber, pageNumberUpdate] = useState(1)
@@ -74,6 +71,7 @@ const Home = () => {
             (data) => {
                 pageNumberUpdate(pageNumber + 1)
                 dispatch({ type: 'SET_RECOMENDED_POSTS', payload: data })
+                console.log(data)
                 if (editFetchNeeded) {
                     dispatch({ type: 'EDIT_TOGGLE', payload: false })
                 }

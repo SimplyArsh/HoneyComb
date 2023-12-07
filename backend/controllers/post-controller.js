@@ -36,11 +36,10 @@ const getRecomendationPosts = async (req, res) => {
 
       const profileResponse = await User.findById(userId)
 
-      const profileName = profileResponse.username;
-
       return {
         ...post._doc,
-        profile_name: profileName,
+        profile_name: profileResponse.username,
+        profile_user_avatar:profileResponse.avatarNumber 
       };
 
     }));
