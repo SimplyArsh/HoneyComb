@@ -47,7 +47,7 @@ const getUserOwnProfile = async (req, res) => {
     return res.status(404).json({ error: 'No such user' })
   }
   user = user._doc
-  user = { username: user.username, email: user.email, aboutMe: user.aboutMe, postList: user.postList, numberOfLikes: user.numberOfLikes, numberOfPosts: user.numberOfPosts, createdAt: user.createdAt, postsLiked:user.postsLiked, userId: id } // only include basic user info, not passwords etc
+  user = { username: user.username, email: user.email, aboutMe: user.aboutMe, postList: user.postList, numberOfLikes: user.numberOfLikes, numberOfPosts: user.numberOfPosts, createdAt: user.createdAt, postsLiked: user.postsLiked, userId: id } // only include basic user info, not passwords etc
 
   res.status(200).json(user) // change this later to only include basic info
 }
@@ -77,7 +77,7 @@ const updateUserLikes = async (req, res) => {
   // user has already been authorzied, so token guarnteed at this point
   const user_id = req.user._id
   const post_id = req.params.id
-  
+
 
   if (!mongoose.Types.ObjectId.isValid(post_id)) {
     return res.status(404).json({ error: 'Project doesnt exist' })
@@ -88,12 +88,12 @@ const updateUserLikes = async (req, res) => {
   }
 
   const checkUserLikeStatus = await User.findOne({ _id: user_id })
-  let post; 
+  let post;
   let liked = null;
 
   if (checkUserLikeStatus.postsLiked.includes(post_id)) {
     // removing the like
-    liked = false; 
+    liked = false;
     post = await User.findOneAndUpdate({ _id: user_id }, {
       $set: {
         numberOfLikes: checkUserLikeStatus.numberOfLikes - 1,
@@ -101,19 +101,19 @@ const updateUserLikes = async (req, res) => {
       $pull: {
         postsLiked: post_id
       },
-    }, {new: true}) 
+    }, { new: true })
   } else {
     //inserting a like
-    liked = true; 
+    liked = true;
     post = await User.findOneAndUpdate({ _id: user_id }, {
       $set: {
-        numberOfLikes: checkUserLikeStatus.numberOfLikes - 1,
+        numberOfLikes: checkUserLikeStatus.numberOfLikes + 1,
       },
       $push: {
         postsLiked: post_id
       },
-    }, {new: true}) 
-  } 
+    }, { new: true })
+  }
 
 
   if (!post) {
@@ -196,5 +196,24 @@ const updateSettings = async (req, res) => {
   res.status(200).json(user)
 }
 
+// Get settings for user
+const getSettings = async (req, res) => {
+  const id = req.user._id
 
-module.exports = { userSignup, userLogin, getProfile, getUserOwnProfile, updateUserLikes, follow, unfollow, updateSettings }
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: 'No such user' })
+  }
+
+  let user = await User.findById(id)
+
+  if (!user) {
+    return res.status(404).json({ error: 'No such user' })
+  }
+  user = user._doc
+  user = user.settings // only include basic user info, not passwords etc
+
+  res.status(200).json(user) // change this later to only include basic info
+}
+
+
+module.exports = { userSignup, userLogin, getProfile, getUserOwnProfile, updateUserLikes, follow, unfollow, updateSettings, getSettings }

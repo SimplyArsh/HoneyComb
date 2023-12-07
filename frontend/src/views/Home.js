@@ -1,12 +1,16 @@
 import PostDetails from "../components/Post-Details";
+import React from 'react'; // Add this line at the top of your file
 import { useEffect, useState, useRef } from 'react'
+// import { useAsyncError, useParams } from 'react-router-dom';
 import { useAuthContext } from '../hooks/use-auth-context'
 import { useHomeContext } from '../hooks/use-home-context'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { useNavigate } from 'react-router-dom'
+// import { useLocation } from 'react-router-dom';
 // import { useInfiniteQuery } from '@tanstack/react-query'
 
 // const comments = {
-//     id: 1,
+//     id: 1, 
 //     items: []
 // }
 
@@ -17,7 +21,17 @@ const Home = () => {
     const { recomendedPosts, editFetchNeeded, dispatch, userLikes } = useHomeContext()
     const isInitialRender = useRef(true);
 
-    const fetchMoreData = () => {
+    const [searchTerm, setSearchTerm] = useState("");
+    const navigate = useNavigate();
+    // const location = useLocation();
+
+    const handleSearchClick = async () => {
+        console.log("searchTerm is now: " + searchTerm + " " + typeof (searchTerm))
+        navigate(`/search?results=${searchTerm}`, { state: { lookup: searchTerm } });
+        window.location.reload();
+    }
+
+    const fetchMoreData = async () => {
         if (editFetchNeeded) {
             pageNumberUpdate(pageNumber - 1)
         }
@@ -26,7 +40,7 @@ const Home = () => {
             isInitialRender.current = false;
             return;
         }
-        fetch('http://localhost:4000/api/post/recomendations?' + new URLSearchParams({
+        fetch('api/post/recomendations?' + new URLSearchParams({
             "pageNumber": pageNumber,
             "pageSize": 4
         }), {
@@ -66,6 +80,7 @@ const Home = () => {
                 })
     };
 
+
     useEffect(() => {
         if (!user) { // is user logged in? 
             return (
@@ -74,6 +89,7 @@ const Home = () => {
         }
         // console.log(recomendedPosts)
         fetchMoreData(); // Initial fetch when the component mounts
+        // eslint-disable-next-line
     }, [editFetchNeeded]); // editToggle will fetch new data whenever there is a change. 
 
     const handleLike = async (post) => {
@@ -101,7 +117,7 @@ const Home = () => {
         dispatch({ type: 'UPDATE_USER_LIKES', payload: { id: post._id, liked: userResBdy.liked } })
     };
 
-    // comments handle functions 
+    // comments handle functions
     /*
     const handleAddComment = async () => {
         try {
@@ -124,64 +140,75 @@ const Home = () => {
         } catch (error) {
             console.log(error)
         }
-
-        // try {
-        //     const response = await fetch ('/api/post/editComment', { 
-        //         headers: { // include token in header
-        //             'Content-Type': 'application/json',
-        //             'Authorization': 'Bearer ' + user.token,
-        //         },
-        //         method: 'PATCH',
-        //         body: JSON.stringify({
-        //             id: "6559c3c837797e4fb897ebf0",
-        //             editedComment: "this is the new value"
-        //         })
-        //     })
-        //     const res = await response.json()
-        //     console.log(res)
-        // } catch (error) {
-        //     console.log(error)
-        // }
-
-        // try {
-        //     const response = await fetch ('/api/post/comments/' + "6559af4bc4256aaea0270d12", { 
-        //         headers: { // include token in header
-        //             'Content-Type': 'application/json',
-        //             'Authorization': 'Bearer ' + user.token,
-        //         },
-        //         method: 'GET'
-        //     })
-        //     const res = await response.json()
-        //     console.log(res)
-        // } catch (error) {
-        //     console.log(error)
-        // }
-
-    }
-    */
+ 
+ 
+         // try {
+         //     const response = await fetch ('/api/post/editComment', { 
+         //         headers: { // include token in header
+         //             'Content-Type': 'application/json',
+         //             'Authorization': 'Bearer ' + user.token,
+         //         },
+         //         method: 'PATCH',
+         //         body: JSON.stringify({
+         //             id: "6559c3c837797e4fb897ebf0",
+         //             editedComment: "this is the new value"
+         //         })
+         //     })
+         //     const res = await response.json()
+         //     console.log(res)
+         // } catch (error) {
+         //     console.log(error)
+         // }
+ 
+         // try {
+         //     const response = await fetch ('/api/post/comments/' + "6559af4bc4256aaea0270d12", { 
+         //         headers: { // include token in header
+         //             'Content-Type': 'application/json',
+         //             'Authorization': 'Bearer ' + user.token,
+         //         },
+         //         method: 'GET'
+         //     })
+         //     const res = await response.json()
+         //     console.log(res)
+         // } catch (error) {
+         //     console.log(error)
+         // }
+ 
+     }
+     */
     return (
         <div className="homePage">
-        <div className="spacer"> </div>
+            <div className="spacer"> </div>
 
-        <div><h2>Explore projects</h2> {/* Header */}<div>
-        <div className="small-spacer"> </div>
-            <InfiniteScroll
-                dataLength={recomendedPosts.length}
-                next={fetchMoreData}
-                hasMore={true}
-                loader={<p></p>}
-            >
-                {recomendedPosts.map((post) => (
-                    <>
-                        <PostDetails editable={false} inProfilePage={false} post={post} key={post._id} handleLike={handleLike}
-                            userId={homePageUserId}
-                            color={userLikes.includes(post._id)}></PostDetails>
-                    </>
-                ))}
-            </InfiniteScroll>
+            <div><h2>Explore projects</h2> {/* Header */}<div>
+                <div className="small-spacer"> </div>
+                {/* Search bar */}
+                <input
+                    type="text"
+                    placeholder="Search for posts..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button onClick={handleSearchClick}>Search</button>
 
-        </div>
-        </div>
+                <InfiniteScroll
+                    dataLength={recomendedPosts.length}
+                    next={fetchMoreData}
+                    hasMore={true}
+                    loader={<p></p>}
+                >
+                    {recomendedPosts.map((post) => (
+                        <React.Fragment key={post._id}>
+                            <PostDetails editable={false} inProfilePage={false} post={post} handleLike={handleLike}
+                                userId={homePageUserId}
+                                color={userLikes.includes(post._id)} />
+                        </React.Fragment>
+                    ))}
+
+                </InfiniteScroll>
+
+            </div>
+            </div>
         </div>
 
     )

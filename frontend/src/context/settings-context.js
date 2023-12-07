@@ -9,13 +9,9 @@ export const settingsReducer = (state, action) => { // action comes from dispatc
         case 'SET_INVISIBLE':
             return { ...state, visible: false };
         case 'SET_LANGUAGE':
-            console.log('LANGUAGE CHANGED TO ', action.payload)
             return { ...state, settings: { ...state.settings, language: action.payload } };
-        case 'CHANGE_THEME': // swap themes
-            if (state.settings.theme === 'light') {
-                return { ...state, settings: { ...state.settings, theme: 'dark' } }
-            }
-            return { ...state, settings: { ...state.settings, theme: 'light' } }
+        case 'SET_THEME': // swap themes=
+            return { ...state, settings: { ...state.settings, theme: action.payload } }
         default:
             return state
     }

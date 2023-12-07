@@ -3,23 +3,24 @@
 /* Defined variables*/
 
 :root {
-  --body_background: #f5eccd;
-  --body_color: black;
-  --link_color: navy;
-  --primary: #1aac83;
+  --bodyBackground: #f5eccd;
+  --bodyColor: black;
+  --linkColor: navy;
+  --formPrimary: #1aac83;
+  --primary: black;
   --error: #e7195a;
 }
 
 [data-theme="dark"] {
-  --body_background: #282c34;
-  --body_color: white;
-  --link_color: cyan;
+  --bodyBackground: #121212;
+  --bodyColor: #E0E0E0;
+  --linkColor: cyan;
 }
 
 /* theme change*/
 
 * {
-  transition: all 0.3s ease-in-out;
+  transition: all 0.02s ease-in-out;
 }
 
 body {
@@ -90,7 +91,7 @@ input {
 }
 
 form button {
-  background: var(--primary);
+  background: var(--formPrimary);
   border: 0;
   color: #fff;
   padding: 10px;

@@ -1,3 +1,11 @@
+:root {
+    --bodyBackground: #f5eccd;
+}
+
+[data-theme="dark"] {
+    --bodyBackground: #282c34;
+}
+
 .settings-container {
     position: fixed;
     /* Fixed positioning relative to the viewport */
@@ -22,6 +30,8 @@
     width: 100%;
     height: 100%;
     z-index: 999;
+    background-color: var(--bodyBackground);
+    transition: 0s ease-in-out;
 }
 
 .settings-container .dropdown-toggle {
