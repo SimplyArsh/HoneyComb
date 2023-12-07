@@ -59,8 +59,12 @@ const Profile = () => {
 
     return (
         <div className="profilePage">
+            <div className="spacer"></div>
             <ProfileUserInfo />
+            <div className="spacer"></div>
             <ProfilePostList completed={false} id={location.state.id} />
+            <div className="spacer"></div>
+            <div className="small-spacer"></div>
             <ProfilePostList completed={true} id={location.state.id} />
         </div>
     )

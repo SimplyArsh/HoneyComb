@@ -10,3 +10,19 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.profileImage {
+    width: 150px;
+    height: 150px;
+    margin: 20px;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    overflow: hidden;
+    position: center;
+}
+
+.profileImage img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
