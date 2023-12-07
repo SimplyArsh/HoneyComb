@@ -70,3 +70,12 @@ header {
 .btn-outline-success {
   border-color: #000;
 }
+
+
+.logo-img {
+  width: 60px; /* Adjust the size as needed */
+  height: 60px; /* Adjust the size as needed */
+  border-radius: 50%; /* Makes it circular */
+  margin-right: 10px; /* Adjust the spacing between the image and text */
+}
+
