@@ -63,3 +63,21 @@
   display: inline-block;
   /* or use display: block; */
 }
+
+.extremely-long-spacer {
+  width: 10px;
+  /* Adjust the width as needed */
+  height: 350px;
+  /* Adjust the height as needed */
+  display: inline-block;
+  /* or use display: block; */
+}
+
+.extremely-extremely-long-spacer {
+  width: 10px;
+  /* Adjust the width as needed */
+  height: 500px;
+  /* Adjust the height as needed */
+  display: inline-block;
+  /* or use display: block; */
+}

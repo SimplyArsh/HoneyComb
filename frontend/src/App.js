@@ -14,6 +14,7 @@ import ResetPassword from './views/Pass-Reset'
 import ResetPasswordLoggedIn from './views/Pass-Reset-Logged-In';
 import CreateProject from './views/Create-Project'
 import Profile from './views/Profile'
+import About from './views/About'
 import PageNotFound from './views/Page-Not-Found'
 import Navbar from './components/Navbar'
 import { useAuthContext } from './hooks/use-auth-context'
@@ -119,8 +120,12 @@ function App() {
                 element={user ? <Profile /> : <Navigate to='/login' />} // if logged in, display profile page. If not logged in, display login
               />
               <Route
+                path='/about'
+                element={<About />}  
+              />
+              <Route
                 path='/pageNotFound'
-                element={<PageNotFound />}  //Allow user to reset password reset even if not logged in
+                element={<PageNotFound />}  
               />
               {/* Catch-all route */}
               <Route path='*' element={<Navigate to='/pageNotFound' />} />

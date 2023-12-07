@@ -52,6 +52,8 @@ const SignUp = () => {
                 <button className="btn submit-button" disabled={isLoading}>Sign up</button>
                 {error && <div className="error">{error}</div>}
             </form>
+            <div className="very-long-spacer"></div>
+
         </div>
     )
 }
