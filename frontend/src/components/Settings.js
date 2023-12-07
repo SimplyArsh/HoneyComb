@@ -39,6 +39,8 @@ export const Settings = () => {
     const handleLogoutClick = () => {
         logout()
         dispatch({ type: 'SET_INVISIBLE' }) // close settings after button clicked
+        localStorage.setItem('theme','light');
+        window.location.reload();
     }
 
     const handleProfileClick = () => {
