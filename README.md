@@ -63,7 +63,9 @@ We encourage contributors to adhere to the following guidelines:
 ## Setup
 After cloning the repository via 
 
-```git clone https://github.com/SimplyArsh/35l_project.git```
+```
+git clone https://github.com/SimplyArsh/35l_project.git
+```
 
 move into the backend folder and install node.js packages via:
 
@@ -82,7 +84,8 @@ Occasionally, after cloning the repo and calling "npm install", you will encount
 
 To resolve, uninstall and then reinstall bcrypt
 
-Do the same for the frontend folder.
+
+Now, do the same for the frontend!
 
 </details>
 
