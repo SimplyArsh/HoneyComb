@@ -1,6 +1,16 @@
 .dark_mode {
-    margin-top: -20px;
-    margin-left: 10px;
+    background-color: black;
+    display: flex;
+    /* Establishes this div as a flex container */
+    justify-content: center;
+    /* Centers the child horizontally */
+    align-items: center;
+    /* Centers the child vertically */
+    height: 40px;
+    /* Your existing height */
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 0px;
 }
 
 .dark_mode_label {

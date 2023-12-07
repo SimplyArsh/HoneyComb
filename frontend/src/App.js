@@ -18,10 +18,53 @@ import PageNotFound from './views/Page-Not-Found'
 import Navbar from './components/Navbar'
 import { useAuthContext } from './hooks/use-auth-context'
 import { useSettingsContext } from "./hooks/use-settings-context"
+import { useEffect } from 'react'
 
 function App() {
   const { user, loading } = useAuthContext()
-  const { visible } = useSettingsContext();
+  const { dispatch, visible } = useSettingsContext();
+
+  useEffect(() => { // get settings when the app loads
+    if (!user) { // don't do anything if the user is logged out
+      dispatch({ type: 'SET_THEME', payload: 'light' }) // by default, color theme is light
+      return
+    }
+    const fetchSettings = async () => {
+      let response
+      response = await fetch('/api/user/settings', {
+        headers: { // include token in header
+          'Authorization': 'Bearer ' + user.token
+        }
+      })
+
+
+      const settingsResponse = await response.json() // get user info from server and update context
+
+      dispatch({ type: 'SET_THEME', payload: settingsResponse.theme }) // update settings context
+
+      // set theme
+      const setDarkMode = () => {
+        document.querySelector("body").setAttribute('data-theme', 'dark');
+      }
+      const setLightMode = () => {
+        document.querySelector("body").setAttribute('data-theme', 'light');
+      }
+      if (settingsResponse.theme === 'light') {
+        setLightMode();
+      } else if (settingsResponse.theme === 'dark') {
+        setDarkMode();
+      }
+
+      if (!response.ok) {
+        return "Error"
+      }
+    }
+
+    if (user) {
+      fetchSettings()
+    }
+
+  }, [user, dispatch])
 
   if (loading) {
     return <div></div>; // loading

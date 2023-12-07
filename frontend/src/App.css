@@ -4,20 +4,21 @@
 @import url("css-components/login.css");
 @import url("css-components/profile.css");
 @import url("css-components/create-project.css");
+@import url("css-components/post.css");
 
 .App-header {
-  background: var(--body_background);
-  color: var(--body_color);
+  background: var(--bodyBackground);
+  color: var(--bodyColor);
 }
 
 .App {
   text-align: center;
-  background: var(--body_background);
-  color: var(--body_color);
+  background: var(--bodyBackground);
+  color: var(--bodyColor);
 }
 
 .App-link {
-  color: var(--link_color);
+  color: var(--linkColor);
 }
 
 .custom-button {

@@ -1,12 +1,12 @@
 import PostDetails from "../components/Post-Details";
 import React from 'react'; // Add this line at the top of your file
 import { useEffect, useState, useRef } from 'react'
-import { useParams } from 'react-router-dom';
+// import { useAsyncError, useParams } from 'react-router-dom';
 import { useAuthContext } from '../hooks/use-auth-context'
 import { useHomeContext } from '../hooks/use-home-context'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useNavigate } from 'react-router-dom'
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 // import { useInfiniteQuery } from '@tanstack/react-query'
 
 // const comments = {
@@ -23,15 +23,15 @@ const Home = () => {
 
     const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
-    const location = useLocation();
+    // const location = useLocation();
 
-    const handleSearchClick = () => {
+    const handleSearchClick = async () => {
         console.log("searchTerm is now: " + searchTerm + " " + typeof (searchTerm))
         navigate(`/search?results=${searchTerm}`, { state: { lookup: searchTerm } });
         window.location.reload();
     }
 
-    const fetchMoreData = () => {
+    const fetchMoreData = async () => {
         if (editFetchNeeded) {
             pageNumberUpdate(pageNumber - 1)
         }
