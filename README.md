@@ -1,5 +1,8 @@
 # Honeycomb: Collaboration and Project Sharing Platform
 
+![DALL·E 2023-12-06 19 04 54 - A simple and minimalist honeycomb logo, featuring a hexagonal shape with a stylized bee silhouette in the center  The design should be clean and moder](https://github.com/SimplyArsh/35l_project/assets/115979938/f530107f-29de-432e-8f45-6a898752df3f)
+
+
 ## Description
 
 Honeycomb is a collaborative platform designed to connect individuals with shared interests, fostering a vibrant community of creators and collaborators. Whether you're seeking assistance on your latest project, looking for exciting ventures to contribute to, or showcasing your completed work, Honeycomb provides a buzzing hive of collaboration opportunities.
