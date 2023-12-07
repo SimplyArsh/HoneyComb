@@ -1,6 +1,6 @@
 # Honeycomb: Collaboration and Project Sharing Platform
 
-https://res.cloudinary.com/dsljo12bp/image/upload/v1701919015/honeycomblogo.png
+![Honeycomb Logo](https://res.cloudinary.com/dsljo12bp/image/upload/v1701919015/honeycomblogo.png)
 
 
 ## Description
