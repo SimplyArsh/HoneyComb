@@ -74,25 +74,25 @@ const Navbar = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
-    const handleHomeClick = () => {
-        navigate('/');
-        window.location.reload();
-    };
+  const handleHomeClick = () => {
+    navigate('/');
+    window.location.reload();
+  };
 
-    const handleCreateClick = () => {
-        navigate('/createproject');
-        window.location.reload();
-    };
+  const handleCreateClick = () => {
+    navigate('/createproject');
+    window.location.reload();
+  };
 
-    const handleSignupClick = () => {
-        navigate('/signup');
-        window.location.reload();
-    };
+  const handleSignupClick = () => {
+    navigate('/signup');
+    window.location.reload();
+  };
 
-    const handleLoginClick = () => {
-        navigate('/login');
-        window.location.reload();
-    };
+  const handleLoginClick = () => {
+    navigate('/login');
+    window.location.reload();
+  };
 
   return (
     <header>

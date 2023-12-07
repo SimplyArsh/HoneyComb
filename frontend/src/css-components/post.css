@@ -1,10 +1,19 @@
 :root {
     --postBackground: #fff;
     --postDetails: #555;
+    --textColor: black;
 }
 
 [data-theme="dark"] {
-    --postBackground: #252525;
+    --postBackground: #878787;
+    --textColor: black;
+    --postDetails: #4B4B4B;
+}
+
+[data-theme="light"] {
+    --postBackground: #fff;
+    --postDetails: #555;
+    --textColor: black;
 }
 
 .postDetails {
@@ -18,8 +27,12 @@
 
 .postDetails h4 {
     margin: 0 0 10px 0;
-    font-size: 1.2em;
-    color: var(--primary);
+    color: var(--textColor);
+}
+
+.postDetails h2 {
+    margin: 0 0 10px 0;
+    color: var(--textColor);
 }
 
 .postDetails p {

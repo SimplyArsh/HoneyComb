@@ -29,6 +29,13 @@ function App() {
       dispatch({ type: 'SET_THEME', payload: 'light' }) // by default, color theme is light
       return
     }
+    // Retrieve the theme from local storage or default to 'light'
+    const localTheme = localStorage.getItem('theme') || 'light';
+
+    // Apply the theme immediately
+    document.querySelector("body").setAttribute('data-theme', localTheme);
+    console.log("App.js updated to", localTheme)
+
     const fetchSettings = async () => {
       let response
       response = await fetch('/api/user/settings', {
@@ -37,6 +44,9 @@ function App() {
         }
       })
 
+      if (!response.ok) {
+        return "Error"
+      }
 
       const settingsResponse = await response.json() // get user info from server and update context
 
@@ -49,15 +59,18 @@ function App() {
       const setLightMode = () => {
         document.querySelector("body").setAttribute('data-theme', 'light');
       }
-      if (settingsResponse.theme === 'light') {
-        setLightMode();
-      } else if (settingsResponse.theme === 'dark') {
-        setDarkMode();
+
+      if (settingsResponse.theme && settingsResponse.theme !== localStorage.getItem('theme')) {
+        // Update local storage and apply theme
+        localStorage.setItem('theme', settingsResponse.theme);
+        document.querySelector("body").setAttribute('data-theme', settingsResponse.theme);
+        if (settingsResponse.theme === 'light') {
+          setLightMode();
+        } else if (settingsResponse.theme === 'dark') {
+          setDarkMode();
+        }
       }
 
-      if (!response.ok) {
-        return "Error"
-      }
     }
 
     if (user) {

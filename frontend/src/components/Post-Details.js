@@ -76,7 +76,7 @@ const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handle
         <div className="container mt-6">
             <div className="card postDetails">
                 {!inProfilePage && <div><img className="avatar" src={avatarURL} alt="User Avatar" />
-                    <h3 className="name">User: {post.profile_name}</h3>
+                    <h2 className="name">User: {post.profile_name}</h2>
                 </div>}
                 <h4 className="postName">Post: {post.postName}</h4>
                 <p><strong>Description: </strong>{post.description}</p>
