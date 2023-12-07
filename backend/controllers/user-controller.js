@@ -47,7 +47,7 @@ const getUserOwnProfile = async (req, res) => {
     return res.status(404).json({ error: 'No such user' })
   }
   user = user._doc
-  user = { username: user.username, email: user.email, aboutMe: user.aboutMe, postList: user.postList, numberOfLikes: user.numberOfLikes, numberOfPosts: user.numberOfPosts, createdAt: user.createdAt, postsLiked: user.postsLiked, userId: id } // only include basic user info, not passwords etc
+  user = { username: user.username, email: user.email, aboutMe: user.aboutMe, postList: user.postList, numberOfLikes: user.numberOfLikes, numberOfPosts: user.numberOfPosts, createdAt: user.createdAt, postsLiked: user.postsLiked, userId: id, avatarNumber: user.avatarNumber  } // only include basic user info, not passwords etc
 
   res.status(200).json(user) // change this later to only include basic info
 }
@@ -67,7 +67,7 @@ const getProfile = async (req, res) => {
     return res.status(404).json({ error: 'No such user' })
   }
   user = user._doc
-  user = { username: user.username, email: user.email, aboutMe: user.aboutMe, postList: user.postList, numberOfLikes: user.numberOfLikes, numberOfPosts: user.numberOfPosts, createdAt: user.createdAt } // only include basic user info, not passwords etc
+  user = { username: user.username, email: user.email, aboutMe: user.aboutMe, postList: user.postList, numberOfLikes: user.numberOfLikes, numberOfPosts: user.numberOfPosts, createdAt: user.createdAt, avatarNumber: user.avatarNumber } // only include basic user info, not passwords etc
 
   res.status(200).json(user) // change this later to only include basic info
 }

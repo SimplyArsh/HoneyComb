@@ -25,7 +25,6 @@ const getRecomendationPosts = async (req, res) => {
     const pageNumber = req.query.pageNumber;
     const userId = req.query.userId
 
-    console.log(req.query.pageSize, req.query.pageNumber, req.query.userId);
 
     const skip = (pageNumber) * pageSize;
 

@@ -30,6 +30,8 @@ export const profileReducer = (state, action) => { // action comes from dispatch
             return { ...state, numberOfPosts: state.currentPosts.length + state.completedPosts.length };
         case 'SET_ABOUT_ME': // set the about me according to payload
             return { ...state, aboutMe: action.payload };
+        case 'SET_AVATAR_NUMBER': // set the about me according to payload
+            return { ...state, avatarNumber: action.payload };
         default:
             return state
     }
@@ -50,7 +52,8 @@ export const ProfileContextProvider = ({ children }) => { // the object wrapped 
         dateJoined: null,
         numberOflikes: null,
         numberOfPosts: null,
-        aboutMe: null
+        aboutMe: null,
+        avatarNumber: null
     }) // similar to useState, but more powerful. To update the state object, first call the dispatch function. When you call the dispatch function, the reducer functon is invoked. 
 
     return ( // we want to wrap this around whatever needs profile context
