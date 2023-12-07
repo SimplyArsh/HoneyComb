@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom';
 import { useAuthContext } from '../hooks/use-auth-context'
 import { useProfileContext } from '../hooks/use-profile-context';
 import ProfilePostList from '../components/Profile-Post-List'
@@ -11,7 +10,7 @@ const Profile = () => {
     const { user } = useAuthContext()
     const { dispatch } = useProfileContext()
     const navigate = useNavigate()
-    
+
 
     useEffect(() => {
         if (!user) {
@@ -60,8 +59,12 @@ const Profile = () => {
 
     return (
         <div className="profilePage">
+            <div className="spacer"></div>
             <ProfileUserInfo />
+            <div className="spacer"></div>
             <ProfilePostList completed={false} id={location.state.id} />
+            <div className="spacer"></div>
+            <div className="small-spacer"></div>
             <ProfilePostList completed={true} id={location.state.id} />
         </div>
     )

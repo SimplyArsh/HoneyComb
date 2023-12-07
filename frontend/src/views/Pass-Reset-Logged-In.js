@@ -56,6 +56,7 @@ const ResetPasswordLoggedIn = () => {
                 {error && <div className="error">{error}</div>}
                 {confirmError && <div className='error'>{confirmError}</div>}
             </form>
+            <div className="extremely-long-spacer"></div>
         </div>
     )
 }

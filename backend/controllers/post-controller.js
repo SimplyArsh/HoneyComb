@@ -121,7 +121,6 @@ const deletePost = async (req, res) => {
 // update a post
 const updatePost = async (req, res) => {
   const { id } = req.params
-  console.log(id)
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: 'No such project post' })
   }
@@ -371,12 +370,10 @@ const editComment = async (req, res) => {
 
   const editCommentId = new mongoose.Types.ObjectId(req.body.id)
   try {
-    console.log("here")
     const CommentToEdit = await Comment.findOneAndUpdate(editCommentId)
 
     CommentToEdit.comment = req.body.editedComment
     CommentToEdit.save()
-    console.log(CommentToEdit)
     res.status(200)
   } catch (error) {
     res.status(404).json({ error: "There was some error in editing the comment" })

@@ -72,7 +72,7 @@ const useNode = () => {
 
         /* if the commentId does not match, then recursivley search the tree to
             find the direct parent */
-        tree?.comments?.map((object) => {
+        tree?.comments?.forEach((object) => {
             editLocalNodeRecursively(object, commentId, newItem)
         })
         /* tree.items.push alters the local tree passed in,
@@ -85,7 +85,7 @@ const useNode = () => {
         if (value.length === 0) {
             return tree
         }
-
+        console.log(tree, commentId, value)
         try {
             const response = await fetch('/api/post/editComment', {
                 headers: { // include token in header
@@ -98,8 +98,9 @@ const useNode = () => {
                     editedComment: value
                 })
             })
-            const res = await response.json()
-            console.log(res)
+            if (!response.ok) {
+                console.log(response)
+            }
 
             return editLocalNodeRecursively(tree, commentId, value)
 
@@ -131,18 +132,20 @@ const useNode = () => {
         if id not matched then it recursively goes through the sublayers
         of that particular comment (i.e. it's replies)  */
         try {
-            // const response = await fetch('/api/post/deleteComment?'
-            //     + new URLSearchParams({
-            //         "commentId": commentId,
-            //         "postParentId": parentPostId
-            //     }), {
-            //     headers: { // include token in header
-            //         'Content-Type': 'application/json',
-            //         'Authorization': 'Bearer ' + user.token,
-            //     },
-            //     method: "PATCH"
-            // })
-            //const res = await response.json() // without this call, code never reaches deleteLocalPart. I don't understand fetch well enough to know it's rejection process
+            const response = await fetch('/api/post/deleteComment?'
+                + new URLSearchParams({
+                    "commentId": commentId,
+                    "postParentId": parentPostId
+                }), {
+                headers: { // include token in header
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + user.token,
+                },
+                method: "PATCH"
+            })
+            if (!response.ok) {
+                console.log(response)
+            }
             return deleteLocalCommentsRecursively(tree, commentId)
 
         } catch (error) {

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useLogout } from '../hooks/use-logout'
 import { useSettingsContext } from "../hooks/use-settings-context"
 import { useAuthContext } from '../hooks/use-auth-context'
@@ -39,10 +39,12 @@ export const Settings = () => {
     const handleLogoutClick = () => {
         logout()
         dispatch({ type: 'SET_INVISIBLE' }) // close settings after button clicked
+        localStorage.setItem('theme', 'light');
+        window.location.reload();
     }
 
     const handleProfileClick = () => {
-        navigate('/profile', {state:{id: null}});
+        navigate('/profile', { state: { id: null } });
         dispatch({ type: 'SET_INVISIBLE' }) // close settings after button clicked
     };
 
