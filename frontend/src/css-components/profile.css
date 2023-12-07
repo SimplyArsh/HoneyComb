@@ -21,7 +21,7 @@
     position: center;
 }
 
-.profileImage img {
+.profileImage ChooseImage {
     width: 100%;
     height: auto;
     display: block;

@@ -1,10 +1,29 @@
 import { Link } from 'react-router-dom'
 import { useProfileContext } from '../hooks/use-profile-context';
 
+function ChooseImage({avatarNumber}) {
+    console.log(avatarNumber)
+    switch(avatarNumber) {
+        
+        case 0:
+            return (<img className="avatar" style={{ width: 150, height: 150 }} src={require('../assets/i1.jpeg')} />)
+        case 1:
+            return (<img className="avatar" style={{ width: 150, height: 150 }} src={require('../assets/i2.jpeg')} />)
+        case 2:
+            return (<img className="avatar" style={{ width: 150, height: 150 }} src={require('../assets/i3.jpeg')} />)
+        case 3:
+            return (<img className="avatar" style={{ width: 150, height: 150 }} src={require('../assets/i4.jpeg')} />)
+        case 4:
+            return (<img className="avatar" style={{ width: 150, height: 150 }} src={require('../assets/i5.jpeg')} />)
+        case 5:
+            return (<img className="avatar" style={{ width: 150, height: 150 }} src={require('../assets/i6.jpeg')} />)
+    }    
+}
+
 const ProfileUserInfo = () => { // display the info of the profile user
 
-    const { username, email, dateJoined, numberOfLikes, numberOfPosts, aboutMe } = useProfileContext()
-    let avatarURL = "https://img.freepik.com/free-photo/fashion-boy-with-yellow-jacket-blue-pants_71767-96.jpg?w=1380&t=st=1700010094~exp=1700010694~hmac=b9d7f8d56b66ac184e10e6b6fc4df817beaf81b63a6e495f32ad81e1eebbbb1a"
+    const { username, email, dateJoined, numberOfLikes, numberOfPosts, aboutMe, avatarNumber } = useProfileContext()
+    
     
     return (
         <div className="header" >
@@ -13,7 +32,7 @@ const ProfileUserInfo = () => { // display the info of the profile user
                 <div className="card profileDetails" style={{ display: 'flex', flexDirection: 'column', position: 'relative', alignItems: 'center' }}>
                 <div className="small-spacer"></div>
                     <div className="profileImage">
-                        <img className="avatar" src={avatarURL} alt="User Avatar"/>
+                        <ChooseImage avatarNumber={avatarNumber}></ChooseImage>
                     </div>
                     <div className="profileInfo">
                         <h1>{username}</h1>

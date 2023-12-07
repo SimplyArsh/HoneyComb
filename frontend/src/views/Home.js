@@ -133,14 +133,15 @@ const Home = () => {
             <div><h2>Explore projects</h2> {/* Header */}<div>
                 <div className="small-spacer"> </div>
                 {/* Search bar */}
+                <div className="col-md-8 mx-auto">
                 <input
                     type="text"
                     placeholder="Search for posts..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <button onClick={handleSearchClick}>Search</button>
-
+                <button className="btn btn-secondary" onClick={handleSearchClick}>Search</button>
+                
                 <InfiniteScroll
                     dataLength={recomendedPosts.length}
                     next={fetchMoreData}
@@ -151,12 +152,12 @@ const Home = () => {
                         <React.Fragment key={post._id}>
                             <PostDetails editable={false} inProfilePage={false} post={post} handleLike={handleLike}
                                 userId={homePageUserId}
-                                color={userLikes.includes(post._id)} />
+                                color={userLikes.includes(post._id)}  />
                         </React.Fragment>
                     ))}
 
                 </InfiniteScroll>
-
+                </div>
             </div>
             </div>
         </div>
