@@ -2,7 +2,8 @@
 
 /* Defined variables*/
 
-:root {
+:root,
+[data-theme="light"] {
   --bodyBackground: #f5eccd;
   --bodyColor: black;
   --linkColor: navy;
@@ -15,12 +16,6 @@
   --bodyBackground: #121212;
   --bodyColor: #E0E0E0;
   --linkColor: cyan;
-}
-
-/* theme change*/
-
-* {
-  transition: all 0.02s ease-in-out;
 }
 
 body {
@@ -36,12 +31,6 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-/* Navbar */
-header {
-  background: #FFD36E;
-  font-size: 5rem;
 }
 
 /*Navbar buttons + Like/Comment buttons (secondary color) */
@@ -71,61 +60,6 @@ header a {
   padding: 20px;
   margin: 0 auto;
 }
-
-/* Bootstrap styling elements for CSS */
-
-/* Login */
-label,
-input {
-  display: block;
-}
-
-input {
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  width: 100%;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-form button {
-  background: var(--formPrimary);
-  border: 0;
-  color: #fff;
-  padding: 10px;
-  font-family: "Poppins";
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-div.error {
-  padding: 10px;
-  background: #ffefef;
-  border: 1px solid var(--error);
-  color: var(--error);
-  border-radius: 4px;
-  margin: 20px 0;
-}
-
-input.error {
-  border: 1px solid var(--error);
-}
-
-/* Profile page */
-
-.profilePage {
-  display: flex;
-  flex-direction: column;
-}
-
-.profileUserInfo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 
 .btn-primary {
   background-color: #007bff;
