@@ -49,6 +49,8 @@ const Profile = () => {
             dispatch({ type: 'SET_NUMBER_OF_LIKES', payload: json.numberOfLikes })
             dispatch({ type: 'SET_NUMBER_OF_POSTS' })
             dispatch({ type: 'SET_ABOUT_ME', payload: json.aboutMe })
+            dispatch({ type: 'SET_AVATAR_NUMBER', payload: json.avatarNumber })
+            console.log(json)
         }
 
         if (user) {
