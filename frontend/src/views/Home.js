@@ -141,7 +141,7 @@ const Home = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <button className="btn btn-secondary" onClick={handleSearchClick}>Search</button>
-                
+                <div className="col-md-8 mx-auto">
                 <InfiniteScroll
                     dataLength={recomendedPosts.length}
                     next={fetchMoreData}
@@ -161,113 +161,9 @@ const Home = () => {
             </div>
             </div>
         </div>
+        </div>
 
     )
 }
 
 export default Home
-
-
-
-
-/* JUNK CODE BELOW */
-    // comments handle functions
-    /*
-    const handleAddComment = async () => {
-        try {
-            const response = await fetch('/api/post/addComment?'
-                + new URLSearchParams({
-                    "parentCommentId": "6559c27c37797e4fb897ebea",
-                    "idSelect": "0" // 0 if reply to a comment
-                }), {
-                headers: { // include token in header
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + user.token,
-                },
-                body: JSON.stringify({
-                    "comment": "this is a new comment  that i just added"
-                }),
-                method: "POST"
-            })
-            const response_ = await response.json()
-            console.log(response_)
-        } catch (error) {
-            console.log(error)
-        }
- 
- 
-         // try {
-         //     const response = await fetch ('/api/post/editComment', { 
-         //         headers: { // include token in header
-         //             'Content-Type': 'application/json',
-         //             'Authorization': 'Bearer ' + user.token,
-         //         },
-         //         method: 'PATCH',
-         //         body: JSON.stringify({
-         //             id: "6559c3c837797e4fb897ebf0",
-         //             editedComment: "this is the new value"
-         //         })
-         //     })
-         //     const res = await response.json()
-         //     console.log(res)
-         // } catch (error) {
-         //     console.log(error)
-         // }
- 
-         // try {
-         //     const response = await fetch ('/api/post/comments/' + "6559af4bc4256aaea0270d12", { 
-         //         headers: { // include token in header
-         //             'Content-Type': 'application/json',
-         //             'Authorization': 'Bearer ' + user.token,
-         //         },
-         //         method: 'GET'
-         //     })
-         //     const res = await response.json()
-         //     console.log(res)
-         // } catch (error) {
-         //     console.log(error)
-         // }
- 
-     }
-     */
-//     return (
-//         <div className="homePage">
-//             <div className="spacer"> </div>
-
-//             <div><h2>Explore projects</h2> {/* Header */}<div>
-//                 <div className="small-spacer"> </div>
-//                 {/* Search bar */}
-//                 <div className="col-md-8 mx-auto">
-//                 <input
-//                     type="text"
-//                     placeholder="Search for posts..."
-//                     value={searchTerm}
-//                     onChange={(e) => setSearchTerm(e.target.value)}
-//                 />
-//                 <button className="btn btn-secondary" onClick={handleSearchClick}>Search</button>
-                
-//                 <InfiniteScroll
-//                     dataLength={recomendedPosts.length}
-//                     next={fetchMoreData}
-//                     hasMore={true}
-//                     loader={<p></p>}
-//                 >
-//                     {recomendedPosts.map((post) => (
-//                         <React.Fragment key={post._id}>
-//                             <PostDetails editable={false} inProfilePage={false} post={post} handleLike={handleLike}
-//                                 userId={homePageUserId}
-//                                 color={userLikes.includes(post._id)}  />
-//                         </React.Fragment>
-//                     ))}
-
-//                 </InfiniteScroll>
-//                 </div>
-//             </div>
-//             </div>
-//         </div>
-
-//     )
-// }
-
-// export default Home
-
