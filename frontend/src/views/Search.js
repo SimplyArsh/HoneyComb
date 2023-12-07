@@ -180,19 +180,19 @@ const Search = () => {
     return(
         <div>
             {/* Search bar */}
+            <div className="col-md-8 mx-auto">
             <input
                 type="text"
                 placeholder="Search for posts..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button onClick={handleSearchClick}>Search</button>
+            <button className="btn btn-secondary" onClick={handleSearchClick}>Search</button>
 
             <InfiniteScroll 
                 dataLength={recomendedPosts.length}
                 next={fetchMoreData}
                 hasMore={true}
-                loader={<p>Loading ...</p>}
             > 
                 {recomendedPosts.map((post) => (
                     <PostDetails
@@ -206,6 +206,8 @@ const Search = () => {
                     ></PostDetails>
                 ))}
             </InfiniteScroll>
+            <div className = "extremely-extremely-long-spacer"></div>
+            </div>
         </div>
     );
 }
