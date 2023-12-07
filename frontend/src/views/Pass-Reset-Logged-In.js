@@ -29,7 +29,7 @@ const ResetPasswordLoggedIn = () => {
 
     return (
         <div className="login">
-            <h1>Reset Your Password</h1>
+            <h1>Change Your Password</h1>
             <form className="create" onSubmit={handleSubmit}>
                 <label>Enter Your Current Password:</label>
                 <input

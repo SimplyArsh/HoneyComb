@@ -74,7 +74,8 @@ export const Settings = () => {
     */
     const handleChangePasswordClick = () => {
         navigate('/changePass');
-    }
+        dispatch({ type: 'SET_INVISIBLE'})
+    };
 
     return (
         visible && (
