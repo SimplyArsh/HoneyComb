@@ -1,5 +1,8 @@
 # Honeycomb: Collaboration and Project Sharing Platform
 
+![Honeycomb Logo](https://res.cloudinary.com/dsljo12bp/image/upload/v1701919015/honeycomblogo.png)
+
+
 ## Description
 
 Honeycomb is a collaborative platform designed to connect individuals with shared interests, fostering a vibrant community of creators and collaborators. Whether you're seeking assistance on your latest project, looking for exciting ventures to contribute to, or showcasing your completed work, Honeycomb provides a buzzing hive of collaboration opportunities.
