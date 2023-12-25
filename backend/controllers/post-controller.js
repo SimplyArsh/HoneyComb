@@ -26,9 +26,9 @@ const getRecomendationPosts = async (req, res) => {
     const userId = req.query.userId
 
 
-    const skip = (pageNumber) * pageSize;
+    const skip = (pageNumber - 1) * pageSize;
 
-    const result = await Post.find({'user_id': {$ne: userId}}, '-comments').sort({_id:-1}).skip(skip).limit(pageSize)
+    const result = await Post.find({ 'user_id': { $ne: userId } }, '-comments').sort({ _id: -1 }).skip(skip).limit(pageSize)
 
     const resultWithProfileNames = await Promise.all(result.map(async (post) => {
       const userId = post.user_id;
@@ -38,7 +38,7 @@ const getRecomendationPosts = async (req, res) => {
       return {
         ...post._doc,
         profile_name: profileResponse.username,
-        profile_user_avatar:profileResponse.avatarNumber 
+        profile_user_avatar: profileResponse.avatarNumber
       };
 
     }));
@@ -372,9 +372,9 @@ const editComment = async (req, res) => {
   const editCommentId = new mongoose.Types.ObjectId(req.body.id)
   try {
 
-    const CommentToEdit = await Comment.updateOne({_id: editCommentId}, 
-      { comment: req.body.editedComment})
-    
+    const CommentToEdit = await Comment.updateOne({ _id: editCommentId },
+      { comment: req.body.editedComment })
+
     res.status(200)
   } catch (error) {
     res.status(404).json({ error: "There was some error in editing the comment" })
