@@ -6,8 +6,8 @@ import { useAuthContext } from '../hooks/use-auth-context'
 import { useNavigate } from 'react-router-dom'
 
 
-function ChooseImage({avatarNumber}) {
-    switch(avatarNumber) {
+function ChooseImage({ avatarNumber }) {
+    switch (avatarNumber) {
         case 0:
             return (<img style={{ width: 40, height: 40 }} src={require('../assets/i1.jpeg')} />)
         case 1:
@@ -20,7 +20,7 @@ function ChooseImage({avatarNumber}) {
             return (<img style={{ width: 40, height: 40 }} src={require('../assets/i5.jpeg')} />)
         case 5:
             return (<img style={{ width: 40, height: 40 }} src={require('../assets/i6.jpeg')} />)
-    }    
+    }
 }
 
 // format for post displays
@@ -34,9 +34,9 @@ const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handle
     const navigate = useNavigate()
     // const location = useLocation()
 
-    let avatarNumber = 2; 
+    let avatarNumber = 2;
 
-    
+
     const handleAvatar = async () => {
         navigate('/profile/:id', { state: { id: post.user_id } })
     }
@@ -103,14 +103,14 @@ const PostDetails = ({ editable, post, inProfilePage, handlePostComplete, handle
     if (post.profile_user_avatar != null) {
         avatarNumber = post.profile_user_avatar
     }
-    
+
     // let avatarURL = "https://img.freepik.com/free-photo/fashion-boy-with-yellow-jacket-blue-pants_71767-96.jpg?w=1380&t=st=1700010094~exp=1700010694~hmac=b9d7f8d56b66ac184e10e6b6fc4df817beaf81b63a6e495f32ad81e1eebbbb1a"
 
 
     return (
         <div className="container mt-6">
             <div className="card postDetails" style={{ display: 'flex', flexDirection: 'column', position: 'relative' }}>
-                <p style={{ position: 'absolute', top: 0, right: 0, margin: '10px', fontSize: '14px', color: '#888' }}>
+                <p style={{ position: 'absolute', top: 0, right: 0, margin: '10px', fontSize: '14px' }}>
                     {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
                 </p>
 

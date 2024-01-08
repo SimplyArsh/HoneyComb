@@ -1,4 +1,5 @@
-:root {
+:root,
+[data-theme="light"] {
     --bodyBackground: #f5eccd;
 }
 
