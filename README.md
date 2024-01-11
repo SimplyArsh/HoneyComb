@@ -10,6 +10,10 @@
 
 Honeycomb is a collaborative platform designed to connect individuals with shared interests, fostering a vibrant community of creators and collaborators. Whether you're seeking assistance on your latest project, looking for exciting ventures to contribute to, or showcasing your completed work, Honeycomb provides a buzzing hive of collaboration opportunities.
 
+## Demo
+
+https://www.youtube.com/watch?v=5KghRL7N9WA&t=2s&ab_channel=HoneyComb
+
 ## Usage Examples
 
 - **Create a Project:**
